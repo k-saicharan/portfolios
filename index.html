@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saicharan Kuna</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=Fraunces:ital,opsz,wght@0,9..144,380;1,9..144,380&family=Space+Mono:wght@400&display=swap');
+    :root { --bg:#14120f; --ink:#e8e0d2; --dim:#a89e8e; --rule:rgba(232,224,210,0.1); --rubric:#9c4634; --copper:#b38a5f; }
+    * { box-sizing:border-box; }
+    body {
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:'EB Garamond',Georgia,serif; font-size:18px; line-height:1.7;
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+      -webkit-font-smoothing:antialiased; padding:40px 24px;
+    }
+    .wrap { max-width:640px; width:100%; }
+    .eyebrow {
+      font-family:'Space Mono',monospace; font-size:9.5px; letter-spacing:3.2px;
+      text-transform:uppercase; color:var(--rubric); margin-bottom:18px;
+    }
+    h1 {
+      font-family:'Fraunces',serif; font-style:italic; font-weight:400;
+      font-variation-settings:'opsz' 110,'wght' 380;
+      font-size:clamp(2.4rem,7vw,3.4rem); line-height:1; letter-spacing:-0.02em;
+      margin:0 0 16px;
+    }
+    .intro { color:var(--dim); max-width:48ch; margin:0 0 52px; }
+    .doors { display:grid; gap:1px; background:var(--rule); border:1px solid var(--rule); }
+    a.door {
+      background:var(--bg); padding:26px 24px; text-decoration:none; color:var(--ink);
+      display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+      transition:background 300ms ease;
+    }
+    a.door:hover { background:#1b1813; }
+    a.door .t { font-family:'Fraunces',serif; font-size:1.3rem; font-style:italic; }
+    a.door .d { color:var(--dim); font-size:0.92rem; flex:1; }
+    a.door .arrow { color:var(--copper); font-family:'Space Mono',monospace; }
+    .alt { margin-top:20px; font-size:0.9rem; color:var(--dim); }
+    .alt a { color:var(--copper); text-decoration:none; }
+    .foot { margin-top:44px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.4px; color:var(--dim); }
+    .foot a { color:var(--copper); text-decoration:none; }
+    @media (max-width:520px){ a.door{ flex-direction:column; gap:6px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">SAICHARAN KUNA</div>
+    <h1>Two ways of looking.</h1>
+    <p class="intro">One eye reads systems from inside the work. The other reads what an image does when you stay with it. Same attention, two rooms.</p>
+
+    <div class="doors">
+      <a class="door" href="./ops/">
+        <span class="t">Systems Thinking from the Floor</span>
+        <span class="d">Operational friction turned into legible structure.</span>
+        <span class="arrow">→</span>
+      </a>
+      <a class="door" href="./film/">
+        <span class="t">What the Image Does</span>
+        <span class="d">Observational notes on film, framing, and camera vision.</span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+    <div class="alt">The systems side also reads as a <a href="./ops-codex/">dark codex →</a></div>
+
+    <div class="foot">
+      <a href="mailto:saicharan9977@gmail.com">saicharan9977@gmail.com</a> &nbsp;·&nbsp; <a href="https://github.com/k-saicharan">github.com/k-saicharan</a>
+    </div>
+  </div>
+</body>
+</html>

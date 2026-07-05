@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What the Image Does</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,380;0,9..144,420;1,9..144,380&family=Space+Mono:wght@400;500&family=Cormorant+Unicase:wght@400;500&display=swap');
+
+    :root {
+      --bg: #14120f;
+      --paper: #f8f4ec;
+      --ink: #e8e0d2;
+      --ink-dim: #a89e8e;
+      --rule: rgba(232, 224, 210, 0.09);
+      --rubric: #9c4634;
+      --copper: #b38a5f;
+      --margin-w: 218px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scrollbar-color: var(--copper) var(--bg); scrollbar-width: thin; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 18.5px;
+      line-height: 1.82;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .codex {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 92px 36px 140px;
+      position: relative;
+    }
+
+    /* Left plumb rail — decorative, spans the reading column without touching layout */
+    .plumb {
+      position: absolute;
+      left: 6px;
+      top: 300px;
+      bottom: 150px;
+      width: 1px;
+      background: var(--rule);
+    }
+    .plumb::before,
+    .plumb::after {
+      content: '';
+      position: absolute;
+      left: -4px;
+      width: 9px;
+      height: 1px;
+      background: var(--rubric);
+    }
+    .plumb::before { top: 0; }
+    .plumb::after { bottom: 0; }
+    @media (max-width: 860px) { .plumb { display: none; } }
+
+    /* Masthead */
+    .masthead {
+      margin-bottom: 78px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .masthead .eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 3.2px;
+      text-transform: uppercase;
+      color: var(--rubric);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .masthead .title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.8rem, 6.8vw, 4.6rem);
+      font-weight: 400;
+      font-style: italic;
+      font-variation-settings: 'opsz' 110, 'wght' 380;
+      line-height: 0.94;
+      letter-spacing: -0.022em;
+      margin: 0 0 18px;
+      color: var(--ink);
+    }
+
+    .masthead .subtitle {
+      font-family: 'Cormorant Unicase', serif;
+      font-size: 11.5px;
+      letter-spacing: 0.8px;
+      color: var(--ink-dim);
+      max-width: 46ch;
+      line-height: 1.55;
+    }
+
+    /* Each leaf = one entry + its margin note. The margin's sticky travel is
+       bounded by this row, so notes no longer pile up on scroll. */
+    .leaf {
+      display: grid;
+      grid-template-columns: 1fr var(--margin-w);
+      column-gap: 40px;
+      align-items: start;
+    }
+    .leaf + .leaf {
+      border-top: 1px solid var(--rule);
+    }
+
+    .entry {
+      grid-column: 1;
+      padding: 46px 0 52px;
+      position: relative;
+    }
+    .leaf:first-of-type .entry { padding-top: 6px; }
+
+    .margin-zone {
+      grid-column: 2;
+      position: sticky;
+      top: 80px;
+      padding-top: 52px;
+      font-size: 0.82rem;
+      color: var(--ink-dim);
+    }
+    .leaf:first-of-type .margin-zone { padding-top: 12px; }
+
+    .plate {
+      font-family: 'Cormorant Unicase', serif;
+      font-size: 10px;
+      letter-spacing: 2.6px;
+      color: var(--rubric);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .spec {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.4px;
+      color: var(--ink-dim);
+      margin: 2px 0;
+    }
+
+    /* Per-entry diagram - pure CSS, keyed to idea */
+    .diagram {
+      margin: 18px 0 12px;
+      height: 58px;
+      position: relative;
+      width: 100%;
+      border-left: 1px solid var(--rule);
+      padding-left: 11px;
+    }
+
+    /* 01 Translation Gap */
+    .diagram-gap .circle {
+      position: absolute;
+      top: 12px;
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--rubric);
+      border-radius: 50%;
+    }
+    .diagram-gap .circle.left { left: 11px; }
+    .diagram-gap .circle.right { left: 59px; border-color: var(--copper); }
+    .diagram-gap .gap {
+      position: absolute;
+      left: 40px;
+      top: 24px;
+      width: 18px;
+      height: 1px;
+      background: linear-gradient(to right, var(--rubric), var(--copper));
+    }
+
+    /* 02 Frame */
+    .diagram-frame {
+      border: 1px solid var(--rubric);
+      width: 72px;
+      height: 42px;
+      position: relative;
+      margin-left: 11px;
+    }
+    .diagram-frame::before,
+    .diagram-frame::after {
+      content: '';
+      position: absolute;
+      background: var(--rule);
+    }
+    .diagram-frame::before { left: 50%; top: 0; bottom: 0; width: 1px; }
+    .diagram-frame::after { top: 50%; left: 0; right: 0; height: 1px; }
+
+    /* 03 Threshold */
+    .diagram-threshold {
+      width: 88px;
+      height: 1px;
+      background: var(--rule);
+      position: relative;
+      margin: 22px 0 0 11px;
+    }
+    .diagram-threshold::before {
+      content: '';
+      position: absolute;
+      left: 34px;
+      top: -9px;
+      width: 1px;
+      height: 20px;
+      background: var(--rubric);
+    }
+    .diagram-threshold::after {
+      content: '\2192';
+      position: absolute;
+      left: 38px;
+      top: -13px;
+      font-size: 13px;
+      color: var(--rubric);
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* 04 Wave (Blue Velvet) */
+    .diagram-wave {
+      width: 92px;
+      height: 42px;
+      position: relative;
+      overflow: hidden;
+      margin-left: 11px;
+    }
+    .diagram-wave::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+      background: var(--rubric);
+      box-shadow: 0 0 0 1px rgba(156,70,52,0.3);
+      animation: wave 4.2s linear infinite;
+    }
+    @keyframes wave {
+      0% { transform: translateX(-12px); }
+      100% { transform: translateX(12px); }
+    }
+
+    /* 05 Grid / Composition */
+    .diagram-grid {
+      width: 78px;
+      height: 48px;
+      border: 1px solid var(--rule);
+      position: relative;
+      margin-left: 11px;
+    }
+    .diagram-grid::before,
+    .diagram-grid::after {
+      content: '';
+      position: absolute;
+      background: var(--rubric);
+    }
+    .diagram-grid::before { left: 33%; top: 0; bottom: 0; width: 1px; }
+    .diagram-grid::after { top: 40%; left: 0; right: 0; height: 1px; }
+
+    .entry h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.38rem;
+      font-weight: 420;
+      font-variation-settings: 'opsz' 72;
+      letter-spacing: -0.01em;
+      line-height: 1.12;
+      margin: 0 0 14px;
+      color: var(--ink);
+    }
+
+    .entry-meta { margin-bottom: 12px; }
+
+    .entry p {
+      margin: 0 0 13px;
+      max-width: 59ch;
+    }
+    .entry p:last-child { margin-bottom: 0; }
+
+    .gloss {
+      font-style: italic;
+      font-size: 1.01rem;
+      color: var(--copper);
+      margin-top: 18px;
+      padding-left: 13px;
+      border-left: 1px solid var(--rule);
+      max-width: 41ch;
+    }
+
+    .footer {
+      margin-top: 60px;
+      padding-top: 26px;
+      border-top: 1px solid var(--rule);
+      font-family: 'Space Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 1.9px;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .codex { padding: 72px 24px 110px; }
+      .leaf { grid-template-columns: 1fr; }
+      .margin-zone {
+        grid-column: 1;
+        position: static;
+        padding-top: 0;
+        margin-bottom: 18px;
+        order: -1;
+      }
+      .entry { grid-column: 1; padding-top: 20px; }
+      .diagram { margin-bottom: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="codex">
+    <div class="plumb" aria-hidden="true"></div>
+
+    <div class="masthead">
+      <span class="eyebrow">SAICHARAN KUNA · OBSERVATIONAL CODEX</span>
+      <h1 class="title">What the Image Does</h1>
+      <div class="subtitle">What a frame holds when you stay with it. Notes on camera vision, emotion, and composition as thinking.</div>
+    </div>
+
+    <!-- Entry 1 -->
+    <div class="leaf">
+      <article class="entry">
+        <div class="entry-meta">
+          <span class="plate"><span class="no">01</span> · VISION GAP</span>
+        </div>
+        <h2>The Translation Gap</h2>
+        <p>The superpower is camera vision. It emerges through context and process. As the scene builds in the head, the camera finds its place. The same way a writer doesn't know the next sentence until they write the previous one.</p>
+        <p>The gap is the translation from image to sentence. The scene is fully there. The bottleneck is converting it into physical, sensory prose. Not an imagination gap. A formal sit-down, blank-page gap.</p>
+        <p class="gloss">The prose is the source material for everything visual.</p>
+      </article>
+      <div class="margin-zone">
+        <span class="plate">01</span>
+        <span class="spec">TRANSLATION</span>
+        <span class="spec">OPTICS STUDY</span>
+        <div class="diagram diagram-gap" aria-hidden="true">
+          <div class="circle left"></div>
+          <div class="circle right"></div>
+          <div class="gap"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 2 -->
+    <div class="leaf">
+      <article class="entry">
+        <div class="entry-meta">
+          <span class="plate"><span class="no">02</span> · EMOTIONAL FRAME</span>
+        </div>
+        <h2>Emotion Through Directorial Vision</h2>
+        <p>When a film is really working, what it carries is the weight of emotion, delivered through the director's vision. How the frame is designed or architected. How visual storytelling does its work with bare minimum things, without grandeur.</p>
+        <p>The best examples do enormous emotional work through precise, deliberate framing. Restraint as the delivery mechanism, not spectacle.</p>
+        <p class="gloss">A felt sense of how much emotion can be held inside a carefully constructed frame, and how little you actually need.</p>
+      </article>
+      <div class="margin-zone">
+        <span class="plate">02</span>
+        <span class="spec">EMOTION</span>
+        <span class="spec">FRAME ARCHITECTURE</span>
+        <div class="diagram diagram-frame" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- Entry 3 -->
+    <div class="leaf">
+      <article class="entry">
+        <div class="entry-meta">
+          <span class="plate"><span class="no">03</span> · SENSORY GATE</span>
+        </div>
+        <h2>In the Realm of the Senses</h2>
+        <p>The explicitness is not the point. The film strips away distance and leaves you face to face with a relationship that keeps asking: if this is already the peak, then what is beyond it?</p>
+        <p>The characters do not behave as if the act is the destination. It feels more like a gateway to another threshold. Once there, they do not want to come back down.</p>
+        <p class="gloss">If the body is designed to resolve, then wanting not to resolve is already a kind of rebellion against biology.</p>
+      </article>
+      <div class="margin-zone">
+        <span class="plate">03</span>
+        <span class="spec">THRESHOLD</span>
+        <span class="spec">SENSORY</span>
+        <div class="diagram diagram-threshold" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- Entry 4 -->
+    <div class="leaf">
+      <article class="entry">
+        <div class="entry-meta">
+          <span class="plate"><span class="no">04</span> · LYNCH STUDY</span>
+        </div>
+        <h2>Blue Velvet</h2>
+        <p>I was expecting a peak while watching. It never arrived. After the film, after sitting with it, something landed. "They put the disease in me." The desire had become inseparable from damage, fear, power.</p>
+        <p>It moved like a dream. Things jumped. The song that meant nothing during the film hummed in my ears for hours afterward.</p>
+        <p class="gloss">Pleasure had to hybridize with domination, risk, terror to feel fully charged.</p>
+      </article>
+      <div class="margin-zone">
+        <span class="plate">04</span>
+        <span class="spec">WAVE</span>
+        <span class="spec">BLUE VELVET</span>
+        <div class="diagram diagram-wave" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- Entry 5 -->
+    <div class="leaf">
+      <article class="entry">
+        <div class="entry-meta">
+          <span class="plate"><span class="no">05</span> · ACTIVE TEXTURE</span>
+        </div>
+        <h2>Composition as Thinking</h2>
+        <p>The woman running with a gun. Right: the character. Center: the car. Left: the tree shedding leaves. The frame itself says he is in a complete mess and needs to escape into whatever beauty might still exist.</p>
+        <p>The POV through a glass that completely blocks vision until lowered. The moment something unexpected appears is created by the cup. I had already written nearly the same device.</p>
+        <p class="gloss">These are not decorations. They are the thinking.</p>
+      </article>
+      <div class="margin-zone">
+        <span class="plate">05</span>
+        <span class="spec">COMPOSITION</span>
+        <span class="spec">THINKING IN FRAME</span>
+        <div class="diagram diagram-grid" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      What the image does when you stay with it. &nbsp;·&nbsp; 5 LOGS REGISTERED
+      <div style="text-transform:none;letter-spacing:0;font-family:'EB Garamond',Georgia,serif;font-size:13.5px;color:var(--ink-dim);margin-top:16px;line-height:1.6;">
+        Saicharan Kuna &nbsp;·&nbsp; <a href="../ops/" style="color:var(--copper);text-decoration:none;">the systems ledger →</a> &nbsp;·&nbsp; <a href="mailto:saicharan9977@gmail.com" style="color:var(--copper);text-decoration:none;">saicharan9977@gmail.com</a> &nbsp;·&nbsp; <a href="https://github.com/k-saicharan" style="color:var(--copper);text-decoration:none;">github.com/k-saicharan</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

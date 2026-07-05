@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Systems Thinking from the Floor</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,380;1,9..144,380&family=Newsreader:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --bg: #f7f4ee;
+      --text: #16130e;
+      --muted: #6f6659;
+      --rule: #e5dfd3;
+      --accent: #9c5f34;
+      --ink: #2f4758;
+      --tick: #c9c0b2;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scrollbar-color: var(--accent) var(--rule); scrollbar-width: thin; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      line-height: 1.74;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 88px 40px 120px;
+    }
+
+    /* Calibration strip masthead */
+    .masthead {
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    .reading-no {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2.8px;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .calibration-strip {
+      height: 1px;
+      background: var(--rule);
+      margin: 14px 0 36px;
+      position: relative;
+    }
+    .calibration-strip::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background-image: repeating-linear-gradient(to right, var(--tick) 0 1px, transparent 1px 11px);
+    }
+
+    .masthead h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.05rem, 5vw, 2.95rem);
+      font-weight: 380;
+      letter-spacing: -0.018em;
+      line-height: 1.02;
+      margin: 0 0 14px;
+    }
+
+    .masthead .lead {
+      font-size: 1.02rem;
+      color: var(--muted);
+      max-width: 56ch;
+      margin: 0;
+      font-style: normal;
+    }
+
+    .method {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-size: 1.02rem;
+      color: var(--ink);
+      max-width: 54ch;
+      margin: 22px 0 0;
+      padding-left: 15px;
+      border-left: 2px solid var(--accent);
+    }
+
+    /* Ruler rail */
+    .ruler {
+      position: fixed;
+      left: calc(50% - 380px);
+      top: 140px;
+      bottom: 80px;
+      width: 1px;
+      background: var(--rule);
+      z-index: 1;
+    }
+    .ruler::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: -3px;
+      width: 7px;
+      background-image: repeating-linear-gradient(to bottom, var(--tick) 0 1px, transparent 1px 47px);
+    }
+    @media (max-width: 920px) { .ruler { display: none; } }
+
+    .section-label {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2.1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 22px;
+    }
+
+    /* The Move — threaded vertical readings */
+    .move {
+      position: relative;
+      margin: 60px 0 78px;
+      padding-left: 42px;
+      border-left: 1px solid var(--rule);
+    }
+    .move::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 9px;
+      bottom: 9px;
+      width: 1px;
+      background: linear-gradient(var(--rule), transparent);
+    }
+
+    .move-item {
+      position: relative;
+      padding-bottom: 28px;
+    }
+    .move-item:last-child { padding-bottom: 0; }
+
+    .move-item::before {
+      content: attr(data-n);
+      position: absolute;
+      left: -42px;
+      top: -1px;
+      font-family: 'Fraunces', serif;
+      font-size: 1.35rem;
+      font-weight: 300;
+      color: var(--tick);
+      letter-spacing: -0.02em;
+    }
+
+    .move-item dt {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text);
+      margin: 0 0 5px;
+    }
+
+    .move-item dd {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.97rem;
+      line-height: 1.65;
+      max-width: 54ch;
+    }
+
+    /* Evidence readings */
+    .evidence-label {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2.1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 18px;
+    }
+
+    .reading {
+      padding: 32px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .reading:last-child {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .reading .meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 1.3px;
+      color: var(--muted);
+      margin-bottom: 13px;
+    }
+
+    .reading .code {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .reading .roman {
+      color: var(--accent);
+    }
+
+    .gauge {
+      flex: 1;
+      max-width: 108px;
+      height: 1px;
+      background: var(--rule);
+      position: relative;
+    }
+    .gauge::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 1px;
+      background: var(--accent);
+      width: 100%;
+      transition: width 420ms ease;
+    }
+    .gauge.archived::after { background: var(--muted); width: 100%; }
+    .gauge.public::after { width: 100%; }
+    .gauge.built::after { width: 100%; background: var(--ink); }
+
+    .reading h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.13rem;
+      font-weight: 420;
+      letter-spacing: -0.006em;
+      margin: 0 0 9px;
+      line-height: 1.26;
+    }
+
+    .reading p {
+      margin: 0 0 15px;
+      color: var(--text);
+      font-size: 15.4px;
+      line-height: 1.7;
+      max-width: 61ch;
+    }
+
+    .reading .pull {
+      font-style: italic;
+      color: var(--ink);
+      font-size: 15.8px;
+      padding-left: 15px;
+      border-left: 2px solid var(--tick);
+      max-width: 54ch;
+    }
+
+    .reading .link {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .reading .link a {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+      transition: background-size 380ms cubic-bezier(0.22,1,0.36,1);
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .reading .link a:hover {
+      background-size: 100% 1px;
+      color: var(--text);
+    }
+
+    .footer-note {
+      margin-top: 82px;
+      padding-top: 26px;
+      border-top: 1px solid var(--rule);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.9px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 780px) {
+      .page { padding: 64px 24px 100px; max-width: 100%; }
+      .move { padding-left: 28px; }
+      .move-item::before { left: -28px; font-size: 1.1rem; }
+      .reading .meta { flex-wrap: wrap; gap: 8px 14px; }
+      .gauge { max-width: 82px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ruler" aria-hidden="true"></div>
+  <div class="page">
+
+    <div class="masthead">
+      <div class="reading-no">Saicharan Kuna · Systems Ledger · 2026</div>
+      <div class="calibration-strip" aria-hidden="true"></div>
+      <h1>Systems thinking from the floor.</h1>
+      <p class="lead">I turn operational friction into legible structure. Built while inside the work, not studied from outside.</p>
+      <p class="method">Either outcome is useful. One closes the question cheaply. The other opens it with evidence.</p>
+    </div>
+
+    <div>
+      <div class="section-label">The Move</div>
+      <dl class="move">
+        <div class="move-item" data-n="01">
+          <dt>Observe the real</dt>
+          <dd>Every shift surfaces the gap between how the system is supposed to work and how it actually does.</dd>
+        </div>
+        <div class="move-item" data-n="02">
+          <dt>Trace the mechanism</dt>
+          <dd>Dead time, exceptions, ownership: these are not complaints. They are the data.</dd>
+        </div>
+        <div class="move-item" data-n="03">
+          <dt>Build the legible</dt>
+          <dd>A brief, a model, a working tool. Something someone else can use, in the domain the problem showed up in or the next one over.</dd>
+        </div>
+        <div class="move-item" data-n="04">
+          <dt>Stay honest</dt>
+          <dd>What is deployable today vs what needs the vendor. No overpromising.</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div>
+      <div class="evidence-label">Evidence</div>
+
+      <!-- 1: GXO — consolidated (voice picking + identity gap + floor model), one real link -->
+      <article class="reading">
+        <div class="meta">
+          <span class="code">GXO · FIELD BRIEF</span>
+          <span class="roman">2026 · 06</span>
+          <div class="gauge public"></div>
+          <span>PUBLIC</span>
+        </div>
+        <h3>Reading the floor: voice picking, shared logins, and the model underneath</h3>
+        <p>Three years inside a live Coca-Cola HBC operation, written as one brief. Why voice-directed picking generates dead time in a high-noise bay, and where in the stack a correction can actually sit. Why 99.99% pick accuracy and daily worker friction are both true at once. Why shared SAP EWM logins are a rational workaround, not a lapse. Built as a working model of the floor from inside it, accurate enough that the people who run it recognize the dynamics.</p>
+        <p class="pull">The metric measures what gets confirmed; it says nothing about how long it took.</p>
+        <div class="link">
+          <a href="https://k-saicharan.github.io/gxo-ops" target="_blank">Field Brief →</a>
+          <a href="https://github.com/k-saicharan/sap-voice-middleware" target="_blank">Middleware code →</a>
+        </div>
+      </article>
+
+      <!-- 2: Google case -->
+      <article class="reading">
+        <div class="meta">
+          <span class="code">GOOGLE · CASE STUDY</span>
+          <span class="roman">2026 · 05</span>
+          <div class="gauge public"></div>
+          <span>PUBLIC</span>
+        </div>
+        <h3>Escalation as architecture</h3>
+        <p>A 21-day unresolved order that crossed six operational systems. Each layer examined from the inside: what it saw, what it couldn't, and where the handoffs dropped. The root lever wasn't any single team; it was the escalation structure itself. Fixes ranked by impact, not by blame.</p>
+        <p class="pull">Each layer examined from the inside: what it saw, what it couldn't.</p>
+        <div class="link">
+          <a href="https://k-saicharan.github.io/google-order-case-study" target="_blank">Public case study →</a>
+        </div>
+      </article>
+
+      <!-- 3: Tote counter — the GitHub build that was missing -->
+      <article class="reading">
+        <div class="meta">
+          <span class="code">VLM · TOTE-COUNTER</span>
+          <span class="roman">2026 · 02</span>
+          <div class="gauge built"></div>
+          <span>BUILT · OPEN SOURCE</span>
+        </div>
+        <h3>Counting tote stacks with a vision model</h3>
+        <p>A recurring miscount on warehouse tote stacks, turned into a working tool. A vision-language model (Llama 4 via Groq) with a chain-of-thought prompt that forces it to count edges in sequence instead of guessing at a whole frame. FastAPI backend, mobile-first so it runs from a phone on the floor. Accurate to within one unit on test data.</p>
+        <div class="link">
+          <a href="https://github.com/k-saicharan/tote-counter" target="_blank">Repository →</a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="footer-note">
+      Friction observed on the floor. Structure built from the data.
+      <div style="text-transform:none;letter-spacing:0;font-family:'Newsreader',Georgia,serif;font-size:13.5px;color:var(--muted);margin-top:16px;line-height:1.6;">
+        Saicharan Kuna &nbsp;·&nbsp; <a href="../film/" style="color:var(--accent);text-decoration:none;">what the image does →</a> &nbsp;·&nbsp; <a href="mailto:saicharan9977@gmail.com" style="color:var(--accent);text-decoration:none;">saicharan9977@gmail.com</a> &nbsp;·&nbsp; <a href="https://github.com/k-saicharan" style="color:var(--accent);text-decoration:none;">github.com/k-saicharan</a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Internal working files — never publish
+transcript.md
+log.md
+backups/
+.DS_Store
+_antigravity/
+.agents/

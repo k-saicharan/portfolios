@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Systems Thinking from the Floor — Codex</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,380;0,9..144,420;1,9..144,380&family=Space+Mono:wght@400;500&family=Cormorant+Unicase:wght@400;500&display=swap');
+
+    :root {
+      --bg: #14120f;
+      --ink: #e8e0d2;
+      --ink-dim: #a89e8e;
+      --rule: rgba(232, 224, 210, 0.09);
+      --rubric: #9c4634;
+      --copper: #b38a5f;
+      --margin-w: 218px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scrollbar-color: var(--copper) var(--bg); scrollbar-width: thin; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 18.5px;
+      line-height: 1.82;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .codex {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 92px 36px 140px;
+      position: relative;
+    }
+
+    .plumb {
+      position: absolute;
+      left: 6px;
+      top: 330px;
+      bottom: 150px;
+      width: 1px;
+      background: var(--rule);
+    }
+    .plumb::before, .plumb::after {
+      content: '';
+      position: absolute;
+      left: -4px;
+      width: 9px;
+      height: 1px;
+      background: var(--rubric);
+    }
+    .plumb::before { top: 0; }
+    .plumb::after { bottom: 0; }
+    @media (max-width: 860px) { .plumb { display: none; } }
+
+    /* Masthead */
+    .masthead {
+      margin-bottom: 56px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .masthead .eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 3.2px;
+      text-transform: uppercase;
+      color: var(--rubric);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .masthead .title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.6rem, 6.2vw, 4.1rem);
+      font-weight: 400;
+      font-style: italic;
+      font-variation-settings: 'opsz' 110, 'wght' 380;
+      line-height: 0.98;
+      letter-spacing: -0.022em;
+      margin: 0 0 18px;
+      color: var(--ink);
+    }
+    .masthead .subtitle {
+      font-family: 'Cormorant Unicase', serif;
+      font-size: 11.5px;
+      letter-spacing: 0.8px;
+      color: var(--ink-dim);
+      max-width: 48ch;
+      line-height: 1.55;
+    }
+    .method {
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--copper);
+      max-width: 52ch;
+      margin: 26px 0 0;
+      padding-left: 14px;
+      border-left: 1px solid var(--rule);
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 2.8px;
+      text-transform: uppercase;
+      color: var(--rubric);
+      margin: 0 0 26px;
+    }
+
+    /* The Move — numbered readings */
+    .move {
+      margin: 56px 0 72px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px 48px;
+    }
+    @media (max-width: 640px) { .move { grid-template-columns: 1fr; } }
+    .move-item { position: relative; padding-left: 42px; }
+    .move-item .n {
+      position: absolute;
+      left: 0;
+      top: -4px;
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--rubric);
+    }
+    .move-item dt {
+      font-family: 'Cormorant Unicase', serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.2px;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin: 0 0 6px;
+    }
+    .move-item dd {
+      margin: 0;
+      color: var(--ink-dim);
+      font-size: 0.98rem;
+      line-height: 1.62;
+    }
+
+    /* Evidence — leaves (entry + margin), sticky bounded per row */
+    .leaf {
+      display: grid;
+      grid-template-columns: 1fr var(--margin-w);
+      column-gap: 40px;
+      align-items: start;
+    }
+    .leaf + .leaf { border-top: 1px solid var(--rule); }
+
+    .entry {
+      grid-column: 1;
+      padding: 44px 0 50px;
+    }
+    .leaf:first-of-type .entry { padding-top: 8px; }
+
+    .entry .meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 12px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .entry .meta .code { color: var(--copper); }
+    .entry .meta .status { color: var(--rubric); }
+
+    .entry h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.42rem;
+      font-weight: 420;
+      font-variation-settings: 'opsz' 72;
+      letter-spacing: -0.01em;
+      line-height: 1.14;
+      margin: 0 0 14px;
+      color: var(--ink);
+    }
+    .entry p {
+      margin: 0 0 13px;
+      max-width: 60ch;
+      color: var(--ink);
+    }
+    .entry .pull {
+      font-style: italic;
+      color: var(--copper);
+      font-size: 1.02rem;
+      margin: 18px 0;
+      padding-left: 13px;
+      border-left: 1px solid var(--rule);
+      max-width: 44ch;
+    }
+    .entry .links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .entry .links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      color: var(--copper);
+      text-decoration: none;
+      background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+      transition: background-size 380ms cubic-bezier(0.22,1,0.36,1);
+    }
+    .entry .links a:hover { background-size: 100% 1px; color: var(--ink); }
+
+    /* Margin zone */
+    .margin-zone {
+      grid-column: 2;
+      position: sticky;
+      top: 80px;
+      padding-top: 50px;
+      color: var(--ink-dim);
+    }
+    .leaf:first-of-type .margin-zone { padding-top: 14px; }
+    .plate {
+      font-family: 'Cormorant Unicase', serif;
+      font-size: 10px;
+      letter-spacing: 2.6px;
+      color: var(--rubric);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .spec {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.4px;
+      color: var(--ink-dim);
+      margin: 2px 0;
+    }
+
+    /* Diagrams — pure CSS, keyed to each proof */
+    .diagram { margin: 20px 0 8px; padding-left: 11px; border-left: 1px solid var(--rule); }
+
+    /* metric vs time: full bar + dashed unmeasured tail */
+    .d-metric .bar { position: relative; height: 30px; width: 108px; }
+    .d-metric .bar::before {
+      content: ''; position: absolute; left: 0; top: 8px; width: 46px; height: 2px; background: var(--rubric);
+    }
+    .d-metric .bar::after {
+      content: ''; position: absolute; left: 46px; top: 8px; right: 0; height: 1px;
+      background-image: repeating-linear-gradient(to right, var(--copper) 0 2px, transparent 2px 6px);
+    }
+    .d-metric .lbl { font-family: 'Space Mono', monospace; font-size: 7.5px; letter-spacing: 1px; color: var(--ink-dim); }
+
+    /* six layers + escalation arrow */
+    .d-layers { position: relative; height: 56px; width: 108px; }
+    .d-layers span {
+      position: absolute; left: 18px; right: 0; height: 1px; background: var(--rule);
+    }
+    .d-layers span:nth-child(1){top:4px}.d-layers span:nth-child(2){top:13px}
+    .d-layers span:nth-child(3){top:22px}.d-layers span:nth-child(4){top:31px}
+    .d-layers span:nth-child(5){top:40px}.d-layers span:nth-child(6){top:49px}
+    .d-layers::before {
+      content: ''; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 1px; background: var(--rubric);
+    }
+    .d-layers::after {
+      content: '\2191'; position: absolute; left: 2px; top: -6px; font-size: 12px; color: var(--rubric); font-family: 'Space Mono', monospace;
+    }
+
+    /* tote stack with counted edges */
+    .d-stack { position: relative; width: 64px; height: 56px; }
+    .d-stack i {
+      position: absolute; left: 0; width: 52px; height: 10px; border: 1px solid var(--rule); border-left-color: var(--copper);
+    }
+    .d-stack i:nth-child(1){top:2px}.d-stack i:nth-child(2){top:15px}
+    .d-stack i:nth-child(3){top:28px}.d-stack i:nth-child(4){top:41px}
+    .d-stack::after {
+      content: '4'; position: absolute; right: 0; top: 20px; font-family: 'Space Mono', monospace; font-size: 12px; color: var(--rubric);
+    }
+
+    .footer {
+      margin-top: 64px;
+      padding-top: 26px;
+      border-top: 1px solid var(--rule);
+      font-family: 'Space Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 1.9px;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .codex { padding: 72px 24px 110px; }
+      .leaf { grid-template-columns: 1fr; }
+      .margin-zone { grid-column: 1; position: static; padding-top: 0; margin-bottom: 18px; order: -1; }
+      .entry { grid-column: 1; padding-top: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="codex">
+    <div class="plumb" aria-hidden="true"></div>
+
+    <div class="masthead">
+      <span class="eyebrow">SAICHARAN KUNA · SYSTEMS LEDGER</span>
+      <h1 class="title">Systems thinking from the floor.</h1>
+      <div class="subtitle">Operational friction turned into legible structure. Built from inside the work, not studied from outside.</div>
+      <p class="method">Either outcome is useful. One closes the question cheaply. The other opens it with evidence.</p>
+    </div>
+
+    <div class="section-label">The Move</div>
+    <dl class="move">
+      <div class="move-item">
+        <span class="n">01</span>
+        <dt>Observe the real</dt>
+        <dd>Every shift surfaces the gap between how the system is supposed to work and how it actually does.</dd>
+      </div>
+      <div class="move-item">
+        <span class="n">02</span>
+        <dt>Trace the mechanism</dt>
+        <dd>Dead time, exceptions, ownership: these are not complaints. They are the data.</dd>
+      </div>
+      <div class="move-item">
+        <span class="n">03</span>
+        <dt>Build the legible</dt>
+        <dd>A brief, a model, a working tool. Something someone else can use, in this domain or the next one over.</dd>
+      </div>
+      <div class="move-item">
+        <span class="n">04</span>
+        <dt>Stay honest</dt>
+        <dd>What is deployable today vs what needs the vendor. No overpromising.</dd>
+      </div>
+    </dl>
+
+    <div class="section-label">Evidence</div>
+
+    <!-- 1: GXO -->
+    <div class="leaf">
+      <article class="entry">
+        <div class="meta">
+          <span class="code">GXO · FIELD BRIEF</span>
+          <span>2026 · 06</span>
+          <span class="status">PUBLIC</span>
+        </div>
+        <h2>Reading the floor: voice picking, shared logins, and the model underneath</h2>
+        <p>Three years inside a live Coca-Cola HBC operation, written as one brief. Why voice-directed picking generates dead time in a high-noise bay, and where in the stack a correction can actually sit. Why 99.99% pick accuracy and daily worker friction are both true at once. Why shared SAP EWM logins are a rational workaround, not a lapse. Built as a working model of the floor from inside it, accurate enough that the people who run it recognize the dynamics.</p>
+        <p class="pull">The metric measures what gets confirmed; it says nothing about how long it took.</p>
+        <div class="links">
+          <a href="https://k-saicharan.github.io/gxo-ops" target="_blank">Field Brief →</a>
+          <a href="https://github.com/k-saicharan/sap-voice-middleware" target="_blank">Middleware code →</a>
+        </div>
+      </article>
+      <div class="margin-zone">
+        <span class="plate">R · 01</span>
+        <span class="spec">METRIC vs TIME</span>
+        <span class="spec">DIAGNOSIS</span>
+        <div class="diagram d-metric" aria-hidden="true">
+          <div class="bar"></div>
+          <span class="lbl">CONFIRMED / UNMEASURED</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2: Google -->
+    <div class="leaf">
+      <article class="entry">
+        <div class="meta">
+          <span class="code">GOOGLE · CASE STUDY</span>
+          <span>2026 · 05</span>
+          <span class="status">PUBLIC</span>
+        </div>
+        <h2>Escalation as architecture</h2>
+        <p>A 21-day unresolved order that crossed six operational systems. Each layer examined from the inside: what it saw, what it couldn't, and where the handoffs dropped. The root lever wasn't any single team; it was the escalation structure itself. Fixes ranked by impact, not by blame.</p>
+        <p class="pull">Each layer examined from the inside: what it saw, what it couldn't.</p>
+        <div class="links">
+          <a href="https://k-saicharan.github.io/google-order-case-study" target="_blank">Public case study →</a>
+        </div>
+      </article>
+      <div class="margin-zone">
+        <span class="plate">R · 02</span>
+        <span class="spec">SIX SYSTEMS</span>
+        <span class="spec">ESCALATION</span>
+        <div class="diagram d-layers" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3: Tote counter -->
+    <div class="leaf">
+      <article class="entry">
+        <div class="meta">
+          <span class="code">VLM · TOTE-COUNTER</span>
+          <span>2026 · 02</span>
+          <span class="status">BUILT · OPEN SOURCE</span>
+        </div>
+        <h2>Counting tote stacks with a vision model</h2>
+        <p>A recurring miscount on warehouse tote stacks, turned into a working tool. A vision-language model (Llama 4 via Groq) with a chain-of-thought prompt that forces it to count edges in sequence instead of guessing at a whole frame. FastAPI backend, mobile-first so it runs from a phone on the floor. Accurate to within one unit on test data.</p>
+        <div class="links">
+          <a href="https://github.com/k-saicharan/tote-counter" target="_blank">Repository →</a>
+        </div>
+      </article>
+      <div class="margin-zone">
+        <span class="plate">R · 03</span>
+        <span class="spec">EDGE COUNT</span>
+        <span class="spec">VISION MODEL</span>
+        <div class="diagram d-stack" aria-hidden="true">
+          <i></i><i></i><i></i><i></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Friction observed on the floor. Structure built from the data.
+      <div style="text-transform:none;letter-spacing:0;font-family:'EB Garamond',Georgia,serif;font-size:13.5px;color:var(--ink-dim);margin-top:16px;line-height:1.6;">
+        Saicharan Kuna &nbsp;·&nbsp; <a href="../ops/" style="color:var(--copper);text-decoration:none;">ledger version →</a> &nbsp;·&nbsp; <a href="../film/" style="color:var(--copper);text-decoration:none;">what the image does →</a> &nbsp;·&nbsp; <a href="mailto:saicharan9977@gmail.com" style="color:var(--copper);text-decoration:none;">saicharan9977@gmail.com</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
