@@ -316,8 +316,8 @@
       <div class="reading-no">Saicharan Kuna · Systems Ledger · 2026</div>
       <div class="calibration-strip" aria-hidden="true"></div>
       <h1>Systems thinking from the floor.</h1>
-      <p class="lead">I turn operational friction into legible structure. Built while inside the work, not studied from outside.</p>
-      <p class="method">Either outcome is useful. One closes the question cheaply. The other opens it with evidence.</p>
+      <p class="lead">I turn operational friction into tools and structure. Built while picking on a live UK 3PL beverage contract, not studied from outside. Continuous improvement is the language of the room; the work is adoption: seeing the gap, building a thin fix, staying honest about what is not deployed.</p>
+      <p class="method">Five pieces below are one portfolio. Not a manifesto. Each card is a real artifact.</p>
     </div>
 
     <div>
@@ -325,60 +325,80 @@
       <dl class="move">
         <div class="move-item" data-n="01">
           <dt>Observe the real</dt>
-          <dd>Every shift surfaces the gap between how the system is supposed to work and how it actually does.</dd>
+          <dd>Domain notes and shift logs while on the floor. The gap between how the system is supposed to work and how it actually does.</dd>
         </div>
         <div class="move-item" data-n="02">
           <dt>Trace the mechanism</dt>
-          <dd>Dead time, exceptions, ownership: these are not complaints. They are the data.</dd>
+          <dd>Dead time, exceptions, handoffs, ownership. Mechanism, not complaint.</dd>
         </div>
         <div class="move-item" data-n="03">
           <dt>Build the legible</dt>
-          <dd>A brief, a model, a working tool. Something someone else can use, in the domain the problem showed up in or the next one over.</dd>
+          <dd>An app, a middleware prototype, a vision tool, a case study. Something someone else can open.</dd>
         </div>
         <div class="move-item" data-n="04">
           <dt>Stay honest</dt>
-          <dd>What is deployable today vs what needs the vendor. No overpromising.</dd>
+          <dd>What ran on my phone vs what was only proposed. No client-named public pages. No hours-saved fiction.</dd>
         </div>
       </dl>
     </div>
 
     <div>
-      <div class="evidence-label">Evidence</div>
+      <div class="evidence-label">Evidence (fused)</div>
 
-      <!-- 1: GXO — consolidated (voice picking + identity gap + floor model), one real link -->
       <article class="reading">
         <div class="meta">
-          <span class="code">GXO · FIELD BRIEF</span>
-          <span class="roman">2026 · 06</span>
-          <div class="gauge public"></div>
-          <span>PUBLIC</span>
+          <span class="code">STACKED · ANDROID</span>
+          <span class="roman">2026 · 06–08</span>
+          <div class="gauge built"></div>
+          <span>BUILT · PILOT (SINGLE USER)</span>
         </div>
-        <h3>Reading the floor: voice picking, shared logins, and the model underneath</h3>
-        <p>Three years inside a live FMCG beverage operation (client anonymised), written as one brief. Why voice-directed picking generates dead time in a high-noise bay, and where in the stack a correction can actually sit. Why 99.99% pick accuracy and daily worker friction are both true at once. Why shared SAP EWM logins are a rational workaround, not a lapse. Built as a working model of the floor from inside it, accurate enough that the people who run it recognize the dynamics.</p>
+        <h3>Stacked: one-handed shift logging with a worker threat model</h3>
+        <p>Born on the floor: paper shift logs lose where a shift actually goes, and any tool that logs output can become a surveillance feed. Stacked is a Flutter Android app (package <code>com.saicharan.stacked</code>) for warehouse pickers: log pallets one-handed mid-shift, see pace and targets with explicit formulas, never one ambiguous number called "speed."</p>
+        <p>The design decision that matters for hiring: when a shift syncs, wall-clock start/end timestamps are stripped; only duration and aggregate counts leave the device. Free-text notes never leave the phone. Consent is explicit opt-in. Manager-side access is a summary view, not a replay of when you stood where. Built by the person who would be on the wrong end of getting that wrong.</p>
+        <p>Status: I use it on shift. Pilot target ~25–30 workers is not live yet. Repo is private while real exports sit in backups. Walkthrough and analysis view available on request; signed APK via private GitHub Releases.</p>
+        <p class="pull">Two formulas, deliberately different denominators. They may never be merged into one vague "speed."</p>
+      </article>
+
+      <article class="reading">
+        <div class="meta">
+          <span class="code">OPERATIONS · CORPUS</span>
+          <span class="roman">2026 · 04–</span>
+          <div class="gauge built"></div>
+          <span>WORKING NOTES</span>
+        </div>
+        <h3>Reading the stack from inside the contract</h3>
+        <p>Twenty-six domain notes (SAP EWM, voice, RealWear, exceptions, KPIs, robot arm readiness, and more) plus ten field logs from the same UK 3PL beverage site (client anonymised after HR asked a named public brief down; that was fair). This is not decoration for a CV. It is how I hold mechanism across shifts: what the system claims, what the aisle does, what a fix would have to respect.</p>
         <p class="pull">The metric measures what gets confirmed; it says nothing about how long it took.</p>
+      </article>
+
+      <article class="reading">
+        <div class="meta">
+          <span class="code">SAP EWM · VOICE MIDDLEWARE</span>
+          <span class="roman">2026 · 05</span>
+          <div class="gauge proposed"></div>
+          <span>PROTOTYPE · NOT DEPLOYED</span>
+        </div>
+        <h3>A correction layer between headset and warehouse system</h3>
+        <p>Voice-directed picking fails on accented speech in a high-noise bay. The prototype is a per-worker word map between headset middleware and SAP EWM. SAP is not touched. Industry pattern that survives is the same shape: thin intelligence over load-bearing legacy, not rip-and-replace. I proposed it to continuous improvement; some cards engaged, some did not. That non-adoption is part of the record, not a failure to hide.</p>
         <div class="link">
-          <a href="https://k-saicharan.github.io/gxo-ops" target="_blank">Field Brief →</a>
-          <a href="https://github.com/k-saicharan/sap-voice-middleware" target="_blank">Middleware code →</a>
+          <a href="https://github.com/k-saicharan/sap-voice-middleware" target="_blank" rel="noopener">Repository →</a>
         </div>
       </article>
 
-      <!-- 2: Google case -->
       <article class="reading">
         <div class="meta">
           <span class="code">GOOGLE · CASE STUDY</span>
-          <span class="roman">2026 · 05</span>
+          <span class="roman">2026 · 06–07</span>
           <div class="gauge public"></div>
-          <span>PUBLIC</span>
+          <span>PUBLIC · CLOSED</span>
         </div>
         <h3>Escalation as architecture</h3>
-        <p>A 21-day unresolved order that crossed six operational systems. Each layer examined from the inside: what it saw, what it couldn't, and where the handoffs dropped. The root lever wasn't any single team; it was the escalation structure itself. Fixes ranked by impact, not by blame.</p>
-        <p class="pull">Each layer examined from the inside: what it saw, what it couldn't.</p>
+        <p>A multi-week consumer order that crossed six operational systems. Each layer examined from the inside: what it could see, what it structurally could not, and where handoffs dropped. Locally green systems, aggregate failure, nobody's KPI breached. Same shape as warehouse "everything is green" friction, different building. Fulfilment closed when the device landed; residual finance noise is separate from the systems lesson.</p>
         <div class="link">
-          <a href="https://k-saicharan.github.io/google-order-case-study" target="_blank">Public case study →</a>
+          <a href="https://k-saicharan.github.io/google-order-case-study" target="_blank" rel="noopener">Public case study →</a>
         </div>
       </article>
 
-      <!-- 3: Tote counter — the GitHub build that was missing -->
       <article class="reading">
         <div class="meta">
           <span class="code">VLM · TOTE-COUNTER</span>
@@ -387,9 +407,9 @@
           <span>BUILT · OPEN SOURCE</span>
         </div>
         <h3>Counting tote stacks with a vision model</h3>
-        <p>A recurring miscount on warehouse tote stacks, turned into a working tool. A vision-language model (Llama 4 via Groq) with a chain-of-thought prompt that forces it to count edges in sequence instead of guessing at a whole frame. FastAPI backend, mobile-first so it runs from a phone on the floor. Accurate to within one unit on test data.</p>
+        <p>A recurring miscount, turned into a working tool. Vision-language model with a chain-of-thought prompt that counts edges in sequence rather than guessing the whole frame. FastAPI backend, phone in the aisle. Accurate to within one unit on the test set. Cheap proof that measurement that used to need a clipboard can start from a phone.</p>
         <div class="link">
-          <a href="https://github.com/k-saicharan/tote-counter" target="_blank">Repository →</a>
+          <a href="https://github.com/k-saicharan/tote-counter" target="_blank" rel="noopener">Repository →</a>
         </div>
       </article>
 
