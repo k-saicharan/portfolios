@@ -1,7 +1,11 @@
 # Internal working files — never publish
 transcript.md
+.transcript.md
 log.md
 backups/
 .DS_Store
 _antigravity/
 .agents/
+NEXT.md
+STATUS.md
+PORTFOLIO-FUSION.md
