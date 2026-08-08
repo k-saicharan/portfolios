@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stacked — one-handed shift logging</title>
+  <meta name="description" content="Stacked: a Flutter Android app for warehouse pickers to log shift output one-handed, built with an explicit worker threat model.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,380;1,9..144,380&family=Newsreader:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --bg: #f7f4ee;
+      --text: #16130e;
+      --muted: #6f6659;
+      --rule: #e5dfd3;
+      --accent: #9c5f34;
+      --ink: #2f4758;
+      --tick: #c9c0b2;
+    }
+
+    * { box-sizing: border-box; }
+    html { scrollbar-color: var(--accent) var(--rule); scrollbar-width: thin; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      line-height: 1.74;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 88px 40px 120px;
+    }
+
+    .masthead {
+      margin-bottom: 54px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .mark {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      flex-shrink: 0;
+      box-shadow: 0 1px 2px rgba(22,19,14,0.08), 0 8px 20px rgba(22,19,14,0.06);
+    }
+
+    .reading-no {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2.8px;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .masthead h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 5.5vw, 2.85rem);
+      font-weight: 380;
+      letter-spacing: -0.018em;
+      line-height: 1.02;
+      margin: 0 0 12px;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 16px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .lead {
+      font-size: 1.02rem;
+      color: var(--muted);
+      max-width: 54ch;
+      margin: 0;
+    }
+
+    .section-label {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2.1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 52px 0 18px;
+    }
+
+    h2.head {
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      font-weight: 420;
+      letter-spacing: -0.01em;
+      margin: 0 0 14px;
+      line-height: 1.22;
+    }
+
+    p {
+      margin: 0 0 16px;
+      font-size: 15.6px;
+      line-height: 1.72;
+      max-width: 60ch;
+    }
+
+    .pull {
+      font-style: italic;
+      color: var(--ink);
+      font-size: 15.8px;
+      padding-left: 15px;
+      border-left: 2px solid var(--accent);
+      max-width: 52ch;
+      margin: 26px 0;
+    }
+
+    .how {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: how;
+    }
+    .how li {
+      counter-increment: how;
+      position: relative;
+      padding: 14px 0 14px 40px;
+      border-top: 1px solid var(--rule);
+      font-size: 15.4px;
+      color: var(--text);
+    }
+    .how li:last-child { border-bottom: 1px solid var(--rule); }
+    .how li::before {
+      content: counter(how);
+      position: absolute;
+      left: 0;
+      top: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin: 4px 0 8px;
+    }
+    .fact {
+      background: var(--bg);
+      padding: 18px 20px;
+    }
+    .fact dt {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 6px;
+    }
+    .fact dd {
+      margin: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    @media (max-width: 560px) { .facts { grid-template-columns: 1fr; } }
+
+    .privacy-list {
+      margin: 0 0 8px;
+      padding: 0;
+      list-style: none;
+    }
+    .privacy-list li {
+      padding: 12px 0;
+      border-top: 1px solid var(--rule);
+      font-size: 15px;
+      color: var(--text);
+      display: flex;
+      gap: 12px;
+    }
+    .privacy-list li:last-child { border-bottom: 1px solid var(--rule); }
+    .privacy-list li b {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-weight: 600;
+      color: var(--ink);
+      flex-shrink: 0;
+      min-width: 118px;
+      font-size: 12.5px;
+      letter-spacing: 0.2px;
+      padding-top: 1px;
+    }
+
+    .footer-note {
+      margin-top: 72px;
+      padding-top: 26px;
+      border-top: 1px solid var(--rule);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.9px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+    }
+    .footer-prose {
+      text-transform: none;
+      letter-spacing: 0;
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+    .footer-prose a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .page { padding: 64px 24px 100px; }
+      .masthead { gap: 14px; }
+      .mark { width: 46px; height: 46px; border-radius: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="masthead">
+      <img class="mark" src="./assets/icon.png" alt="Stacked app icon" width="56" height="56">
+      <div>
+        <div class="reading-no">Saicharan Kuna · Systems Ledger · Stacked</div>
+        <h1>One-handed shift logging, built from the wrong end of the phone.</h1>
+        <div class="status-row"><span class="dot"></span>Built · self-use on shift · pilot recruiting</div>
+        <p class="lead">A Flutter Android app for warehouse pickers to log pallet output mid-shift without pulling out a notebook — designed by someone who'd be the one wearing the badge it tracks.</p>
+      </div>
+    </div>
+
+    <div class="section-label">Why it exists</div>
+    <h2 class="head">Paper logs lose the shift. A phone can lose more than that.</h2>
+    <p>Every warehouse shift I've worked has the same gap: what you actually did and what ends up written down are two different records, because nobody stops picking to write a clean log. The paper version gets scribbled, guessed at, or skipped. The obvious digital fix — an app that logs your output automatically — has an obvious failure mode: it can just as easily become a surveillance feed. A tool built to help you prove your pace can also become the tool that times your toilet breaks.</p>
+    <p>Stacked exists to close the first gap without opening the second. It's a shift log I actually use — built for the version of me who is on shift, not the version who might one day review the data.</p>
+    <p class="pull">Built by the person who would be on the wrong end of getting the privacy model wrong.</p>
+
+    <div class="section-label">How it works</div>
+    <ol class="how">
+      <li>Tap the item count as you finish each pallet — one hand, no typing, no menus mid-shift.</li>
+      <li>The app timestamps and logs it instantly, and auto-detects Morning / Evening / Night from the clock, including midnight crossings.</li>
+      <li>Pace and daily target are shown as two separate, explicit formulas — never one ambiguous number called "speed."</li>
+      <li>Drop a quick timestamped note for anything that slowed you down — dock delay, forklift queue, system down — so the log explains itself later.</li>
+      <li>Set your rotation once and the app forecasts your upcoming shift pattern automatically.</li>
+    </ol>
+
+    <div class="section-label">Two numbers, on purpose</div>
+    <p>The app never collapses output into one vague "speed." Pace and daily target use deliberately different denominators, and the UI always shows the formula, not just the result:</p>
+    <div class="facts">
+      <div class="fact">
+        <dt>Pace</dt>
+        <dd>items ÷ (first→last pallet span + 30m pad)</dd>
+      </div>
+      <div class="fact">
+        <dt>Daily target</dt>
+        <dd>(8h − breaks) × (1 − dead-time%) × rate/hr</dd>
+      </div>
+    </div>
+    <p class="pull">They may never be merged into one number. A single "speed" metric is exactly the kind of ambiguity that turns a helpful log into a weapon.</p>
+
+    <div class="section-label">Data, on your terms</div>
+    <ul class="privacy-list">
+      <li><b>No accounts</b> Open the app and use it — no email, username, or login.</li>
+      <li><b>Offline by default</b> Logs, stats, and notes are stored locally on your device.</li>
+      <li><b>Opt-in only</b> Sync is off until you explicitly turn it on, every time.</li>
+      <li><b>What syncs</b> Only aggregate shift summaries — pallet count, item count, duration. Nothing else leaves the device.</li>
+      <li><b>What never syncs</b> Your name, your notes, and the wall-clock timestamps of when a shift started and ended — stripped specifically so synced data can't be matched against CCTV or badge logs.</li>
+      <li><b>Manager view</b> A summary dashboard, not a replay of where you stood and when.</li>
+    </ul>
+
+    <div class="section-label">Status</div>
+    <p>I use it on shift. Built for a pilot of roughly 25–30 warehouse workers on a rotating schedule; that pilot is recruiting, not live yet. The build, the private pilot backend, and the real shift exports stay off this page — this is the app, not the operation behind it.</p>
+
+    <div class="footer-note">
+      A tool for the version of me on shift, not the version reviewing the data.
+      <div class="footer-prose">
+        Saicharan Kuna &nbsp;·&nbsp; <a href="../ops/">systems thinking from the floor →</a> &nbsp;·&nbsp; <a href="mailto:saicharan9977@gmail.com">saicharan9977@gmail.com</a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
