@@ -18,7 +18,7 @@
     }
 
     * { box-sizing: border-box; }
-    html { scrollbar-color: var(--accent) var(--rule); scrollbar-width: thin; }
+    html { scrollbar-color: var(--accent) var(--rule); scrollbar-width: thin; scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -78,13 +78,6 @@
       font-size: 1.05rem;
       color: var(--text);
       max-width: 52ch;
-      margin: 0 0 14px;
-    }
-
-    .masthead .lead {
-      font-size: 1.02rem;
-      color: var(--muted);
-      max-width: 54ch;
       margin: 0;
     }
 
@@ -117,25 +110,28 @@
       margin: 0 0 8px;
     }
 
-    /* Benji-shaped list on ops chrome */
     .explore {
       margin-top: 8px;
       border-top: 1px solid var(--rule);
     }
 
-    .explore:hover .row { opacity: 0.34; }
-    .explore:hover .row:hover { opacity: 1; }
+    .explore:hover .item { opacity: 0.34; }
+    .explore:hover .item:hover,
+    .explore:hover .item[open] { opacity: 1; }
 
-    .row {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      padding: 22px 0 24px;
+    .item {
       border-bottom: 1px solid var(--rule);
       transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .row .meta {
+    .item summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 22px 0 24px;
+    }
+    .item summary::-webkit-details-marker { display: none; }
+
+    .item .meta {
       display: flex;
       align-items: center;
       gap: 16px;
@@ -146,8 +142,8 @@
       margin-bottom: 10px;
     }
 
-    .row .code { color: var(--ink); font-weight: 500; }
-    .row .roman { color: var(--accent); }
+    .item .code { color: var(--ink); font-weight: 500; }
+    .item .roman { color: var(--accent); }
 
     .gauge {
       flex: 1;
@@ -168,7 +164,7 @@
     .gauge.public::after { background: var(--accent); }
     .gauge.mind::after { background: var(--accent); width: 72%; }
 
-    .row h3 {
+    .item h3 {
       font-family: 'Fraunces', serif;
       font-size: 1.2rem;
       font-weight: 420;
@@ -178,7 +174,7 @@
       color: var(--text);
     }
 
-    .row p {
+    .item .teaser {
       margin: 0;
       color: var(--muted);
       font-size: 15.2px;
@@ -186,20 +182,77 @@
       max-width: 58ch;
     }
 
-    .row .go {
+    .item .hint {
       font-family: 'Instrument Sans', system-ui, sans-serif;
       font-size: 12px;
       font-weight: 500;
       color: var(--accent);
       margin-top: 12px;
       display: inline-flex;
+    }
+    .item[open] .hint { color: var(--muted); }
+    .item[open] .hint::after { content: ' · close'; }
+    .item:not([open]) .hint::after { content: ''; }
+
+    .panel {
+      padding: 0 0 28px;
+      max-width: 61ch;
+    }
+    .panel p {
+      margin: 0 0 14px;
+      color: var(--text);
+      font-size: 15.4px;
+      line-height: 1.7;
+    }
+    .panel p:last-child { margin-bottom: 0; }
+    .panel h4 {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 22px 0 8px;
+    }
+    .panel .pull {
+      font-style: italic;
+      color: var(--ink);
+      padding-left: 15px;
+      border-left: 2px solid var(--tick);
+      max-width: 54ch;
+    }
+    .panel .links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .panel .links a,
+    a.out {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
       background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
       transition: background-size 380ms cubic-bezier(0.22,1,0.36,1);
     }
-    .row:hover .go {
+    .panel .links a:hover,
+    a.out:hover {
       background-size: 100% 1px;
       color: var(--text);
     }
+
+    /* External-only row (Google) */
+    a.item-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      padding: 22px 0 24px;
+      border-bottom: 1px solid var(--rule);
+      transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    a.item-link .hint { margin-top: 12px; }
 
     .footer-note {
       margin-top: 82px;
@@ -228,7 +281,7 @@
 
     @media (max-width: 780px) {
       .page { padding: 64px 24px 100px; max-width: 100%; }
-      .row .meta { flex-wrap: wrap; gap: 8px 14px; }
+      .item .meta { flex-wrap: wrap; gap: 8px 14px; }
       .gauge { max-width: 82px; }
     }
   </style>
@@ -247,79 +300,146 @@
     <div class="explore-label">Explore</div>
     <div class="explore">
 
-      <a class="row" href="#missing-piece">
-        <div class="meta">
-          <span class="code">MISSING PIECE</span>
-          <span class="roman">2026</span>
-          <div class="gauge mind"></div>
-          <span>HINGE</span>
+      <details class="item" id="missing-piece">
+        <summary>
+          <div class="meta">
+            <span class="code">MISSING PIECE</span>
+            <span class="roman">2026</span>
+            <div class="gauge mind"></div>
+            <span>HINGE</span>
+          </div>
+          <h3>The missing piece</h3>
+          <p class="teaser">Where matter moves, AI capability is rarely the bottleneck. The scarce half is judgment, trigger, and what survives the floor.</p>
+          <span class="hint">Open</span>
+        </summary>
+        <div class="panel">
+          <p>The floor work — logs compounding into domain pages, Stacked on shift, InventoryVision, the voice path, Bay Door, the management probe — led me to a working hypothesis.</p>
+          <p>Wherever matter moves at scale, AI capability is rarely the bottleneck. Someone still has to judge which problem to point it at, know what survives contact with a real floor, and trigger the thing so it ships. That complementary half is what I’ve been practising without a clean job title for it.</p>
+          <p>The role shows up under different names in every sector. Keyword search fails for that reason. The portfolio is the evidence trail: composition on the floor, thin wrappers at brittle steps, site-shaped vision, a personal tool that only becomes more if usage is real.</p>
+          <p class="pull">I’m looking for the seat where that hypothesis is the job.</p>
         </div>
-        <h3>The missing piece</h3>
-        <p>Where matter moves, AI capability is rarely the bottleneck. The scarce half is judgment, trigger, and what survives the floor.</p>
-        <span class="go">Open →</span>
-      </a>
+      </details>
 
-      <a class="row" href="#on-the-floor">
-        <div class="meta">
-          <span class="code">FLOOR</span>
-          <span class="roman">2026</span>
-          <div class="gauge built"></div>
-          <span>LINEAGE</span>
+      <details class="item" id="on-the-floor">
+        <summary>
+          <div class="meta">
+            <span class="code">FLOOR</span>
+            <span class="roman">2026</span>
+            <div class="gauge built"></div>
+            <span>LINEAGE</span>
+          </div>
+          <h3>On the floor</h3>
+          <p class="teaser">Picker to field logs to Stacked on shift; Voice, Bay Door, where the work points next.</p>
+          <span class="hint">Open</span>
+        </summary>
+        <div class="panel">
+          <p>I started as a picker in a beverage 3PL warehouse. After shifts I logged what had surprised me or made me wonder why. Those notes became a system: field logs in, domain pages out. Later observations started landing on earlier ones. That compounding is how I learned the floor: picking, voice kit, waves, exceptions, how work actually moves.</p>
+          <p>From those logs came <strong>Stacked</strong>: a phone app I use on shift to log pallets, watch items-per-hour live, and keep rotating schedules straight. Local-first. Optional anonymous sync.</p>
+          <p>Upstream is a clean personal record of what the shift produced while I was still in it. Downstream, if usage grows, those logs become material for harder picking questions: sequences that serve aggregate throughput, with the worker as an input rather than the whole target. That thread stays open until the data is real.</p>
+          <h4>Voice</h4>
+          <p>Spoken quantity confirms are the brittle step under warehouse noise. I traced the failure to the speech layer sitting on the warehouse system, then built a thin middleware demo that corrects before the core stack sees the utterance — core left untouched. Later a language-pack path opened. Proposed and researched. Stacked is what I run; this path is direction until a site moment installs something.</p>
+          <h4>Bay Door</h4>
+          <p>Bay Door started as a “this should be simpler” instinct on the floor, then became a correction arc: the process looked clean on paper until attention rewrote what the aisle actually cost. It went into a management conversation as research. Same pattern as the rest of the floor work — deciding fact and decision place out of line.</p>
+          <h4>Where the floor work points</h4>
+          <p>On the floor, the deciding fact often already sits in the stack. The decision still happens somewhere else. What’s missing is composition at the moment you need it. A conversation with site management mapped where attention could land next — handover visibility, damage logging, voice. Stacked is what I run on shift. The wider thread waits for an owner and a site moment.</p>
+          <div class="links">
+            <a href="https://github.com/k-saicharan/stacked-public" target="_blank" rel="noopener">Stacked on GitHub</a>
+            <a href="https://k-saicharan.github.io/stacked-public/show.html" target="_blank" rel="noopener">Join Stacked</a>
+            <a href="../stacked/index.html">Stacked about</a>
+          </div>
         </div>
-        <h3>On the floor</h3>
-        <p>Picker to field logs to Stacked on shift; Voice, Bay Door, where the work points next.</p>
-        <span class="go">Open →</span>
-      </a>
+      </details>
 
-      <a class="row" href="#inventoryvision">
-        <div class="meta">
-          <span class="code">INVENTORYVISION</span>
-          <span class="roman">2026</span>
-          <div class="gauge built"></div>
-          <span>VISION</span>
+      <details class="item" id="inventoryvision">
+        <summary>
+          <div class="meta">
+            <span class="code">INVENTORYVISION</span>
+            <span class="roman">2026</span>
+            <div class="gauge built"></div>
+            <span>VISION</span>
+          </div>
+          <h3>InventoryVision</h3>
+          <p class="teaser">Tote-counter proof; physical vs record drift; site-shaped customisation.</p>
+          <span class="hint">Open</span>
+        </summary>
+        <div class="panel">
+          <p>One of the jobs on a fulfilment floor is counting nested Euro totes by hand. Thin lips stacked on thin lips. Easy to miss one. Tedious.</p>
+          <p>I built a small counter that looks at a stack and returns a number. The breakthrough wasn’t more physical hints in the prompt. It was making the model name each lip, top to bottom, before it was allowed a final count. That got to 69% exact and 100% within one tote on the test set.</p>
+          <p>What it pointed at is bigger than a counter. Physical storage and the system of record drift apart. Closing that gap is the real job.</p>
+          <p>Vision is how the floor gets seen — physical state only. Identity of a unit stays a separate, exact step. Every warehouse is its own environment: layout, lighting, labels, how stock moves, what the record already trusts. The interesting work is pairing that site-specific shape with AI.</p>
+          <p>What I’m searching for next in this build is an agent that takes the floor information it needs and returns the best customisation for that site.</p>
+          <div class="links">
+            <a href="https://github.com/k-saicharan/tote-counter" target="_blank" rel="noopener">Tote-counter</a>
+            <a href="https://inventoryvisionhub.co.uk" target="_blank" rel="noopener">InventoryVision</a>
+          </div>
         </div>
-        <h3>InventoryVision</h3>
-        <p>Tote-counter proof; physical vs record drift; site-shaped customisation.</p>
-        <span class="go">Open →</span>
-      </a>
+      </details>
 
-      <a class="row" href="#autopilot">
-        <div class="meta">
-          <span class="code">AUTOPILOT</span>
-          <span class="roman">2026</span>
-          <div class="gauge mind"></div>
-          <span>LIFE OS</span>
+      <details class="item" id="autopilot">
+        <summary>
+          <div class="meta">
+            <span class="code">AUTOPILOT</span>
+            <span class="roman">2026</span>
+            <div class="gauge mind"></div>
+            <span>LIFE OS</span>
+          </div>
+          <h3>Autopilot</h3>
+          <p class="teaser">Execution layer I designed: Board, cascade, /log — sessions inherit truth.</p>
+          <span class="hint">Open</span>
+        </summary>
+        <div class="panel">
+          <p>I built Autopilot as my life OS — an execution layer on top of agents and skills I wrote myself. The problem it solves is simple: every new session starts blind, and anything I only held in my head rot. Creative work stays mine. Everything else I wanted a system that could hold context, move what is movable, and bring me only the calls that need judgment.</p>
+          <p>Board is the single face for anything that needs me. Priorities and Window hold what matters and what time is actually free. On demand, Autopilot sweeps the rails, reconciles trackers when they drift from reality, advances research and drafts freely, and stalls on irreversible sends and judgment. Answers cascade into every file they touch. Sessions that never invoke Autopilot still write board-worthy state before they end — so the next wake inherits truth.</p>
+          <p>Under that sits logging. Every project gets a running log. I run <code>/log</code> across sessions, hosts, and domains so decisions, opens, and residue compound when the chat closes. OpenAI’s agent sessions and Anthropic’s Claude Code transcripts treat that persistence as built-in; seeing that made the instinct feel spot-on. Continuity is the product.</p>
+          <p>Xenrich and Insight Radio sit beside this as skills in the same Systems layer. Autopilot is the OS that keeps the runway clear around them.</p>
         </div>
-        <h3>Autopilot</h3>
-        <p>Execution layer I designed: Board, cascade, /log — sessions inherit truth.</p>
-        <span class="go">Open →</span>
-      </a>
+      </details>
 
-      <a class="row" href="#closing-the-loop">
-        <div class="meta">
-          <span class="code">LOOP</span>
-          <span class="roman">2026</span>
-          <div class="gauge mind"></div>
-          <span>ATTENTION</span>
+      <details class="item" id="closing-the-loop">
+        <summary>
+          <div class="meta">
+            <span class="code">LOOP</span>
+            <span class="roman">2026</span>
+            <div class="gauge mind"></div>
+            <span>ATTENTION</span>
+          </div>
+          <h3>Closing the loop</h3>
+          <p class="teaser">Cell, express, clear. Xenrich as the receipt on bookmarks and the feed.</p>
+          <span class="hint">Open</span>
+        </summary>
+        <div class="panel">
+          <p>A cell carries the whole book and only reads the chapter that matches where it is and what signals are arriving — position decides expression; the rest stays quiet. That picture got into how I learn: when something lands, I decide what it is for inside the threads I am already in, put it there with the trail attached, and clear it so the next signal can land clean.</p>
+          <p>When something on X hits hard enough to save, it is already a vote. I sort it into a world as I save it. Later I answer what made me save <em>that</em> one, connect it to the threads I am already inside, and file it with the link still attached — then the bookmark goes. The queue is only what is still open. The trail lives in a ledger. Xenrich is the skill that runs that loop on my own bookmarks.</p>
+          <p>I treat the feed the same way. Abundant information creates a poverty of attention; algorithms hold that scarcity well. My working hypothesis is that the useful move is directing what gets expressed — small, contextual next steps when something sparks — so consumption compounds into action and agency.</p>
         </div>
-        <h3>Closing the loop</h3>
-        <p>Cell, express, clear. Xenrich as the receipt on bookmarks and the feed.</p>
-        <span class="go">Open →</span>
-      </a>
+      </details>
 
-      <a class="row" href="#stupid-ideas">
-        <div class="meta">
-          <span class="code">LAB</span>
-          <span class="roman">2026</span>
-          <div class="gauge public"></div>
-          <span>NOTICING</span>
+      <details class="item" id="stupid-ideas">
+        <summary>
+          <div class="meta">
+            <span class="code">LAB</span>
+            <span class="roman">2026</span>
+            <div class="gauge public"></div>
+            <span>NOTICING</span>
+          </div>
+          <h3>Stupid ideas</h3>
+          <p class="teaser">Shankha, Net Saver, dictation exhaust, Clean and Seal — chased far enough to leave a trail.</p>
+          <span class="hint">Open</span>
+        </summary>
+        <div class="panel">
+          <p>Some ideas start as a sensation or a narrow fear and refuse to leave. These are the ones chased far enough to leave a trail.</p>
+          <h4>Shankha Alarm</h4>
+          <p>The industrial beep felt wrong for what a morning should open with. The idea became a real conch shell sounded by air — a recording would miss the point. Work went simulation-first: BEM acoustics, blowing threshold, quiet pump and accumulator. Presentation stayed sacred: open on a peeta by default.</p>
+          <h4>Net Saver / EntangleSafe</h4>
+          <p>Inland fishing nets can trap a wader and pull them under before anyone hears a struggle. The brief stayed on that quiet drowning, then narrowed to a cheap collar-level hydrostatic buoyancy prototype. The open question is whether buoyancy frees a body under real net tension.</p>
+          <h4>Dictation exhaust</h4>
+          <p>Years of MacWhisper push-to-talk left a local SQLite trail — timestamp, text, target app. That history became a personal corpus: intentional speech-to-tool exhaust. From it: computer-use demo episodes, re-prompt friction scores, and a private command lexicon.</p>
+          <h4>Clean and Seal</h4>
+          <p>Small scratches get ignored because clean and cover are two separate fiddles. A pocket dual stick puts tear-wipe and a liquid-plaster dose in one pass, as a carry-first single-use multipack. The bet is readiness and a forced clean-then-seal sequence — chemistry that already works, carried so it gets used.</p>
         </div>
-        <h3>Stupid ideas</h3>
-        <p>Shankha, Net Saver, dictation exhaust, Clean and Seal — chased far enough to leave a trail.</p>
-        <span class="go">Open →</span>
-      </a>
+      </details>
 
-      <a class="row" href="https://k-saicharan.github.io/google-order-case-study" target="_blank" rel="noopener">
+      <a class="item item-link" id="systems-brief" href="https://k-saicharan.github.io/google-order-case-study" target="_blank" rel="noopener">
         <div class="meta">
           <span class="code">GOOGLE</span>
           <span class="roman">2026</span>
@@ -327,8 +447,8 @@
           <span>BRIEF</span>
         </div>
         <h3>Systems brief</h3>
-        <p>Pixel order stuck across six systems — living brief, role hats, structural gap.</p>
-        <span class="go">Open →</span>
+        <p class="teaser">Pixel order stuck across six systems — living brief, role hats, structural gap.</p>
+        <span class="hint">Open case study</span>
       </a>
 
     </div>
@@ -343,5 +463,27 @@
     </div>
 
   </div>
+  <script>
+    // One open at a time keeps the Benji skim clean; deep-link via hash still works.
+    const items = [...document.querySelectorAll('details.item')];
+    items.forEach(d => {
+      d.addEventListener('toggle', () => {
+        if (d.open) {
+          items.forEach(o => { if (o !== d) o.open = false; });
+          history.replaceState(null, '', '#' + d.id);
+        } else if (location.hash === '#' + d.id) {
+          history.replaceState(null, '', location.pathname);
+        }
+      });
+    });
+    const hash = location.hash.slice(1);
+    if (hash) {
+      const el = document.getElementById(hash);
+      if (el && el.tagName === 'DETAILS') {
+        el.open = true;
+        el.scrollIntoView({ block: 'start' });
+      }
+    }
+  </script>
 </body>
 </html>
