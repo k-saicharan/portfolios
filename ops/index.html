@@ -117,19 +117,25 @@
 
     .explore:hover .item { opacity: 0.34; }
     .explore:hover .item:hover,
-    .explore:hover .item[open] { opacity: 1; }
+    .explore:hover .item.is-open { opacity: 1; }
 
     .item {
       border-bottom: 1px solid var(--rule);
       transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .item summary {
-      list-style: none;
-      cursor: pointer;
+    .item-head {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: 0;
       padding: 22px 0 24px;
+      margin: 0;
+      cursor: pointer;
+      font: inherit;
+      color: inherit;
     }
-    .item summary::-webkit-details-marker { display: none; }
 
     .item .meta {
       display: flex;
@@ -190,14 +196,15 @@
       margin-top: 12px;
       display: inline-flex;
     }
-    .item[open] .hint { color: var(--muted); }
-    .item[open] .hint::after { content: ' · close'; }
-    .item:not([open]) .hint::after { content: ''; }
+    .item.is-open .hint { color: var(--muted); }
+    .item.is-open .hint::after { content: ' · close'; }
 
     .panel {
+      display: none;
       padding: 0 0 28px;
       max-width: 61ch;
     }
+    .item.is-open .panel { display: block; }
     .panel p {
       margin: 0 0 14px;
       color: var(--text);
@@ -300,9 +307,9 @@
     <div class="explore-label">Explore</div>
     <div class="explore">
 
-      <details class="item" id="missing-piece">
-        <summary>
-          <div class="meta">
+            <div class="item" id="missing-piece">
+        <button type="button" class="item-head" aria-expanded="false" aria-controls="missing-piece-panel">
+<div class="meta">
             <span class="code">MISSING PIECE</span>
             <span class="roman">2026</span>
             <div class="gauge mind"></div>
@@ -311,18 +318,18 @@
           <h3>The missing piece</h3>
           <p class="teaser">Where matter moves, AI capability is rarely the bottleneck. The scarce half is judgment, trigger, and what survives the floor.</p>
           <span class="hint">Open</span>
-        </summary>
-        <div class="panel">
-          <p>The floor work — logs compounding into domain pages, Stacked on shift, InventoryVision, the voice path, Bay Door, the management probe — led me to a working hypothesis.</p>
+        </button>
+        <div class="panel" id="missing-piece-panel" hidden>
+<p>The floor work — logs compounding into domain pages, Stacked on shift, InventoryVision, the voice path, Bay Door, the management probe — led me to a working hypothesis.</p>
           <p>Wherever matter moves at scale, AI capability is rarely the bottleneck. Someone still has to judge which problem to point it at, know what survives contact with a real floor, and trigger the thing so it ships. That complementary half is what I’ve been practising without a clean job title for it.</p>
           <p>The role shows up under different names in every sector. Keyword search fails for that reason. The portfolio is the evidence trail: composition on the floor, thin wrappers at brittle steps, site-shaped vision, a personal tool that only becomes more if usage is real.</p>
           <p class="pull">I’m looking for the seat where that hypothesis is the job.</p>
         </div>
-      </details>
+      </div>
 
-      <details class="item" id="on-the-floor">
-        <summary>
-          <div class="meta">
+            <div class="item" id="on-the-floor">
+        <button type="button" class="item-head" aria-expanded="false" aria-controls="on-the-floor-panel">
+<div class="meta">
             <span class="code">FLOOR</span>
             <span class="roman">2026</span>
             <div class="gauge built"></div>
@@ -331,9 +338,9 @@
           <h3>On the floor</h3>
           <p class="teaser">Picker to field logs to Stacked on shift; Voice, Bay Door, where the work points next.</p>
           <span class="hint">Open</span>
-        </summary>
-        <div class="panel">
-          <p>I started as a picker in a beverage 3PL warehouse. After shifts I logged what had surprised me or made me wonder why. Those notes became a system: field logs in, domain pages out. Later observations started landing on earlier ones. That compounding is how I learned the floor: picking, voice kit, waves, exceptions, how work actually moves.</p>
+        </button>
+        <div class="panel" id="on-the-floor-panel" hidden>
+<p>I started as a picker in a beverage 3PL warehouse. After shifts I logged what had surprised me or made me wonder why. Those notes became a system: field logs in, domain pages out. Later observations started landing on earlier ones. That compounding is how I learned the floor: picking, voice kit, waves, exceptions, how work actually moves.</p>
           <p>From those logs came <strong>Stacked</strong>: a phone app I use on shift to log pallets, watch items-per-hour live, and keep rotating schedules straight. Local-first. Optional anonymous sync.</p>
           <p>Upstream is a clean personal record of what the shift produced while I was still in it. Downstream, if usage grows, those logs become material for harder picking questions: sequences that serve aggregate throughput, with the worker as an input rather than the whole target. That thread stays open until the data is real.</p>
           <h4>Voice</h4>
@@ -348,11 +355,11 @@
             <a href="../stacked/index.html">Stacked about</a>
           </div>
         </div>
-      </details>
+      </div>
 
-      <details class="item" id="inventoryvision">
-        <summary>
-          <div class="meta">
+            <div class="item" id="inventoryvision">
+        <button type="button" class="item-head" aria-expanded="false" aria-controls="inventoryvision-panel">
+<div class="meta">
             <span class="code">INVENTORYVISION</span>
             <span class="roman">2026</span>
             <div class="gauge built"></div>
@@ -361,9 +368,9 @@
           <h3>InventoryVision</h3>
           <p class="teaser">Tote-counter proof; physical vs record drift; site-shaped customisation.</p>
           <span class="hint">Open</span>
-        </summary>
-        <div class="panel">
-          <p>One of the jobs on a fulfilment floor is counting nested Euro totes by hand. Thin lips stacked on thin lips. Easy to miss one. Tedious.</p>
+        </button>
+        <div class="panel" id="inventoryvision-panel" hidden>
+<p>One of the jobs on a fulfilment floor is counting nested Euro totes by hand. Thin lips stacked on thin lips. Easy to miss one. Tedious.</p>
           <p>I built a small counter that looks at a stack and returns a number. The breakthrough wasn’t more physical hints in the prompt. It was making the model name each lip, top to bottom, before it was allowed a final count. That got to 69% exact and 100% within one tote on the test set.</p>
           <p>What it pointed at is bigger than a counter. Physical storage and the system of record drift apart. Closing that gap is the real job.</p>
           <p>Vision is how the floor gets seen — physical state only. Identity of a unit stays a separate, exact step. Every warehouse is its own environment: layout, lighting, labels, how stock moves, what the record already trusts. The interesting work is pairing that site-specific shape with AI.</p>
@@ -373,11 +380,11 @@
             <a href="https://inventoryvisionhub.co.uk" target="_blank" rel="noopener">InventoryVision</a>
           </div>
         </div>
-      </details>
+      </div>
 
-      <details class="item" id="autopilot">
-        <summary>
-          <div class="meta">
+            <div class="item" id="autopilot">
+        <button type="button" class="item-head" aria-expanded="false" aria-controls="autopilot-panel">
+<div class="meta">
             <span class="code">AUTOPILOT</span>
             <span class="roman">2026</span>
             <div class="gauge mind"></div>
@@ -386,18 +393,18 @@
           <h3>Autopilot</h3>
           <p class="teaser">Execution layer I designed: Board, cascade, /log — sessions inherit truth.</p>
           <span class="hint">Open</span>
-        </summary>
-        <div class="panel">
-          <p>I built Autopilot as my life OS — an execution layer on top of agents and skills I wrote myself. The problem it solves is simple: every new session starts blind, and anything I only held in my head rot. Creative work stays mine. Everything else I wanted a system that could hold context, move what is movable, and bring me only the calls that need judgment.</p>
+        </button>
+        <div class="panel" id="autopilot-panel" hidden>
+<p>I built Autopilot as my life OS — an execution layer on top of agents and skills I wrote myself. The problem it solves is simple: every new session starts blind, and anything I only held in my head rot. Creative work stays mine. Everything else I wanted a system that could hold context, move what is movable, and bring me only the calls that need judgment.</p>
           <p>Board is the single face for anything that needs me. Priorities and Window hold what matters and what time is actually free. On demand, Autopilot sweeps the rails, reconciles trackers when they drift from reality, advances research and drafts freely, and stalls on irreversible sends and judgment. Answers cascade into every file they touch. Sessions that never invoke Autopilot still write board-worthy state before they end — so the next wake inherits truth.</p>
           <p>Under that sits logging. Every project gets a running log. I run <code>/log</code> across sessions, hosts, and domains so decisions, opens, and residue compound when the chat closes. OpenAI’s agent sessions and Anthropic’s Claude Code transcripts treat that persistence as built-in; seeing that made the instinct feel spot-on. Continuity is the product.</p>
           <p>Xenrich and Insight Radio sit beside this as skills in the same Systems layer. Autopilot is the OS that keeps the runway clear around them.</p>
         </div>
-      </details>
+      </div>
 
-      <details class="item" id="closing-the-loop">
-        <summary>
-          <div class="meta">
+            <div class="item" id="closing-the-loop">
+        <button type="button" class="item-head" aria-expanded="false" aria-controls="closing-the-loop-panel">
+<div class="meta">
             <span class="code">LOOP</span>
             <span class="roman">2026</span>
             <div class="gauge mind"></div>
@@ -406,17 +413,17 @@
           <h3>Closing the loop</h3>
           <p class="teaser">Cell, express, clear. Xenrich as the receipt on bookmarks and the feed.</p>
           <span class="hint">Open</span>
-        </summary>
-        <div class="panel">
-          <p>A cell carries the whole book and only reads the chapter that matches where it is and what signals are arriving — position decides expression; the rest stays quiet. That picture got into how I learn: when something lands, I decide what it is for inside the threads I am already in, put it there with the trail attached, and clear it so the next signal can land clean.</p>
+        </button>
+        <div class="panel" id="closing-the-loop-panel" hidden>
+<p>A cell carries the whole book and only reads the chapter that matches where it is and what signals are arriving — position decides expression; the rest stays quiet. That picture got into how I learn: when something lands, I decide what it is for inside the threads I am already in, put it there with the trail attached, and clear it so the next signal can land clean.</p>
           <p>When something on X hits hard enough to save, it is already a vote. I sort it into a world as I save it. Later I answer what made me save <em>that</em> one, connect it to the threads I am already inside, and file it with the link still attached — then the bookmark goes. The queue is only what is still open. The trail lives in a ledger. Xenrich is the skill that runs that loop on my own bookmarks.</p>
           <p>I treat the feed the same way. Abundant information creates a poverty of attention; algorithms hold that scarcity well. My working hypothesis is that the useful move is directing what gets expressed — small, contextual next steps when something sparks — so consumption compounds into action and agency.</p>
         </div>
-      </details>
+      </div>
 
-      <details class="item" id="stupid-ideas">
-        <summary>
-          <div class="meta">
+            <div class="item" id="stupid-ideas">
+        <button type="button" class="item-head" aria-expanded="false" aria-controls="stupid-ideas-panel">
+<div class="meta">
             <span class="code">LAB</span>
             <span class="roman">2026</span>
             <div class="gauge public"></div>
@@ -425,9 +432,9 @@
           <h3>Stupid ideas</h3>
           <p class="teaser">Shankha, Net Saver, dictation exhaust, Clean and Seal — chased far enough to leave a trail.</p>
           <span class="hint">Open</span>
-        </summary>
-        <div class="panel">
-          <p>Some ideas start as a sensation or a narrow fear and refuse to leave. These are the ones chased far enough to leave a trail.</p>
+        </button>
+        <div class="panel" id="stupid-ideas-panel" hidden>
+<p>Some ideas start as a sensation or a narrow fear and refuse to leave. These are the ones chased far enough to leave a trail.</p>
           <h4>Shankha Alarm</h4>
           <p>The industrial beep felt wrong for what a morning should open with. The idea became a real conch shell sounded by air — a recording would miss the point. Work went simulation-first: BEM acoustics, blowing threshold, quiet pump and accumulator. Presentation stayed sacred: open on a peeta by default.</p>
           <h4>Net Saver / EntangleSafe</h4>
@@ -437,7 +444,7 @@
           <h4>Clean and Seal</h4>
           <p>Small scratches get ignored because clean and cover are two separate fiddles. A pocket dual stick puts tear-wipe and a liquid-plaster dose in one pass, as a carry-first single-use multipack. The bet is readiness and a forced clean-then-seal sequence — chemistry that already works, carried so it gets used.</p>
         </div>
-      </details>
+      </div>
 
       <a class="item item-link" id="systems-brief" href="https://k-saicharan.github.io/google-order-case-study" target="_blank" rel="noopener">
         <div class="meta">
@@ -464,26 +471,44 @@
 
   </div>
   <script>
-    // One open at a time keeps the Benji skim clean; deep-link via hash still works.
-    const items = [...document.querySelectorAll('details.item')];
-    items.forEach(d => {
-      d.addEventListener('toggle', () => {
-        if (d.open) {
-          items.forEach(o => { if (o !== d) o.open = false; });
-          history.replaceState(null, '', '#' + d.id);
-        } else if (location.hash === '#' + d.id) {
-          history.replaceState(null, '', location.pathname);
-        }
+    const items = [...document.querySelectorAll('.item')].filter(el => el.querySelector('.item-head'));
+    function closeAll(except) {
+      items.forEach(el => {
+        if (el === except) return;
+        el.classList.remove('is-open');
+        const btn = el.querySelector('.item-head');
+        const panel = el.querySelector('.panel');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+        if (panel) panel.hidden = true;
+      });
+    }
+    function openItem(el) {
+      closeAll(el);
+      el.classList.add('is-open');
+      el.querySelector('.item-head').setAttribute('aria-expanded', 'true');
+      el.querySelector('.panel').hidden = false;
+      history.replaceState(null, '', '#' + el.id);
+    }
+    function closeItem(el) {
+      el.classList.remove('is-open');
+      el.querySelector('.item-head').setAttribute('aria-expanded', 'false');
+      el.querySelector('.panel').hidden = true;
+      if (location.hash === '#' + el.id) history.replaceState(null, '', location.pathname);
+    }
+    items.forEach(el => {
+      el.querySelector('.item-head').addEventListener('click', (e) => {
+        e.preventDefault();
+        if (el.classList.contains('is-open')) closeItem(el);
+        else openItem(el);
       });
     });
     const hash = location.hash.slice(1);
     if (hash) {
       const el = document.getElementById(hash);
-      if (el && el.tagName === 'DETAILS') {
-        el.open = true;
+      if (el && el.classList.contains('item') && el.querySelector('.item-head')) {
+        openItem(el);
         el.scrollIntoView({ block: 'start' });
       }
     }
   </script>
 </body>
-</html>
