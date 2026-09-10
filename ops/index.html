@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Systems Thinking from the Floor</title>
+  <title>Sai Charan — how my mind works</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,380;1,9..144,380&family=Newsreader:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -18,7 +18,6 @@
     }
 
     * { box-sizing: border-box; }
-
     html { scrollbar-color: var(--accent) var(--rule); scrollbar-width: thin; }
 
     body {
@@ -34,28 +33,25 @@
     .page {
       max-width: 720px;
       margin: 0 auto;
-      padding: 88px 40px 120px;
+      padding: 64px 40px 120px;
     }
 
-    /* Calibration strip masthead */
-    .masthead {
-      margin-bottom: 60px;
-      position: relative;
-    }
+    .masthead { margin-bottom: 40px; position: relative; }
 
     .reading-no {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 2.8px;
+      font-size: 12px;
+      letter-spacing: 2.4px;
       text-transform: uppercase;
       color: var(--ink);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      font-weight: 500;
     }
 
     .calibration-strip {
       height: 1px;
       background: var(--rule);
-      margin: 14px 0 36px;
+      margin: 10px 0 22px;
       position: relative;
     }
     .calibration-strip::before {
@@ -70,33 +66,28 @@
 
     .masthead h1 {
       font-family: 'Fraunces', serif;
-      font-size: clamp(2.05rem, 5vw, 2.95rem);
+      font-size: clamp(1.7rem, 4vw, 2.35rem);
       font-weight: 380;
       letter-spacing: -0.018em;
-      line-height: 1.02;
+      line-height: 1.08;
+      margin: 0 0 14px;
+      max-width: 22ch;
+    }
+
+    .masthead .who {
+      font-size: 1.05rem;
+      color: var(--text);
+      max-width: 52ch;
       margin: 0 0 14px;
     }
 
     .masthead .lead {
       font-size: 1.02rem;
       color: var(--muted);
-      max-width: 56ch;
-      margin: 0;
-      font-style: normal;
-    }
-
-    .method {
-      font-family: 'Newsreader', Georgia, serif;
-      font-style: italic;
-      font-size: 1.02rem;
-      color: var(--ink);
       max-width: 54ch;
-      margin: 22px 0 0;
-      padding-left: 15px;
-      border-left: 2px solid var(--accent);
+      margin: 0;
     }
 
-    /* Ruler rail */
     .ruler {
       position: fixed;
       left: calc(50% - 380px);
@@ -116,89 +107,35 @@
     }
     @media (max-width: 920px) { .ruler { display: none; } }
 
-    .section-label {
+    .explore-label {
       font-family: 'Instrument Sans', system-ui, sans-serif;
       font-size: 10px;
       font-weight: 600;
       letter-spacing: 2.1px;
       text-transform: uppercase;
       color: var(--accent);
-      margin: 0 0 22px;
+      margin: 0 0 8px;
     }
 
-    /* The Move — threaded vertical readings */
-    .move {
-      position: relative;
-      margin: 60px 0 78px;
-      padding-left: 42px;
-      border-left: 1px solid var(--rule);
-    }
-    .move::before {
-      content: '';
-      position: absolute;
-      left: 11px;
-      top: 9px;
-      bottom: 9px;
-      width: 1px;
-      background: linear-gradient(var(--rule), transparent);
-    }
-
-    .move-item {
-      position: relative;
-      padding-bottom: 28px;
-    }
-    .move-item:last-child { padding-bottom: 0; }
-
-    .move-item::before {
-      content: attr(data-n);
-      position: absolute;
-      left: -42px;
-      top: -1px;
-      font-family: 'Fraunces', serif;
-      font-size: 1.35rem;
-      font-weight: 300;
-      color: var(--tick);
-      letter-spacing: -0.02em;
-    }
-
-    .move-item dt {
-      font-family: 'Instrument Sans', system-ui, sans-serif;
-      font-size: 11.5px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--text);
-      margin: 0 0 5px;
-    }
-
-    .move-item dd {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.97rem;
-      line-height: 1.65;
-      max-width: 54ch;
-    }
-
-    /* Evidence readings */
-    .evidence-label {
-      font-family: 'Instrument Sans', system-ui, sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 2.1px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 0 0 18px;
-    }
-
-    .reading {
-      padding: 32px 0;
+    /* Benji-shaped list on ops chrome */
+    .explore {
+      margin-top: 8px;
       border-top: 1px solid var(--rule);
     }
-    .reading:last-child {
+
+    .explore:hover .row { opacity: 0.34; }
+    .explore:hover .row:hover { opacity: 1; }
+
+    .row {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      padding: 22px 0 24px;
       border-bottom: 1px solid var(--rule);
+      transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .reading .meta {
+    .row .meta {
       display: flex;
       align-items: center;
       gap: 16px;
@@ -206,17 +143,11 @@
       font-size: 9.5px;
       letter-spacing: 1.3px;
       color: var(--muted);
-      margin-bottom: 13px;
+      margin-bottom: 10px;
     }
 
-    .reading .code {
-      color: var(--ink);
-      font-weight: 500;
-    }
-
-    .reading .roman {
-      color: var(--accent);
-    }
+    .row .code { color: var(--ink); font-weight: 500; }
+    .row .roman { color: var(--accent); }
 
     .gauge {
       flex: 1;
@@ -228,61 +159,44 @@
     .gauge::after {
       content: '';
       position: absolute;
-      left: 0;
-      top: 0;
+      left: 0; top: 0;
       height: 1px;
       background: var(--accent);
       width: 100%;
-      transition: width 420ms ease;
     }
-    .gauge.archived::after { background: var(--muted); width: 100%; }
-    .gauge.public::after { width: 100%; }
-    .gauge.built::after { width: 100%; background: var(--ink); }
+    .gauge.built::after { background: var(--ink); }
+    .gauge.public::after { background: var(--accent); }
+    .gauge.mind::after { background: var(--accent); width: 72%; }
 
-    .reading h3 {
+    .row h3 {
       font-family: 'Fraunces', serif;
-      font-size: 1.13rem;
+      font-size: 1.2rem;
       font-weight: 420;
       letter-spacing: -0.006em;
-      margin: 0 0 9px;
+      margin: 0 0 7px;
       line-height: 1.26;
-    }
-
-    .reading p {
-      margin: 0 0 15px;
       color: var(--text);
-      font-size: 15.4px;
-      line-height: 1.7;
-      max-width: 61ch;
     }
 
-    .reading .pull {
-      font-style: italic;
-      color: var(--ink);
-      font-size: 15.8px;
-      padding-left: 15px;
-      border-left: 2px solid var(--tick);
-      max-width: 54ch;
+    .row p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15.2px;
+      line-height: 1.65;
+      max-width: 58ch;
     }
 
-    .reading .link {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-    .reading .link a {
+    .row .go {
       font-family: 'Instrument Sans', system-ui, sans-serif;
       font-size: 12px;
       font-weight: 500;
       color: var(--accent);
-      text-decoration: none;
+      margin-top: 12px;
+      display: inline-flex;
       background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
       transition: background-size 380ms cubic-bezier(0.22,1,0.36,1);
-      display: inline-flex;
-      align-items: center;
-      gap: 2px;
     }
-    .reading .link a:hover {
+    .row:hover .go {
       background-size: 100% 1px;
       color: var(--text);
     }
@@ -298,12 +212,23 @@
       color: var(--muted);
       text-align: center;
     }
+    .footer-note .links {
+      text-transform: none;
+      letter-spacing: 0;
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+    .footer-note a {
+      color: var(--accent);
+      text-decoration: none;
+    }
 
     @media (max-width: 780px) {
       .page { padding: 64px 24px 100px; max-width: 100%; }
-      .move { padding-left: 28px; }
-      .move-item::before { left: -28px; font-size: 1.1rem; }
-      .reading .meta { flex-wrap: wrap; gap: 8px 14px; }
+      .row .meta { flex-wrap: wrap; gap: 8px 14px; }
       .gauge { max-width: 82px; }
     }
   </style>
@@ -313,115 +238,107 @@
   <div class="page">
 
     <div class="masthead">
-      <div class="reading-no">Saicharan Kuna · Systems Ledger · 2026</div>
+      <div class="reading-no">Sai Charan · Belfast · 2026</div>
       <div class="calibration-strip" aria-hidden="true"></div>
-      <h1>Systems thinking from the floor.</h1>
-      <p class="lead">I turn operational friction into tools and structure. Built while picking on a live UK 3PL beverage contract, not studied from outside. Continuous improvement is the language of the room; the work is adoption: seeing the gap, building a thin fix, staying honest about what is not deployed.</p>
-      <p class="method">Five pieces below are one portfolio. Not a manifesto. Each card is a real artifact.</p>
+      <h1>How my mind works when left somewhere.</h1>
+      <p class="who">Looking at the flow, I figure out the rain and the river — what feeds it, and the channel that carries it.</p>
     </div>
 
-    <div>
-      <div class="section-label">The Move</div>
-      <dl class="move">
-        <div class="move-item" data-n="01">
-          <dt>Observe the real</dt>
-          <dd>Domain notes and shift logs while on the floor. The gap between how the system is supposed to work and how it actually does.</dd>
-        </div>
-        <div class="move-item" data-n="02">
-          <dt>Trace the mechanism</dt>
-          <dd>Dead time, exceptions, handoffs, ownership. Mechanism, not complaint.</dd>
-        </div>
-        <div class="move-item" data-n="03">
-          <dt>Build the legible</dt>
-          <dd>An app, a middleware prototype, a vision tool, a case study. Something someone else can open.</dd>
-        </div>
-        <div class="move-item" data-n="04">
-          <dt>Stay honest</dt>
-          <dd>What ran on my phone vs what was only proposed. No client-named public pages. No hours-saved fiction.</dd>
-        </div>
-      </dl>
-    </div>
+    <div class="explore-label">Explore</div>
+    <div class="explore">
 
-    <div>
-      <div class="evidence-label">Evidence (fused)</div>
-
-      <article class="reading">
+      <a class="row" href="#missing-piece">
         <div class="meta">
-          <span class="code">STACKED · ANDROID</span>
-          <span class="roman">2026 · 06–08</span>
+          <span class="code">MISSING PIECE</span>
+          <span class="roman">2026</span>
+          <div class="gauge mind"></div>
+          <span>HINGE</span>
+        </div>
+        <h3>The missing piece</h3>
+        <p>Where matter moves, AI capability is rarely the bottleneck. The scarce half is judgment, trigger, and what survives the floor.</p>
+        <span class="go">Open →</span>
+      </a>
+
+      <a class="row" href="#on-the-floor">
+        <div class="meta">
+          <span class="code">FLOOR</span>
+          <span class="roman">2026</span>
           <div class="gauge built"></div>
-          <span>BUILT · PILOT (SINGLE USER)</span>
+          <span>LINEAGE</span>
         </div>
-        <h3>Stacked: one-handed shift logging with a worker threat model</h3>
-        <p>Born on the floor: paper shift logs lose where a shift actually goes, and any tool that logs output can become a surveillance feed. Stacked is a Flutter Android app (package <code>com.saicharan.stacked</code>) for warehouse pickers: log pallets one-handed mid-shift, see pace and targets with explicit formulas, never one ambiguous number called "speed."</p>
-        <p>The design decision that matters for hiring: when a shift syncs, wall-clock start/end timestamps are stripped; only duration and aggregate counts leave the device. Free-text notes never leave the phone. Consent is explicit opt-in. Manager-side access is a summary view, not a replay of when you stood where. Built by the person who would be on the wrong end of getting that wrong.</p>
-        <p>Status: I use it on shift. Pilot target ~25–30 workers is not live yet. Source stays private while real exports sit in backups; the app and its privacy model are written up on their own page.</p>
-        <p class="pull">Two formulas, deliberately different denominators. They may never be merged into one vague "speed."</p>
-        <div class="link">
-          <a href="../stacked/" rel="noopener">About Stacked →</a>
-        </div>
-      </article>
+        <h3>On the floor</h3>
+        <p>Picker to field logs to Stacked on shift; Voice, Bay Door, where the work points next.</p>
+        <span class="go">Open →</span>
+      </a>
 
-      <article class="reading">
+      <a class="row" href="#inventoryvision">
         <div class="meta">
-          <span class="code">OPERATIONS · CORPUS</span>
-          <span class="roman">2026 · 04–</span>
+          <span class="code">INVENTORYVISION</span>
+          <span class="roman">2026</span>
           <div class="gauge built"></div>
-          <span>WORKING NOTES</span>
+          <span>VISION</span>
         </div>
-        <h3>Reading the stack from inside the contract</h3>
-        <p>Twenty-six domain notes (SAP EWM, voice, RealWear, exceptions, KPIs, robot arm readiness, and more) plus ten field logs from the same UK 3PL beverage site (client anonymised after HR asked a named public brief down; that was fair). This is not decoration for a CV. It is how I hold mechanism across shifts: what the system claims, what the aisle does, what a fix would have to respect.</p>
-        <p class="pull">The metric measures what gets confirmed; it says nothing about how long it took.</p>
-      </article>
+        <h3>InventoryVision</h3>
+        <p>Tote-counter proof; physical vs record drift; site-shaped customisation.</p>
+        <span class="go">Open →</span>
+      </a>
 
-      <article class="reading">
+      <a class="row" href="#autopilot">
         <div class="meta">
-          <span class="code">SAP EWM · VOICE MIDDLEWARE</span>
-          <span class="roman">2026 · 05</span>
-          <div class="gauge proposed"></div>
-          <span>PROTOTYPE · NOT DEPLOYED</span>
+          <span class="code">AUTOPILOT</span>
+          <span class="roman">2026</span>
+          <div class="gauge mind"></div>
+          <span>LIFE OS</span>
         </div>
-        <h3>A correction layer between headset and warehouse system</h3>
-        <p>Voice-directed picking fails on accented speech in a high-noise bay. The prototype is a per-worker word map between headset middleware and SAP EWM. SAP is not touched. Industry pattern that survives is the same shape: thin intelligence over load-bearing legacy, not rip-and-replace. I proposed it to continuous improvement; some cards engaged, some did not. That non-adoption is part of the record, not a failure to hide.</p>
-        <div class="link">
-          <a href="https://github.com/k-saicharan/sap-voice-middleware" target="_blank" rel="noopener">Repository →</a>
-        </div>
-      </article>
+        <h3>Autopilot</h3>
+        <p>Execution layer I designed: Board, cascade, /log — sessions inherit truth.</p>
+        <span class="go">Open →</span>
+      </a>
 
-      <article class="reading">
+      <a class="row" href="#closing-the-loop">
         <div class="meta">
-          <span class="code">GOOGLE · CASE STUDY</span>
-          <span class="roman">2026 · 06–07</span>
+          <span class="code">LOOP</span>
+          <span class="roman">2026</span>
+          <div class="gauge mind"></div>
+          <span>ATTENTION</span>
+        </div>
+        <h3>Closing the loop</h3>
+        <p>Cell, express, clear. Xenrich as the receipt on bookmarks and the feed.</p>
+        <span class="go">Open →</span>
+      </a>
+
+      <a class="row" href="#stupid-ideas">
+        <div class="meta">
+          <span class="code">LAB</span>
+          <span class="roman">2026</span>
           <div class="gauge public"></div>
-          <span>PUBLIC · CLOSED</span>
+          <span>NOTICING</span>
         </div>
-        <h3>Escalation as architecture</h3>
-        <p>A multi-week consumer order that crossed six operational systems. Each layer examined from the inside: what it could see, what it structurally could not, and where handoffs dropped. Locally green systems, aggregate failure, nobody's KPI breached. Same shape as warehouse "everything is green" friction, different building. Fulfilment closed when the device landed; residual finance noise is separate from the systems lesson.</p>
-        <div class="link">
-          <a href="https://k-saicharan.github.io/google-order-case-study" target="_blank" rel="noopener">Public case study →</a>
-        </div>
-      </article>
+        <h3>Stupid ideas</h3>
+        <p>Shankha, Net Saver, dictation exhaust, Clean and Seal — chased far enough to leave a trail.</p>
+        <span class="go">Open →</span>
+      </a>
 
-      <article class="reading">
+      <a class="row" href="https://k-saicharan.github.io/google-order-case-study" target="_blank" rel="noopener">
         <div class="meta">
-          <span class="code">VLM · TOTE-COUNTER</span>
-          <span class="roman">2026 · 02</span>
-          <div class="gauge built"></div>
-          <span>BUILT · OPEN SOURCE</span>
+          <span class="code">GOOGLE</span>
+          <span class="roman">2026</span>
+          <div class="gauge public"></div>
+          <span>BRIEF</span>
         </div>
-        <h3>Counting tote stacks with a vision model</h3>
-        <p>A recurring miscount, turned into a working tool. Vision-language model with a chain-of-thought prompt that counts edges in sequence rather than guessing the whole frame. FastAPI backend, phone in the aisle. Accurate to within one unit on the test set. Cheap proof that measurement that used to need a clipboard can start from a phone.</p>
-        <div class="link">
-          <a href="https://github.com/k-saicharan/tote-counter" target="_blank" rel="noopener">Repository →</a>
-        </div>
-      </article>
+        <h3>Systems brief</h3>
+        <p>Pixel order stuck across six systems — living brief, role hats, structural gap.</p>
+        <span class="go">Open →</span>
+      </a>
 
     </div>
 
     <div class="footer-note">
-      Friction observed on the floor. Structure built from the data.
-      <div style="text-transform:none;letter-spacing:0;font-family:'Newsreader',Georgia,serif;font-size:13.5px;color:var(--muted);margin-top:16px;line-height:1.6;">
-        Saicharan Kuna &nbsp;·&nbsp; <a href="../film/" style="color:var(--accent);text-decoration:none;">what the image does →</a> &nbsp;·&nbsp; <a href="mailto:saicharan9977@gmail.com" style="color:var(--accent);text-decoration:none;">saicharan9977@gmail.com</a> &nbsp;·&nbsp; <a href="https://github.com/k-saicharan" style="color:var(--accent);text-decoration:none;">github.com/k-saicharan</a>
+      Sai Charan
+      <div class="links">
+        <a href="mailto:saicharan9977@gmail.com">saicharan9977@gmail.com</a>
+        &nbsp;·&nbsp;
+        <a href="https://github.com/k-saicharan">github.com/k-saicharan</a>
       </div>
     </div>
 
