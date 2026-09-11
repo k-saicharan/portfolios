@@ -1,12 +1,26 @@
-# Portfolios Project
+# Portfolios
 
-This directory contains two independent portfolio pages representing different aspects of Saicharan Kuna's work:
+Canonical source: this directory. Do not start a new folder. Binding spec: vault `Systems/PORTFOLIO CANON.md`.
 
-1. [Film Portfolio](file:///Users/saicharan/Desktop/Grok%20try%20/portfolios/film/index.html) ("What the Image Does"): An observational codex on film thinking, camera vision, and spatial mechanics.
-2. [Ops Portfolio — Ledger](file:///Users/saicharan/Desktop/Grok%20try%20/portfolios/ops/index.html) ("Systems Thinking from the Floor"): A proof-book ledger detailing operational analysis and systems architecture from warehouse and organizational work. Light editorial treatment.
-3. [Ops Portfolio — Codex](file:///Users/saicharan/Desktop/Grok%20try%20/portfolios/ops-codex/index.html): The same ops content in the film page's dark-codex design language, for a quick side-by-side of the two treatments.
+## Live
 
-## Design Philosophy
+| Page | URL |
+|---|---|
+| Jobs: How my mind works when left somewhere | https://portfolios-chi-one.vercel.app/ |
+| Same page on GitHub Pages (alias; `/ops/` too) | https://k-saicharan.github.io/portfolios/ |
+| Film: What the Image Does | https://k-saicharan.github.io/portfolios/film/ |
 
-- **Film**: Visualized as an optic codex inspired by Leonardo Da Vinci's notebooks. Features delicate pure-CSS ray-tracing diagrams, a Fibonacci golden spiral composition study, and a focus-pull transition between entries.
-- **Ops**: Visualized as a clean, high-contrast engineering ledger inspired by modern research blogs. Prioritizes extreme legibility, whitespace, and precise lines.
+Jobs page source is `index.html` (root) and `ops/index.html` (path-relative Stacked link differs by one `../`). Film is `film/index.html` and is **not** on Vercel.
+
+Public name on these pages is **Sai Charan**. Surname only on CVs and forms.
+
+## Do not publish
+
+- `unseen/` parked
+- `ops-codex/` retired
+- `backups/` archive
+
+## Local
+
+`/Users/saicharan/Desktop/Grok try /portfolios/`
+GitHub: `k-saicharan/portfolios`
