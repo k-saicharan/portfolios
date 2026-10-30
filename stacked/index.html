@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stacked — one-handed shift logging</title>
-  <meta name="description" content="Stacked: a Flutter Android app for warehouse pickers to log shift output one-handed, built with an explicit worker threat model.">
+  <title>Stacked: one-handed shift logging</title>
+  <meta name="description" content="Stacked: an Android app for warehouse pickers to log shift output one-handed. In use on shift; not rolled out to a site.">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,380;1,9..144,380&family=Newsreader:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -248,59 +248,44 @@
     <div class="masthead">
       <img class="mark" src="./assets/icon.png" alt="Stacked app icon" width="56" height="56">
       <div>
-        <div class="reading-no">Saicharan Kuna · Systems Ledger · Stacked</div>
-        <h1>One-handed shift logging, built from the wrong end of the phone.</h1>
-        <div class="status-row"><span class="dot"></span>Built · self-use on shift · pilot recruiting</div>
-        <p class="lead">A Flutter Android app for warehouse pickers to log pallet output mid-shift without pulling out a notebook — designed by someone who'd be the one wearing the badge it tracks.</p>
+        <div class="reading-no">Saicharan Kuna · Stacked</div>
+        <h1>One-handed shift logging.</h1>
+        <div class="status-row"><span class="dot"></span>Android app · in use on shift</div>
+        <p class="lead">Tap the pallet count with one hand. I use it on shift.</p>
       </div>
     </div>
 
     <div class="section-label">Why it exists</div>
-    <h2 class="head">Paper logs lose the shift. A phone can lose more than that.</h2>
-    <p>Every warehouse shift I've worked has the same gap: what you actually did and what ends up written down are two different records, because nobody stops picking to write a clean log. The paper version gets scribbled, guessed at, or skipped. The obvious digital fix — an app that logs your output automatically — has an obvious failure mode: it can just as easily become a surveillance feed. A tool built to help you prove your pace can also become the tool that times your toilet breaks.</p>
-    <p>Stacked exists to close the first gap without opening the second. It's a shift log I actually use — built for the version of me who is on shift, not the version who might one day review the data.</p>
-    <p class="pull">Built by the person who would be on the wrong end of getting the privacy model wrong.</p>
+    <h2 class="head">A shift log you can keep while picking.</h2>
+    <p>Stacked is the log I actually use: one tap per pallet, on the phone that is already in the other hand.</p>
 
     <div class="section-label">How it works</div>
     <ol class="how">
-      <li>Tap the item count as you finish each pallet — one hand, no typing, no menus mid-shift.</li>
+      <li>Tap the item count as you finish each pallet. One hand, no typing, no menus mid-shift.</li>
       <li>The app timestamps and logs it instantly, and auto-detects Morning / Evening / Night from the clock, including midnight crossings.</li>
-      <li>Pace and daily target are shown as two separate, explicit formulas — never one ambiguous number called "speed."</li>
-      <li>Drop a quick timestamped note for anything that slowed you down — dock delay, forklift queue, system down — so the log explains itself later.</li>
+      <li>Pace and daily target stay two separate numbers. They are not collapsed into one figure called "speed."</li>
+      <li>Drop a quick timestamped note for anything that slowed you down (dock delay, forklift queue, system down) so the log explains itself later.</li>
       <li>Set your rotation once and the app forecasts your upcoming shift pattern automatically.</li>
     </ol>
 
-    <div class="section-label">Two numbers, on purpose</div>
-    <p>The app never collapses output into one vague "speed." Pace and daily target use deliberately different denominators, and the UI always shows the formula, not just the result:</p>
-    <div class="facts">
-      <div class="fact">
-        <dt>Pace</dt>
-        <dd>items ÷ (first→last pallet span + 30m pad)</dd>
-      </div>
-      <div class="fact">
-        <dt>Daily target</dt>
-        <dd>(8h − breaks) × (1 − dead-time%) × rate/hr</dd>
-      </div>
-    </div>
-    <p class="pull">They may never be merged into one number. A single "speed" metric is exactly the kind of ambiguity that turns a helpful log into a weapon.</p>
+    <div class="section-label">Two numbers</div>
+    <p>Pace is how fast the pallets actually moved. Daily target is what the shift is supposed to clear after breaks. They use different inputs on purpose, so the app cannot quietly turn them into one "speed" number.</p>
 
-    <div class="section-label">Data, on your terms</div>
+    <div class="section-label">Where the data sits</div>
     <ul class="privacy-list">
-      <li><b>No accounts</b> Open the app and use it — no email, username, or login.</li>
-      <li><b>Offline by default</b> Logs, stats, and notes are stored locally on your device.</li>
-      <li><b>Opt-in only</b> Sync is off until you explicitly turn it on, every time.</li>
-      <li><b>What syncs</b> Only aggregate shift summaries — pallet count, item count, duration. Nothing else leaves the device.</li>
-      <li><b>What never syncs</b> Your name, your notes, and the wall-clock timestamps of when a shift started and ended — stripped specifically so synced data can't be matched against CCTV or badge logs.</li>
-      <li><b>Manager view</b> A summary dashboard, not a replay of where you stood and when.</li>
+      <li><b>No accounts</b> Open the app and use it. No email, username, or login.</li>
+      <li><b>On the phone</b> Logs, stats, and notes stay on the device.</li>
+      <li><b>Opt-in sync</b> Sync is off until you turn it on.</li>
+      <li><b>If it syncs</b> Only pallet count, item count, and duration. Notes and clock times stay local.</li>
     </ul>
 
     <div class="section-label">Status</div>
-    <p>I use it on shift. Built for a pilot of roughly 25–30 warehouse workers on a rotating schedule; that pilot is recruiting, not live yet. The build, the private pilot backend, and the real shift exports stay off this page — this is the app, not the operation behind it.</p>
+    <p>I use it on shift.</p>
 
     <div class="footer-note">
-      A tool for the version of me on shift, not the version reviewing the data.
+      Stacked
       <div class="footer-prose">
-        Saicharan Kuna &nbsp;·&nbsp; <a href="../ops/">systems thinking from the floor →</a> &nbsp;·&nbsp; <a href="mailto:saicharan9977@gmail.com">saicharan9977@gmail.com</a>
+        Saicharan Kuna &nbsp;·&nbsp; <a href="../ops/index.html">operations →</a> &nbsp;·&nbsp; <a href="mailto:saicharan9977@gmail.com">saicharan9977@gmail.com</a>
       </div>
     </div>
 

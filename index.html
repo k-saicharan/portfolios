@@ -399,6 +399,7 @@
           <p>Spoken quantity confirms are the brittle step under warehouse noise. I traced the failure to the speech layer sitting on the warehouse system, then built a thin middleware demo that corrects before the core stack sees the utterance — core left untouched. Later a language-pack path opened. Proposed and researched. Stacked is what I run; this path is direction until a site moment installs something.</p>
           <div class="links">
             <a href="https://github.com/k-saicharan/sap-voice-middleware" target="_blank" rel="noopener">Voice middleware on GitHub</a>
+            <a href="./proofs/number-fidelity/">Number fidelity eval</a>
           </div>
           <h4>Bay Door</h4>
           <p>Bay Door started as a “this should be simpler” instinct on the floor, then became a correction arc: the process looked clean on paper until attention rewrote what the aisle actually cost. It went into a management conversation as research. Same pattern as the rest of the floor work — deciding fact and decision place out of line.</p>
@@ -408,6 +409,8 @@
             <a href="https://github.com/k-saicharan/stacked-public" target="_blank" rel="noopener">Stacked on GitHub</a>
             <a href="https://k-saicharan.github.io/stacked-public/show.html" target="_blank" rel="noopener">Join Stacked</a>
             <a href="./stacked/index.html">Stacked about</a>
+            <a href="./proofs/two-schemes-one-island/">Two deposit schemes memo</a>
+            <a href="./proofs/ewm-gap-pack/">EWM gap pack template</a>
           </div>
         </div>
       </div>
@@ -434,6 +437,7 @@
           <div class="links">
             <a href="https://github.com/k-saicharan/tote-counter" target="_blank" rel="noopener">Tote-counter</a>
             <a href="https://inventoryvisionhub.co.uk" target="_blank" rel="noopener">InventoryVision</a>
+            <a href="./proofs/ghost-shelf/">Ghost shelf artifact</a>
           </div>
         </div>
       </div>
@@ -945,30 +949,30 @@ If a folder is empty, say so plainly and move on.
         </div>
       </div>
 
-      <div class="item" id="operations-proofs">
-        <button type="button" class="item-head" aria-expanded="false" aria-controls="operations-proofs-panel">
-<div class="meta">
-            <span class="code">PROOFS</span>
+      <div class="item" id="artifacts">
+        <button type="button" class="item-head" aria-expanded="false" aria-controls="artifacts-panel">
+          <div class="meta">
+            <span class="code">ARTIFACTS</span>
             <span class="roman">2026</span>
             <div class="gauge built"></div>
-            <span>CHECKS</span>
+            <span>RECEIPTS</span>
           </div>
-          <h3>Operations proofs</h3>
-          <p class="teaser">Four small, checkable pieces on real floor problems: shelf honesty, deposit packs, voice numbers, EWM gaps.</p>
+          <h3>Artifacts</h3>
+          <p class="teaser">Four checkable pieces on real floor and market problems: shelf honesty, deposit packs, voice numbers, EWM gaps.</p>
           <span class="hint">Open</span>
         </button>
-        <div class="panel" id="operations-proofs-panel" hidden>
-<p>Each proof starts with a question that could kill it. Sources are named. Unverified claims are flagged.</p>
+        <div class="panel" id="artifacts-panel" hidden>
+          <p>Concrete artifacts built against real operational questions. Each one names its sources and explicitly flags what remains unverified or open.</p>
           <h4>The ghost shelf</h4>
-          <p>A campaign idea: an ad that refuses to sell what is not on the shelf. Built for a creative brief; the insight is the 24–48 hour gap between sell-out and the shopping-ad feed.</p>
+          <p>A campaign concept: an ad that refuses to sell what is not on the shelf. Built for a creative brief; the insight is the 24-48 hour sync lag between store sell-out and the shopping ad feed.</p>
           <h4>Two deposit schemes, one island</h4>
-          <p>What changes for all-island drinks distribution when the UK deposit scheme starts on 1 Oct 2027. Memo shape: risk moves from deposit-vs-none to the wrong deposit.</p>
+          <p>What changes for all-island drinks distribution when the UK deposit scheme starts on 1 Oct 2027. Memo shape: risk moves from deposit-vs-none to the wrong deposit barcode.</p>
           <h4>Right meaning, wrong number</h4>
-          <p>A 50-item Hindi–English test set for spoken quantities and check digits, where one wrong digit means a wrong pick. Eval design only; no model results yet.</p>
+          <p>A 50-item Hindi-English test set for spoken quantities and check digits in noisy warehouse environments. Eval design only; no model results yet.</p>
           <h4>Floor flow to EWM gap pack</h4>
           <p>A template for turning observed picker flows into a SAP EWM fit-gap list before the first workshop. Needs five real flows before it counts as site proof.</p>
           <div class="links">
-            <a href="./proofs/">All four proofs</a>
+            <a href="./proofs/">All four artifacts</a>
             <a href="./proofs/ghost-shelf/">Ghost shelf</a>
             <a href="./proofs/two-schemes-one-island/">Two schemes</a>
             <a href="./proofs/number-fidelity/">Number fidelity</a>
@@ -1035,7 +1039,8 @@ If a folder is empty, say so plainly and move on.
     });
     const hash = location.hash.slice(1);
     if (hash) {
-      const el = document.getElementById(hash);
+      const targetId = (hash === 'operations-proofs') ? 'artifacts' : hash;
+      const el = document.getElementById(targetId) || document.getElementById(hash);
       if (el && el.classList.contains('item') && el.querySelector('.item-head')) {
         openItem(el);
         el.scrollIntoView({ block: 'start' });
