@@ -949,37 +949,53 @@ If a folder is empty, say so plainly and move on.
         </div>
       </div>
 
-      <div class="item" id="artifacts">
-        <button type="button" class="item-head" aria-expanded="false" aria-controls="artifacts-panel">
-          <div class="meta">
-            <span class="code">ARTIFACTS</span>
-            <span class="roman">2026</span>
-            <div class="gauge built"></div>
-            <span>RECEIPTS</span>
-          </div>
-          <h3>Artifacts</h3>
-          <p class="teaser">Four checkable pieces on real floor and market problems: shelf honesty, deposit packs, voice numbers, EWM gaps.</p>
-          <span class="hint">Open</span>
-        </button>
-        <div class="panel" id="artifacts-panel" hidden>
-          <p>Concrete artifacts built against real operational questions. Each one names its sources and explicitly flags what remains unverified or open.</p>
-          <h4>The ghost shelf</h4>
-          <p>A campaign concept: an ad that refuses to sell what is not on the shelf. Built for a creative brief; the insight is the 24-48 hour sync lag between store sell-out and the shopping ad feed.</p>
-          <h4>Two deposit schemes, one island</h4>
-          <p>What changes for all-island drinks distribution when the UK deposit scheme starts on 1 Oct 2027. Memo shape: risk moves from deposit-vs-none to the wrong deposit barcode.</p>
-          <h4>Right meaning, wrong number</h4>
-          <p>A 50-item Hindi-English test set for spoken quantities and check digits in noisy warehouse environments. Eval design only; no model results yet.</p>
-          <h4>Floor flow to EWM gap pack</h4>
-          <p>A template for turning observed picker flows into a SAP EWM fit-gap list before the first workshop. Needs five real flows before it counts as site proof.</p>
-          <div class="links">
-            <a href="../proofs/">All four artifacts</a>
-            <a href="../proofs/ghost-shelf/">Ghost shelf</a>
-            <a href="../proofs/two-schemes-one-island/">Two schemes</a>
-            <a href="../proofs/number-fidelity/">Number fidelity</a>
-            <a href="../proofs/ewm-gap-pack/">EWM gap pack</a>
-          </div>
+      <a class="item item-link" id="number-fidelity" href="../proofs/number-fidelity/">
+        <div class="meta">
+          <span class="code">SPEECH</span>
+          <span class="roman">2026</span>
+          <div class="gauge built"></div>
+          <span>EVAL</span>
         </div>
-      </div>
+        <h3>Right meaning, wrong number</h3>
+        <p class="teaser">In a voice confirm, the only words that matter are the numbers. No audio is recorded and no model has been scored yet.</p>
+        <span class="hint">Open artifact</span>
+      </a>
+
+      <a class="item item-link" id="two-schemes-one-island" href="../proofs/two-schemes-one-island/">
+        <div class="meta">
+          <span class="code">DEPOSIT</span>
+          <span class="roman">2026</span>
+          <div class="gauge built"></div>
+          <span>BRIEF</span>
+        </div>
+        <h3>Two deposit schemes, one island</h3>
+        <p class="teaser">From 1 October 2027, Northern Ireland packs carry their own deposit too. The risk changes from "deposit vs none" to "the wrong deposit".</p>
+        <span class="hint">Open artifact</span>
+      </a>
+
+      <a class="item item-link" id="ewm-gap-pack" href="../proofs/ewm-gap-pack/">
+        <div class="meta">
+          <span class="code">EWM</span>
+          <span class="roman">2026</span>
+          <div class="gauge built"></div>
+          <span>TEMPLATE</span>
+        </div>
+        <h3>Floor flow to EWM gap pack</h3>
+        <p class="teaser">When a warehouse moves from SAP WM to EWM, its data migrates but its handheld scanner logic does not. A real pack uses observed flows.</p>
+        <span class="hint">Open artifact</span>
+      </a>
+
+      <a class="item item-link" id="ghost-shelf" href="../proofs/ghost-shelf/">
+        <div class="meta">
+          <span class="code">SHELF</span>
+          <span class="roman">2026</span>
+          <div class="gauge built"></div>
+          <span>CONCEPT</span>
+        </div>
+        <h3>The ghost shelf</h3>
+        <p class="teaser">Shoppers click an ad, land on "out of stock", and leave annoyed. The idea: an ad that tells you the truth before you tap.</p>
+        <span class="hint">Open artifact</span>
+      </a>
 
       <a class="item item-link" id="systems-brief" href="https://k-saicharan.github.io/google-order-case-study" target="_blank" rel="noopener">
         <div class="meta">
@@ -1039,10 +1055,14 @@ If a folder is empty, say so plainly and move on.
     });
     const hash = location.hash.slice(1);
     if (hash) {
-      const targetId = (hash === 'operations-proofs') ? 'artifacts' : hash;
-      const el = document.getElementById(targetId) || document.getElementById(hash);
-      if (el && el.classList.contains('item') && el.querySelector('.item-head')) {
-        openItem(el);
+      const aliases = {
+        'operations-proofs': 'number-fidelity',
+        'artifacts': 'number-fidelity'
+      };
+      const targetId = aliases[hash] || hash;
+      const el = document.getElementById(targetId);
+      if (el && el.classList.contains('item')) {
+        if (el.querySelector('.item-head')) openItem(el);
         el.scrollIntoView({ block: 'start' });
       }
     }
