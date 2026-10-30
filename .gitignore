@@ -9,3 +9,5 @@ _antigravity/
 NEXT.md
 STATUS.md
 PORTFOLIO-FUSION.md
+.vercel
+.env*
