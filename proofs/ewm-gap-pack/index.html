@@ -1,0 +1,47 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Floor flow to EWM gap pack</title><link rel="stylesheet" href="../style.css"></head><body><main>
+<p class="kicker">Deployment · SAP WM to EWM</p>
+<h1>Floor flow to EWM gap pack</h1>
+<p class="lede">When a warehouse moves from SAP WM to EWM, its data migrates but its handheld scanner logic does not. This page is a way to arrive at the first fit-gap workshop with the floor already mapped.</p>
+
+<h2>Why the gap exists</h2>
+<ul>
+<li>Custom WM code doesn't migrate directly, and handheld (RF) screens need reconfiguring in EWM's RF framework (<a href="https://leverx.com/en-gb/blog/sap-wm-to-ewm-migration-uk">LeverX</a>, <a href="https://mdpgroup.com/en/blog/migrating-from-sap-wm-to-embedded-ewm-step-by-step-migration-guide/">MDP</a>).</li>
+<li>The Migration Cockpit moves data objects, not RF logic.</li>
+<li>So the site-specific know-how (what the picker actually scans, sees and does when something goes wrong) has to be re-captured. Usually that happens in workshops.</li>
+</ul>
+<p class="flag">Not yet checked: whether SAP partners sell accelerators that re-spec legacy RF screens. If one exists, this pack has to be faster or more floor-accurate than that tool.</p>
+
+<h2>The pack: one card per flow</h2>
+<div class="card">
+<h3>Flow card (filled from floor observation)</h3>
+<table><tbody>
+<tr><th>Flow</th><td>Name, trigger, how often it happens per shift</td></tr>
+<tr><th>Steps</th><td>Each screen: what is shown, what is scanned or typed, what confirms it</td></tr>
+<tr><th>Exceptions</th><td>Short pick, damaged stock, wrong location, empty bin. What the picker does <i>today</i>, including the workarounds</td></tr>
+<tr><th>Unwritten rules</th><td>Things the floor does that the system doesn't know about</td></tr>
+</tbody></table>
+<h3>Gap line (one per step or exception)</h3>
+<table><thead><tr><th>Step</th><th>EWM object</th><th>Fit</th><th>Note</th></tr></thead><tbody>
+<tr><td>…</td><td>Warehouse order / task, queue, RF logical transaction, verification field, personalisation</td><td>Standard · Config · Custom · Process change</td><td>Who decides, and the risk if wrong</td></tr>
+</tbody></table>
+</div>
+
+<h2>Worked example (illustrative)</h2>
+<p class="flag">Generic flow written for this page, not from any client site. A real pack uses observed flows.</p>
+<table><thead><tr><th>Floor step today</th><th>EWM object</th><th>Fit</th><th>Note</th></tr></thead><tbody>
+<tr><td>Picker gets the next pick from a system-guided list</td><td>Warehouse order from queue, RF system-guided processing</td><td>Standard</td><td>Queue design decides who gets which work</td></tr>
+<tr><td>Scan bin, scan product, key quantity</td><td>Warehouse task confirmation with verification fields</td><td>Config</td><td>Pick which fields are verified, and in what order</td></tr>
+<tr><td>Bin short: picker keys the actual quantity and moves on</td><td>Exception code on confirmation</td><td>Config</td><td>Decide what follow-up the exception triggers (count, replenish)</td></tr>
+<tr><td>Picker radios the team lead before shorting high-value lines</td><td>No system equivalent</td><td>Process change</td><td>Unwritten rule. Build it in as an approval, or drop it on purpose</td></tr>
+<tr><td>Custom screen showing the next three bins</td><td>RF screen personalisation</td><td>Custom</td><td>Check whether the floor still needs it, and how often it is used</td></tr>
+</tbody></table>
+
+<h2>Where an AI agent helps</h2>
+<ul>
+<li>Turns raw floor notes (voice memos, photos of screens, a walk-through) into flow cards in a consistent format.</li>
+<li>Drafts the gap lines against EWM objects. A consultant checks every line, because the model drafts and the human decides.</li>
+<li>The time saved goes to the hard part: the unwritten rules and the process-change calls.</li>
+</ul>
+<footer>Template by Sai Charan, Oct 2026, from experience of warehouse picking floors. Sources linked above.</footer>
+</main></body></html>

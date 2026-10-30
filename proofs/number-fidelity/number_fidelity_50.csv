@@ -1,0 +1,51 @@
+id,category,script,expected,trap
+1,Hindi words that sound like English words,"Bin A-12, saath piece confirm",loc=A12; qty=60,saath (60) vs saath (with)
+2,Hindi words that sound like English words,"Do box utha liye, location B-07",qty=2; loc=B07,do (2) vs English 'do' / Hindi 'give'
+3,Hindi words that sound like English words,"Teen carton, check digit four-two",qty=3; cd=42,teen (3) vs English 'teen'
+4,Hindi words that sound like English words,"Nau piece, aisle nine",qty=9; aisle=9,nau (9) vs 'no' / 'now'
+5,Hindi words that sound like English words,"Sau unit picked, slot C-14",qty=100; loc=C14,sau (100) dropped or read as 'so'
+6,Hindi words that sound like English words,"Saat piece, location D-03",qty=7; loc=D03,saat (7) vs saath (60)
+7,Hindi words that sound like English words,"Saath nahi, saat piece",qty=7,spoken self-correction; last value wins
+8,Hindi words that sound like English words,"Chaar case, bay four",qty=4; bay=4,same number in two languages
+9,Hindi words that sound like English words,"Paanch, five, confirm",qty=5,bilingual repeat must not become 55
+10,Hindi words that sound like English words,"Aath box, pallet eight-zero-one",qty=8; pallet=801,aath (8) vs 'at'
+11,Near-identical Hindi numbers,Unnees piece,qty=19,19 / 29 / 49 / 79 differ by one syllable
+12,Near-identical Hindi numbers,Untees piece,qty=29,see 11
+13,Near-identical Hindi numbers,Unchaas piece,qty=49,see 11
+14,Near-identical Hindi numbers,Unaasi piece,qty=79,see 11
+15,Near-identical Hindi numbers,Pachchees carton,qty=25,25 vs 35 vs 50
+16,Near-identical Hindi numbers,Paintees carton,qty=35,see 15
+17,Near-identical Hindi numbers,Chhiyaalis unit,qty=46,irregular Hindi 41-49
+18,Near-identical Hindi numbers,Sattaavan unit,qty=57,irregular Hindi 51-59
+19,Near-identical Hindi numbers,"Fifteen nahi, fifty",qty=50,English teen/ty plus Hindi correction
+20,Near-identical Hindi numbers,"Thirteen piece, haan thirteen",qty=13,repeat must not become 1313
+21,"Fractions (dedh, dhai, sawa, paune)",Dedh kilo,qty=1.5,dedh = one and a half
+22,"Fractions (dedh, dhai, sawa, paune)",Dhai box,qty=2.5,dhai = two and a half
+23,"Fractions (dedh, dhai, sawa, paune)",Sawa do kilo,qty=2.25,sawa = plus a quarter
+24,"Fractions (dedh, dhai, sawa, paune)",Paune teen kilo,qty=2.75,paune = minus a quarter; read as 3
+25,"Fractions (dedh, dhai, sawa, paune)",Saadhe chaar kilo,qty=4.5,saadhe = plus a half
+26,"Fractions (dedh, dhai, sawa, paune)",Dedh sau piece,qty=150,fraction times hundred
+27,"Fractions (dedh, dhai, sawa, paune)",Dhai sau gram,qty=250,see 26
+28,"Fractions (dedh, dhai, sawa, paune)",Sawa sau unit,qty=125,see 26
+29,"Fractions (dedh, dhai, sawa, paune)",Paune do sau,qty=175,see 26
+30,"Fractions (dedh, dhai, sawa, paune)","Half dozen, matlab chhe",qty=6,unit word plus Hindi gloss
+31,Language switches inside a field,"Location A, ek-do-teen",loc=A123,digit string in Hindi
+32,Language switches inside a field,"Bin forty-two, quantity chhe",bin=42; qty=6,switch language between fields
+33,Language switches inside a field,"Rack teen, level two, position paanch",rack=3; level=2; pos=5,switch language inside one address
+34,Language switches inside a field,SKU seven-saat-seven,sku=777,switch language inside one number
+35,Language switches inside a field,Order number ek lakh bees hazaar,order=120000,lakh / hazaar grouping
+36,Language switches inside a field,"Quantity baarah, twelve",qty=12,bilingual repeat must not become 1212
+37,Language switches inside a field,Batch do-zero-do-chhe,batch=2026,mixed digits in a year-like string
+38,Language switches inside a field,"Aisle double-one, bay saat",aisle=11; bay=7,'double' plus a Hindi digit
+39,Language switches inside a field,"Gyaarah carton, location E-eleven",qty=11; loc=E11,"same number in two languages, two fields"
+40,Language switches inside a field,"Pallet chaudah, quantity forty",pallet=14; qty=40,chaudah (14) vs chaalis (40)
+41,Check digits,Check digit four-seven,cd=47,baseline
+42,Check digits,Check digit double seven,cd=77,'double'
+43,Check digits,Check digit triple zero,cd=000,leading zeros must survive
+44,Check digits,Check digit oh-five,cd=05,'oh' as zero
+45,Check digits,Check digit chaar-saat,cd=47,"same as 41, in Hindi"
+46,Check digits,Check digit forty-seven,cd=47,said as one number
+47,Check digits,"Check digit sixteen... nahi, sixty",cd=60,correction mid-confirm
+48,Check digits,Check digit zero-nau,cd=09,leading zero plus nau / 'no'
+49,Check digits,Check digit ek-ek,cd=11,repeated Hindi digit
+50,Check digits,Check digit pachaas,cd=50,pachaas (50) vs pachchees (25)

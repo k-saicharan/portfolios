@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Two deposit schemes, one island</title><link rel="stylesheet" href="../style.css"></head><body><main>
+<p class="kicker">Supply chain · regulatory change brief</p>
+<h1>Two deposit schemes, one island</h1>
+<p class="lede">Today, a drinks pack on the island of Ireland either carries a deposit or doesn't. From 1 October 2027, Northern Ireland packs carry their own deposit too. The risk changes from "deposit vs none" to "the wrong deposit".</p>
+
+<h2>Where things stand</h2>
+<table><thead><tr><th></th><th>Republic of Ireland (now)</th><th>Northern Ireland (from 1 Oct 2027)</th></tr></thead><tbody>
+<tr><td>Scheme</td><td>Re-turn</td><td>UK deposit return scheme (England + NI)</td></tr>
+<tr><td>Deposit</td><td>15c or 25c, depending on container size</td><td>20p</td></tr>
+<tr><td>Containers in scope</td><td>Plastic bottles and cans</td><td>150ml to 3L containers in scope</td></tr>
+<tr><td>On-pack marking</td><td>Re-turn logo, plus a national (RoI-only) barcode for scheme packs</td><td>Scheme label required on in-scope packs</td></tr>
+</tbody></table>
+<p class="flag">Today NI packs carry different barcodes from RoI scheme packs, and no Re-turn logo. So a barcode scan can already tell them apart. Whether a given warehouse system <i>blocks</i> the wrong one at despatch is site-specific and unverified here.</p>
+
+<h2>What changes for all-island distribution</h2>
+<ol>
+<li><b>Three pack versions where there were two.</b> RoI-scheme, NI-scheme and (for some routes) non-scheme export packs of the same drink. Each needs its own barcode, master-data record and stock location.</li>
+<li><b>Mistakes cost money on both sides.</b> An RoI pack sold in NI carries a deposit that NI customers can't reclaim, and once the UK scheme is live the reverse is also true. Today only one direction carries a deposit.</li>
+<li><b>Master data is the control point, not the floor.</b> If the GTINs differ and the system checks them at pick and despatch, the floor is already safe. Risk moves to where barcodes are created, copied or relabelled: new product set-up, promotional packs, cross-docks and wholesale breaks.</li>
+<li><b>Reporting doubles.</b> Two scheme operators means two sets of packs-placed-on-market returns, each tied to the right market.</li>
+</ol>
+
+<h2>The one-aisle check</h2>
+<div class="card">
+<p>One evening's test answers whether a floor check adds anything:</p>
+<ol>
+<li>Take one RoI-scheme pack and one NI pack of the same drink.</li>
+<li>Photograph both labels and both barcodes.</li>
+<li>Scan both. Do they resolve to different products in the warehouse system? Does despatch to the wrong market get blocked?</li>
+</ol>
+<p><b>If it blocks:</b> the floor is solved, and the work is the master-data plan for 2027. <b>If the barcodes match:</b> a visual check at the bay is worth building.</p>
+</div>
+
+<h2>Questions to put to a supply chain team</h2>
+<ul>
+<li>Will NI-scheme packs get new GTINs, or will current NI codes carry the UK label?</li>
+<li>Where in the network are pallets broken and re-picked across the border?</li>
+<li>Who owns pack-market master data, and is there a check when a promo pack is set up?</li>
+</ul>
+<footer>Sources: Re-turn cross-border guidance and FAQ (re-turn.ie); UK DRS regulations for England and Northern Ireland (go-live 1 Oct 2027, 20p, 150ml-3L, scheme label). Brief by Sai Charan, Oct 2026. No company data used.</footer>
+</main></body></html>

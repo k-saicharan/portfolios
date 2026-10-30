@@ -1,0 +1,90 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Right meaning, wrong number: a number-fidelity test set</title><link rel="stylesheet" href="../style.css"></head><body><main>
+<p class="kicker">Speech AI · eval design</p>
+<h1>Right meaning, wrong number</h1>
+<p class="lede">Speech models are scored on word error rate. In a voice confirm, the only words that matter are the numbers. A transcript can be 95% right and still send a picker to the wrong slot.</p>
+
+<h2>The gap</h2>
+<ul>
+<li><b>Current Indic speech benchmarks don't score number accuracy.</b> Sarvam and AI4Bharat's open Indic DiarBench covers about 28 hours across 10 main languages. It scores DER, cpWER and WDER. None of these isolates whether a quantity or check digit came out right.</li>
+<li><b>Hindi-English number speech has specific traps.</b> <i>Saath</i> is 60 but also means "with". 19, 29, 49 and 79 differ by one syllable. <i>Paune teen</i> means 2.75, not 3. Speakers switch language mid-number ("seven-saat-seven").</li>
+<li><b>A missed number costs more than a missed word.</b> Get the meaning right and the quantity wrong, and you have a mispick, a wrong delivery or a wrong payment.</li>
+</ul>
+
+<h2>The metric</h2>
+<div class="card">
+<p><b>Number Fidelity Error (NFE)</b> = items where any expected numeric field is wrong after normalisation, divided by items attempted.</p>
+<p>Normalise first: map Hindi number words and fractions to values, read "double"/"triple" as repeats, keep leading zeros, and let the last value win after a spoken correction ("nahi"). Then compare each field exactly. Partial credit doesn't exist, because a pick is either right or wrong.</p>
+<p>Always report it as <b>failures out of n</b>, per model and per condition, e.g. "7 of 50 wrong". Never report a bare percentage.</p>
+</div>
+
+<h2>Recording protocol</h2>
+<ul>
+<li>At least 2 speakers, each reading all 50 items, so n = 100 per condition.</li>
+<li>Two conditions: a quiet room, and the same scripts over warehouse background noise (forklift reversing alarm, conveyor hum) played at a fixed level.</li>
+<li>Read the way a picker talks: fast and flat, with no pause before the number.</li>
+<li>Run the same audio through each speech-to-text system under test (e.g. Sarvam's speech-to-text API and Whisper). Keep the raw transcripts, so anyone can re-score them.</li>
+</ul>
+<div class="flag"><b>Status:</b> this is the test set and scoring method. No audio is recorded and no model has been scored yet, so this page reports no results. Results will be added as failures out of n.</div>
+
+<h2>The 50 items</h2>
+<ul><li><b>A</b> Hindi words that sound like English words (items 1-10)</li><li><b>B</b> Near-identical Hindi numbers (items 11-20)</li><li><b>C</b> Fractions (dedh, dhai, sawa, paune) (items 21-30)</li><li><b>D</b> Language switches inside a field (items 31-40)</li><li><b>E</b> Check digits (items 41-50)</li></ul>
+<p><a href="number_fidelity_50.csv">Download CSV</a></p>
+<table><thead><tr><th>#</th><th>Cat</th><th>Spoken script</th><th>Expected</th><th>Trap</th></tr></thead><tbody>
+<tr><td>1</td><td>A</td><td>Bin A-12, saath piece confirm</td><td><code>loc=A12; qty=60</code></td><td>saath (60) vs saath (with)</td></tr>
+<tr><td>2</td><td>A</td><td>Do box utha liye, location B-07</td><td><code>qty=2; loc=B07</code></td><td>do (2) vs English &#x27;do&#x27; / Hindi &#x27;give&#x27;</td></tr>
+<tr><td>3</td><td>A</td><td>Teen carton, check digit four-two</td><td><code>qty=3; cd=42</code></td><td>teen (3) vs English &#x27;teen&#x27;</td></tr>
+<tr><td>4</td><td>A</td><td>Nau piece, aisle nine</td><td><code>qty=9; aisle=9</code></td><td>nau (9) vs &#x27;no&#x27; / &#x27;now&#x27;</td></tr>
+<tr><td>5</td><td>A</td><td>Sau unit picked, slot C-14</td><td><code>qty=100; loc=C14</code></td><td>sau (100) dropped or read as &#x27;so&#x27;</td></tr>
+<tr><td>6</td><td>A</td><td>Saat piece, location D-03</td><td><code>qty=7; loc=D03</code></td><td>saat (7) vs saath (60)</td></tr>
+<tr><td>7</td><td>A</td><td>Saath nahi, saat piece</td><td><code>qty=7</code></td><td>spoken self-correction; last value wins</td></tr>
+<tr><td>8</td><td>A</td><td>Chaar case, bay four</td><td><code>qty=4; bay=4</code></td><td>same number in two languages</td></tr>
+<tr><td>9</td><td>A</td><td>Paanch, five, confirm</td><td><code>qty=5</code></td><td>bilingual repeat must not become 55</td></tr>
+<tr><td>10</td><td>A</td><td>Aath box, pallet eight-zero-one</td><td><code>qty=8; pallet=801</code></td><td>aath (8) vs &#x27;at&#x27;</td></tr>
+<tr><td>11</td><td>B</td><td>Unnees piece</td><td><code>qty=19</code></td><td>19 / 29 / 49 / 79 differ by one syllable</td></tr>
+<tr><td>12</td><td>B</td><td>Untees piece</td><td><code>qty=29</code></td><td>see 11</td></tr>
+<tr><td>13</td><td>B</td><td>Unchaas piece</td><td><code>qty=49</code></td><td>see 11</td></tr>
+<tr><td>14</td><td>B</td><td>Unaasi piece</td><td><code>qty=79</code></td><td>see 11</td></tr>
+<tr><td>15</td><td>B</td><td>Pachchees carton</td><td><code>qty=25</code></td><td>25 vs 35 vs 50</td></tr>
+<tr><td>16</td><td>B</td><td>Paintees carton</td><td><code>qty=35</code></td><td>see 15</td></tr>
+<tr><td>17</td><td>B</td><td>Chhiyaalis unit</td><td><code>qty=46</code></td><td>irregular Hindi 41-49</td></tr>
+<tr><td>18</td><td>B</td><td>Sattaavan unit</td><td><code>qty=57</code></td><td>irregular Hindi 51-59</td></tr>
+<tr><td>19</td><td>B</td><td>Fifteen nahi, fifty</td><td><code>qty=50</code></td><td>English teen/ty plus Hindi correction</td></tr>
+<tr><td>20</td><td>B</td><td>Thirteen piece, haan thirteen</td><td><code>qty=13</code></td><td>repeat must not become 1313</td></tr>
+<tr><td>21</td><td>C</td><td>Dedh kilo</td><td><code>qty=1.5</code></td><td>dedh = one and a half</td></tr>
+<tr><td>22</td><td>C</td><td>Dhai box</td><td><code>qty=2.5</code></td><td>dhai = two and a half</td></tr>
+<tr><td>23</td><td>C</td><td>Sawa do kilo</td><td><code>qty=2.25</code></td><td>sawa = plus a quarter</td></tr>
+<tr><td>24</td><td>C</td><td>Paune teen kilo</td><td><code>qty=2.75</code></td><td>paune = minus a quarter; read as 3</td></tr>
+<tr><td>25</td><td>C</td><td>Saadhe chaar kilo</td><td><code>qty=4.5</code></td><td>saadhe = plus a half</td></tr>
+<tr><td>26</td><td>C</td><td>Dedh sau piece</td><td><code>qty=150</code></td><td>fraction times hundred</td></tr>
+<tr><td>27</td><td>C</td><td>Dhai sau gram</td><td><code>qty=250</code></td><td>see 26</td></tr>
+<tr><td>28</td><td>C</td><td>Sawa sau unit</td><td><code>qty=125</code></td><td>see 26</td></tr>
+<tr><td>29</td><td>C</td><td>Paune do sau</td><td><code>qty=175</code></td><td>see 26</td></tr>
+<tr><td>30</td><td>C</td><td>Half dozen, matlab chhe</td><td><code>qty=6</code></td><td>unit word plus Hindi gloss</td></tr>
+<tr><td>31</td><td>D</td><td>Location A, ek-do-teen</td><td><code>loc=A123</code></td><td>digit string in Hindi</td></tr>
+<tr><td>32</td><td>D</td><td>Bin forty-two, quantity chhe</td><td><code>bin=42; qty=6</code></td><td>switch language between fields</td></tr>
+<tr><td>33</td><td>D</td><td>Rack teen, level two, position paanch</td><td><code>rack=3; level=2; pos=5</code></td><td>switch language inside one address</td></tr>
+<tr><td>34</td><td>D</td><td>SKU seven-saat-seven</td><td><code>sku=777</code></td><td>switch language inside one number</td></tr>
+<tr><td>35</td><td>D</td><td>Order number ek lakh bees hazaar</td><td><code>order=120000</code></td><td>lakh / hazaar grouping</td></tr>
+<tr><td>36</td><td>D</td><td>Quantity baarah, twelve</td><td><code>qty=12</code></td><td>bilingual repeat must not become 1212</td></tr>
+<tr><td>37</td><td>D</td><td>Batch do-zero-do-chhe</td><td><code>batch=2026</code></td><td>mixed digits in a year-like string</td></tr>
+<tr><td>38</td><td>D</td><td>Aisle double-one, bay saat</td><td><code>aisle=11; bay=7</code></td><td>&#x27;double&#x27; plus a Hindi digit</td></tr>
+<tr><td>39</td><td>D</td><td>Gyaarah carton, location E-eleven</td><td><code>qty=11; loc=E11</code></td><td>same number in two languages, two fields</td></tr>
+<tr><td>40</td><td>D</td><td>Pallet chaudah, quantity forty</td><td><code>pallet=14; qty=40</code></td><td>chaudah (14) vs chaalis (40)</td></tr>
+<tr><td>41</td><td>E</td><td>Check digit four-seven</td><td><code>cd=47</code></td><td>baseline</td></tr>
+<tr><td>42</td><td>E</td><td>Check digit double seven</td><td><code>cd=77</code></td><td>&#x27;double&#x27;</td></tr>
+<tr><td>43</td><td>E</td><td>Check digit triple zero</td><td><code>cd=000</code></td><td>leading zeros must survive</td></tr>
+<tr><td>44</td><td>E</td><td>Check digit oh-five</td><td><code>cd=05</code></td><td>&#x27;oh&#x27; as zero</td></tr>
+<tr><td>45</td><td>E</td><td>Check digit chaar-saat</td><td><code>cd=47</code></td><td>same as 41, in Hindi</td></tr>
+<tr><td>46</td><td>E</td><td>Check digit forty-seven</td><td><code>cd=47</code></td><td>said as one number</td></tr>
+<tr><td>47</td><td>E</td><td>Check digit sixteen... nahi, sixty</td><td><code>cd=60</code></td><td>correction mid-confirm</td></tr>
+<tr><td>48</td><td>E</td><td>Check digit zero-nau</td><td><code>cd=09</code></td><td>leading zero plus nau / &#x27;no&#x27;</td></tr>
+<tr><td>49</td><td>E</td><td>Check digit ek-ek</td><td><code>cd=11</code></td><td>repeated Hindi digit</td></tr>
+<tr><td>50</td><td>E</td><td>Check digit pachaas</td><td><code>cd=50</code></td><td>pachaas (50) vs pachchees (25)</td></tr>
+</tbody></table>
+
+<h2>Where this goes beyond warehouses</h2>
+<p>There's no good data on how many Indian warehouses use voice picking. Most still use barcode scanners. The same number traps show up wherever Hindi-English speech carries a number that has to be exact: delivery-partner address calls, UPI payment confirmations, and order taking.</p>
+
+<footer>Sources: Sarvam AI / AI4Bharat, Indic DiarBench (public release). The test items are original to this page. Built Oct 2026 by Sai Charan.</footer>
+</main></body></html>
