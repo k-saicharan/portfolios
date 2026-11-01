@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Sai Charan: how my mind works when left somewhere. Field logs, physical operations, vision models, and systems architecture.">
-  <title>Sai Charan: how my mind works</title>
+  <meta name="description" content="Sai Charan: Reality systems prototyper. Field observations, computer vision, speech middleware, and systems architecture where physical work meets software.">
+  <title>Sai Charan: Finding the edge. Building the logic.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,380;0,9..144,440;1,9..144,380&family=Newsreader:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
@@ -337,15 +337,13 @@
       border-left: 2px solid var(--accent);
       max-width: 56ch;
     }
-    .panel .links,
-    .surface-links {
+    .panel .links {
       display: flex;
       gap: 18px 24px;
       flex-wrap: wrap;
       margin-top: 14px;
     }
     .panel .links a,
-    .surface-links a,
     a.out {
       font-family: 'Instrument Sans', system-ui, sans-serif;
       font-size: 12.5px;
@@ -356,7 +354,6 @@
       text-underline-offset: 3px;
     }
     .panel .links a:hover,
-    .surface-links a:hover,
     a.out:hover {
       color: var(--text);
       text-decoration-color: var(--text);
@@ -620,6 +617,184 @@
         padding: 18px 16px;
       }
     }
+  
+    /* Title links, Subheading links & Inline links */
+    .item-title a.title-link,
+    .item-title a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dotted var(--tick);
+      transition: color 150ms ease, border-bottom-color 150ms ease;
+    }
+    .item-title a.title-link:hover,
+    .item-title a:hover {
+      color: var(--accent-ink);
+      border-bottom-color: var(--accent-ink);
+    }
+    .ext-arrow {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72em;
+      margin-left: 5px;
+      color: var(--accent);
+      vertical-align: 0.12em;
+      transition: transform 150ms ease;
+    }
+    .item-title a:hover .ext-arrow,
+    .sub-link-head a:hover .ext-arrow {
+      transform: translate(2px, -2px);
+    }
+    .iv-drift-note a {
+      color: var(--accent-ink);
+      text-decoration: underline;
+      text-decoration-color: var(--tick);
+      text-underline-offset: 3px;
+      transition: color 150ms ease, text-decoration-color 150ms ease;
+    }
+    .iv-drift-note a:hover {
+      color: var(--text);
+      text-decoration-color: var(--text);
+    }
+    .iv-drift-note h3.sub-link-head {
+      margin-top: 18px;
+    }
+    .iv-drift-note h3.sub-link-head a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dotted var(--tick);
+      transition: color 150ms ease, border-bottom-color 150ms ease;
+    }
+    .iv-drift-note h3.sub-link-head a:hover {
+      color: var(--accent-ink);
+      border-bottom-color: var(--accent-ink);
+    }
+
+    /* Workbench Specimen Tray & Movable Cards (filling left-hand empty space) */
+    .specimen-tray {
+      margin-top: 18px;
+      position: relative;
+      background: rgba(236, 230, 218, 0.45);
+      border: 1px dashed var(--rule-strong);
+      padding: 10px;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    .specimen-tray-header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.5px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      pointer-events: none;
+    }
+    .specimen-tray-header .drag-hint {
+      color: var(--accent-ink);
+      font-weight: 500;
+    }
+    .specimen-card {
+      position: absolute;
+      background: var(--paper-card);
+      border: 1px solid var(--rule-strong);
+      box-shadow: 0 2px 5px rgba(22, 19, 14, 0.06), 0 1px 2px rgba(22, 19, 14, 0.04);
+      padding: 11px 13px;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+      transition: box-shadow 0.18s ease, border-color 0.18s ease;
+      box-sizing: border-box;
+    }
+    .specimen-card:hover {
+      border-color: var(--ink);
+      box-shadow: 0 5px 12px rgba(22, 19, 14, 0.1);
+    }
+    .specimen-card.is-dragging {
+      cursor: grabbing;
+      z-index: 60 !important;
+      box-shadow: 0 14px 28px rgba(22, 19, 14, 0.18), 0 4px 10px rgba(22, 19, 14, 0.08);
+      border-color: var(--accent) !important;
+    }
+    .specimen-card .card-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      display: inline-block;
+      padding: 2px 5px;
+      background: var(--paper-well);
+      color: var(--ink);
+      border: 1px solid var(--rule-strong);
+      margin-bottom: 6px;
+    }
+    .specimen-card .card-title {
+      font-family: 'Fraunces', serif;
+      font-size: 13px;
+      font-weight: 450;
+      color: var(--text);
+      margin: 0 0 4px;
+      line-height: 1.22;
+    }
+    .specimen-card .card-body {
+      font-family: 'Newsreader', serif;
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+    @media (max-width: 900px) {
+      .specimen-tray {
+        min-height: auto !important;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow: visible;
+        padding: 12px;
+      }
+      .specimen-card {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        transform: none !important;
+        cursor: default;
+      }
+      .specimen-tray-header .drag-hint {
+        display: none;
+      }
+    }
+
+  
+    /* Closing Thread / Decision Rule */
+    .mind-thread {
+      margin: 72px 0 36px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule-strong);
+      max-width: 68ch;
+    }
+    .thread-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--accent-ink);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+    .thread-prose {
+      margin: 0;
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+      font-style: italic;
+      line-height: 1.62;
+      color: var(--text);
+    }
+
   </style>
 </head>
 <body>
@@ -628,13 +803,13 @@
 
     <header class="masthead">
       <div class="reading-no">
-        <span><strong>Sai Charan</strong> · Belfast · 2026</span>
+        <span><strong>Sai Charan</strong> · 2026</span>
         <a href="mailto:saicharan9977@gmail.com">saicharan9977@gmail.com</a>
       </div>
       <div class="calibration-strip" aria-hidden="true"></div>
       <div class="masthead-grid">
-        <h1>How my mind works when left somewhere.</h1>
-        <p class="who">Looking at the flow, I figure out the rain and the river; what feeds it, and the channel that carries it.</p>
+        <h1>Finding the edge. Building the logic.</h1>
+        <p class="who">Reality systems prototyper: observing how things actually work at the point of contact, and building the working tools that make them hold.</p>
       </div>
     </header>
 
@@ -642,7 +817,7 @@
     <div class="explore">
 
       <!-- =================================================================
-           1. THE MISSING PIECE (Workbench: Adoption Seam Plate + Evidence)
+           SECTION: MISSING-PIECE
            ================================================================= -->
       <section class="item" id="missing-piece">
         <div class="meta">
@@ -651,7 +826,7 @@
           <div class="gauge mind"></div>
           <span>HINGE</span>
         </div>
-        <h2 class="item-title">The missing piece</h2>
+        <h2 class="item-title"><a href="#missing-piece" class="title-link">The missing piece</a></h2>
         <p class="teaser">Where matter moves, AI capability is rarely the bottleneck. The scarce half is judgment, trigger, and what survives the floor.</p>
 
         <div class="iv-workbench">
@@ -703,6 +878,19 @@
               <text x="230" y="183" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">BOTTLENECK ≠ MODEL</text>
               <text x="230" y="198" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">SCARCE = JUDGMENT</text>
             </svg>
+            <div class="specimen-tray" style="min-height: 180px;">
+              <div class="specimen-tray-header">
+                <span>FIELD THESIS STAMP</span>
+                <span class="drag-hint">DRAG TO ARRANGE ⤢</span>
+              </div>
+              <div class="specimen-card specimen-axiom" data-base-transform="rotate(-1deg)" style="top: 22px; left: 18px; width: 255px; transform: rotate(-1deg); z-index: 2; border-left: 3px solid var(--ink); background: #faf8f3;">
+                <div class="card-tag">THE COMPLEMENTARY HALF</div>
+                <div class="card-title" style="font-size: 13px;">Floor Seam Axiom</div>
+                <div class="card-body" style="font-size: 12px; font-style: italic; line-height: 1.45; color: var(--text);">
+                  &ldquo;Where matter moves at scale, AI capability is rarely the bottleneck. The scarce half is judgment, trigger, and what survives the floor.&rdquo;
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="iv-metrics-plate">
@@ -746,6 +934,10 @@
       <!-- =================================================================
            2. ON THE FLOOR (Workbench: Fused Workplace Lineage + Full Narrative)
            ================================================================= -->
+
+      <!-- =================================================================
+           SECTION: ON-THE-FLOOR
+           ================================================================= -->
       <section class="item" id="on-the-floor">
         <div class="meta">
           <span class="code">FLOOR</span>
@@ -753,7 +945,7 @@
           <div class="gauge built"></div>
           <span>LINEAGE</span>
         </div>
-        <h2 class="item-title">On the floor</h2>
+        <h2 class="item-title"><a href="#on-the-floor" class="title-link">On the floor</a></h2>
         <p class="teaser">Picker to field logs to Stacked on shift; Voice, Bay Door, where the work points next.</p>
 
         <div class="iv-workbench">
@@ -809,6 +1001,67 @@
               <rect x="22" y="206" width="326" height="24" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
               <text x="32" y="221" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#16130e">DECIDING FACT IN STACK ≠ DECISION PLACE ON FLOOR</text>
             </svg>
+            <div class="specimen-tray" style="min-height: 410px;">
+              <div class="specimen-tray-header">
+                <span>FLOOR ARTIFACT SPECIMENS</span>
+                <span class="drag-hint">DRAG TO ARRANGE ⤢</span>
+              </div>
+              <div class="specimen-card specimen-stacked" data-base-transform="rotate(-2deg)" style="top: 24px; left: 14px; width: 236px; transform: rotate(-2deg); z-index: 2;">
+                <div class="card-tag">02 · STACKED SHIFT HUD</div>
+                <div class="card-title">
+                  <img src="./stacked/assets/icon.png" width="18" height="18" alt="Stacked" style="border-radius: 4px; vertical-align: -2px; margin-right: 6px;">Stacked on Shift
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 8px 0; background: var(--bg); padding: 8px; border: 1px solid var(--rule-strong);">
+                  <div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--muted);">LIVE IPH</div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: var(--ink);">214</div>
+                  </div>
+                  <div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--muted);">TARGET</div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #2f7a4d;">200 (+7%)</div>
+                  </div>
+                  <div style="grid-column: span 2; border-top: 1px dashed var(--rule-strong); padding-top: 4px;">
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: var(--accent-ink);">PALLET 04 / 07 · 12H ROTATING</span>
+                  </div>
+                </div>
+                <div class="card-body">One-handed pallet &amp; IPH counter running live on shift. Local-first SQLite.</div>
+              </div>
+
+              <div class="specimen-card specimen-fieldlog" data-base-transform="rotate(1.8deg)" style="top: 110px; right: 12px; width: 220px; transform: rotate(1.8deg); z-index: 1; background: #faf8f3; border-left: 3px solid var(--accent);">
+                <div class="card-tag" style="color: var(--accent-ink);">01 · FIELD LOG CHIT</div>
+                <div class="card-title" style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 600;">22:00 SHIFT LOG</div>
+                <div class="card-body" style="font-family: 'Newsreader', serif; font-size: 12.5px; line-height: 1.4; color: var(--text);">
+                  <div style="margin-bottom: 4px;">• Wave 03: voice confirm misheard 'sixteen' as 'sixty'.</div>
+                  <div style="margin-bottom: 4px;">• Heavy beverage crates palletised base-first.</div>
+                  <div style="color: var(--accent-ink); font-style: italic;">Compounding into domain pages.</div>
+                </div>
+              </div>
+
+              <div class="specimen-card specimen-voicetap" data-base-transform="rotate(-1.2deg)" style="top: 236px; left: 18px; width: 230px; transform: rotate(-1.2deg); z-index: 3; background: #23221e; color: #ede6dc; border-color: #4a453e;">
+                <div class="card-tag" style="background: #34322c; color: #e8a87c; border-color: #5c554b;">03 · VOICE MIDDLEWARE TAP</div>
+                <div class="card-title" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #fdfaf6;">01:15 AUDIO STREAM</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; line-height: 1.45; color: #c8c0b4; margin: 6px 0;">
+                  <div>RAW: <span style="color: #e8a87c;">&ldquo;twen'y fo-ur&rdquo;</span> (82dB noise)</div>
+                  <div>PARSED: <span style="color: #79d2a6; font-weight: 600;">24 (CONFIRMED)</span></div>
+                  <div style="color: #9c9488; font-size: 8px; margin-top: 2px;">INTERCEPT: PRE-WMS · 0ms DELAY</div>
+                </div>
+              </div>
+
+              <div class="specimen-card specimen-bayblueprint" data-base-transform="rotate(2deg)" style="top: 260px; right: 16px; width: 215px; transform: rotate(2deg); z-index: 4; border-top: 2px solid var(--ink);">
+                <div class="card-tag">04 · BAY DOOR DOCK AUDIT</div>
+                <div class="card-title" style="font-size: 12.5px;">Aisle Seam Blueprint</div>
+                <svg viewBox="0 0 180 46" style="width: 100%; height: 38px; margin: 4px 0; background: var(--bg); border: 1px solid var(--rule-strong);">
+                  <rect x="8" y="6" width="38" height="32" fill="#e6dfd3" stroke="#2f4758" stroke-width="1"/>
+                  <text x="12" y="22" font-family="JetBrains Mono" font-size="7" fill="#2f4758">BAY 12</text>
+                  <rect x="54" y="6" width="38" height="32" fill="#e6dfd3" stroke="#2f4758" stroke-width="1"/>
+                  <text x="58" y="22" font-family="JetBrains Mono" font-size="7" fill="#2f4758">BAY 14</text>
+                  <path d="M 105 14 C 125 14, 130 34, 155 34" fill="none" stroke="#9c5f34" stroke-width="1.3" stroke-dasharray="2 2"/>
+                  <circle cx="155" cy="34" r="2" fill="#9c5f34"/>
+                  <text x="105" y="42" font-family="JetBrains Mono" font-size="6.5" fill="#7d4822">TRUCK RADIUS</text>
+                </svg>
+                <div class="card-body" style="font-size: 11px;">Attention rewrote the true cost of the aisle in management walk.</div>
+              </div>
+            </div>
           </div>
 
           <div class="iv-metrics-plate">
@@ -841,23 +1094,15 @@
 
             <div class="iv-drift-note">
               <p>I started as a picker in a beverage 3PL warehouse. After shifts I logged what had surprised me or made me wonder why. Those notes became a system: field logs in, domain pages out. Later observations started landing on earlier ones. That compounding is how I learned the floor: picking, voice kit, waves, exceptions, how work actually moves.</p>
-              <p>From those logs came <strong>Stacked</strong>: a phone app I use on shift to log pallets, watch items-per-hour live, and keep rotating schedules straight. Local-first. Optional anonymous sync.</p>
+              <p>From those logs came <strong><a href="https://github.com/k-saicharan/stacked-public" target="_blank" rel="noopener">Stacked</a></strong> (<a href="./stacked/index.html">about</a> · <a href="https://k-saicharan.github.io/stacked-public/show.html" target="_blank" rel="noopener">join pilot</a>): a phone app I use on shift to log pallets, watch items-per-hour live, and keep rotating schedules straight. Local-first. Optional anonymous sync.</p>
               <p>Upstream is a clean personal record of what the shift produced while I was still in it. Downstream, if usage grows, those logs become material for harder picking questions: sequences that serve aggregate throughput, with the worker as an input rather than the whole target. That thread stays open until the data is real.</p>
-              <h3>Voice</h3>
+              <h3 class="sub-link-head"><a href="https://github.com/k-saicharan/sap-voice-middleware" target="_blank" rel="noopener">Voice <span class="ext-arrow">↗</span></a></h3>
               <p>Spoken quantity confirms are the brittle step under warehouse noise. I traced the failure to the speech layer sitting on the warehouse system, then built a thin middleware demo that corrects before the core stack sees the utterance; core left untouched. Later a language-pack path opened. Proposed and researched. Stacked is what I run; this path is direction until a site moment installs something.</p>
               <h3>Bay Door</h3>
               <p>Bay Door started as a “this should be simpler” instinct on the floor, then became a correction arc: the process looked clean on paper until attention rewrote what the aisle actually cost. It went into a management conversation as research. Same pattern as the rest of the floor work; deciding fact and decision place out of line.</p>
               <h3>Where the floor work points</h3>
               <p>On the floor, the deciding fact often already sits in the stack. The decision still happens somewhere else. What’s missing is composition at the moment you need it. A conversation with site management mapped where attention could land next; handover visibility, damage logging, voice. Stacked is what I run on shift. The wider thread waits for an owner and a site moment.</p>
-              <div class="surface-links">
-                <a href="https://github.com/k-saicharan/stacked-public" target="_blank" rel="noopener">Stacked on GitHub</a>
-                <a href="https://k-saicharan.github.io/stacked-public/show.html" target="_blank" rel="noopener">Join Stacked</a>
-                <a href="./stacked/index.html">Stacked about</a>
-                <a href="https://github.com/k-saicharan/sap-voice-middleware" target="_blank" rel="noopener">Voice middleware on GitHub</a>
-                <a href="./proofs/number-fidelity/">Number fidelity eval</a>
-                <a href="./proofs/two-schemes-one-island/">Two deposit schemes memo</a>
-                <a href="./proofs/ewm-gap-pack/">EWM gap pack template</a>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -866,6 +1111,10 @@
       <!-- =================================================================
            3. INVENTORYVISION (Numbered tote lips SVG + 38% to 69% bars on 13 photos)
            ================================================================= -->
+
+      <!-- =================================================================
+           SECTION: INVENTORYVISION
+           ================================================================= -->
       <section class="item" id="inventoryvision">
         <div class="meta">
           <span class="code">INVENTORYVISION</span>
@@ -873,7 +1122,7 @@
           <div class="gauge built"></div>
           <span>VISION</span>
         </div>
-        <h2 class="item-title">InventoryVision</h2>
+        <h2 class="item-title"><a href="https://inventoryvisionhub.co.uk" target="_blank" rel="noopener" class="title-link">InventoryVision <span class="ext-arrow">↗</span></a></h2>
         <p class="teaser">Tote-counter proof; physical vs record drift; site-shaped customisation.</p>
 
         <div class="iv-workbench">
@@ -947,6 +1196,39 @@
               <text x="242" y="157" font-family="JetBrains Mono, monospace" font-size="8" fill="#595044">NAMED SEQUENTIALLY</text>
               <text x="242" y="172" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="600" fill="#16130e">COUNT = 7 TOTES</text>
             </svg>
+            <div class="specimen-tray" style="min-height: 290px;">
+              <div class="specimen-tray-header">
+                <span>VISION SPECIMENS</span>
+                <span class="drag-hint">DRAG TO ARRANGE ⤢</span>
+              </div>
+              <div class="specimen-card specimen-vlm" data-base-transform="rotate(-1.5deg)" style="top: 22px; left: 16px; width: 240px; transform: rotate(-1.5deg); z-index: 2; background: #23221e; color: #ede6dc; border-color: #4a453e;">
+                <div class="card-tag" style="background: #34322c; color: #79d2a6; border-color: #5c554b;">CAMERA VIEWFINDER · SCAN</div>
+                <div class="card-title" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #fdfaf6;">Tote Lip Detection</div>
+                <svg viewBox="0 0 200 65" style="width: 100%; height: 50px; margin: 4px 0; background: #181714; border: 1px solid #3d3a33;">
+                  <path d="M 6 12 L 6 6 L 12 6" fill="none" stroke="#79d2a6" stroke-width="1.2"/>
+                  <path d="M 188 6 L 194 6 L 194 12" fill="none" stroke="#79d2a6" stroke-width="1.2"/>
+                  <path d="M 6 52 L 6 58 L 12 58" fill="none" stroke="#79d2a6" stroke-width="1.2"/>
+                  <path d="M 188 58 L 194 58 L 194 52" fill="none" stroke="#79d2a6" stroke-width="1.2"/>
+                  <rect x="24" y="16" width="34" height="32" fill="rgba(121,210,166,0.15)" stroke="#79d2a6" stroke-width="1"/>
+                  <text x="26" y="26" font-family="JetBrains Mono" font-size="6" fill="#79d2a6">.96</text>
+                  <rect x="64" y="16" width="34" height="32" fill="rgba(121,210,166,0.15)" stroke="#79d2a6" stroke-width="1"/>
+                  <text x="66" y="26" font-family="JetBrains Mono" font-size="6" fill="#79d2a6">.94</text>
+                  <rect x="104" y="16" width="34" height="32" fill="rgba(121,210,166,0.15)" stroke="#79d2a6" stroke-width="1"/>
+                  <text x="106" y="26" font-family="JetBrains Mono" font-size="6" fill="#79d2a6">.91</text>
+                  <rect x="144" y="16" width="34" height="32" fill="rgba(121,210,166,0.15)" stroke="#79d2a6" stroke-width="1"/>
+                  <text x="146" y="26" font-family="JetBrains Mono" font-size="6" fill="#79d2a6">.88</text>
+                </svg>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #a49c90;">13 WAREHOUSE PHOTOS · 38% &rarr; 69%</div>
+              </div>
+
+              <div class="specimen-card specimen-clireport" data-base-transform="rotate(2deg)" style="top: 135px; right: 16px; width: 220px; transform: rotate(2deg); z-index: 3; border-top: 2px solid var(--accent);">
+                <div class="card-tag">TOTE-COUNTER CLI</div>
+                <div class="card-title" style="font-family: 'JetBrains Mono', monospace; font-size: 11px;">$ tote-counter --inspect</div>
+                <div class="card-body" style="font-size: 11.5px; font-family: 'Newsreader', serif;">
+                  Open source edge counter pairing site-specific warehouse geometry with modern vision.
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="iv-metrics-plate">
@@ -986,11 +1268,7 @@
               <p>Vision is how the floor gets seen; physical state only. Identity of a unit stays a separate, exact step. Every warehouse is its own environment: layout, lighting, labels, how stock moves, what the record already trusts. The interesting work is pairing that site-specific shape with AI.</p>
               <p>What I’m searching for next in this build is an agent that takes the floor information it needs and returns the best customisation for that site.</p>
               <p>This is free-time founder work; nights and gaps after shifts; building toward a real product, not a side demo for a CV.</p>
-              <div class="surface-links">
-                <a href="https://github.com/k-saicharan/tote-counter" target="_blank" rel="noopener">Tote-counter</a>
-                <a href="https://inventoryvisionhub.co.uk" target="_blank" rel="noopener">InventoryVision</a>
-                <a href="./proofs/ghost-shelf/">Ghost shelf artifact</a>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -999,6 +1277,739 @@
       <!-- =================================================================
            4. AUTOPILOT (Workbench: Control Loops Plate + Autonomy Gate Bars)
            ================================================================= -->
+
+      <!-- =================================================================
+           SECTION: SYSTEMS-BRIEF
+           ================================================================= -->
+      <section class="item" id="systems-brief">
+        <div class="meta">
+          <span class="code">GOOGLE</span>
+          <span class="roman">2026</span>
+          <div class="gauge public"></div>
+          <span>BRIEF</span>
+        </div>
+        <h2 class="item-title"><a href="https://k-saicharan.github.io/google-order-case-study" target="_blank" rel="noopener" class="title-link">Systems brief: Pixel order stuck <span class="ext-arrow">↗</span></a></h2>
+        <p class="teaser">Pixel order stuck across six systems; living brief, role hats, structural gap.</p>
+
+        <div class="iv-workbench">
+          <div class="iv-tote-plate">
+            <div class="plate-caption">
+              <span>FIG 4.1 · SIX-SYSTEM ORDER HANDOFF CHAIN</span>
+              <span>LOCAL GREEN ≠ END-TO-END FLOW</span>
+            </div>
+            <svg viewBox="0 0 360 210" role="img" aria-label="Technical diagram of six operational systems in a chain with a broken handoff seam between System 03 OMS and System 04 3PL Warehouse">
+              <title>Systems brief: Pixel order stuck across six systems with broken handoff between OMS and 3PL</title>
+              <!-- Row 1: Systems 01, 02, 03 -->
+              <rect x="20" y="20" width="54" height="32" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.3"/>
+              <text x="26" y="34" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#2f4758">SYS 01</text>
+              <text x="26" y="45" font-family="Newsreader, serif" font-size="8.5" fill="#595044">Store</text>
+              <line x1="74" y1="36" x2="88" y2="36" stroke="#2f4758" stroke-width="1.3"/>
+
+              <rect x="88" y="20" width="54" height="32" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.3"/>
+              <text x="94" y="34" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#2f4758">SYS 02</text>
+              <text x="94" y="45" font-family="Newsreader, serif" font-size="8.5" fill="#595044">Auth</text>
+              <line x1="142" y1="36" x2="156" y2="36" stroke="#2f4758" stroke-width="1.3"/>
+
+              <rect x="156" y="20" width="54" height="32" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.3"/>
+              <text x="162" y="34" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#2f4758">SYS 03</text>
+              <text x="162" y="45" font-family="Newsreader, serif" font-size="8.5" fill="#595044">OMS</text>
+
+              <!-- Broken Link Seam between SYS 03 and SYS 04 -->
+              <line x1="183" y1="52" x2="128" y2="76" stroke="#9c5f34" stroke-width="1.6" stroke-dasharray="3 2"/>
+              <circle cx="115" cy="82" r="10" fill="#fbf9f5" stroke="#9c5f34" stroke-width="1.5"/>
+              <text x="110.5" y="85.5" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#7d4822">✕</text>
+              <line x1="102" y1="88" x2="47" y2="112" stroke="#9c5f34" stroke-width="1.6" stroke-dasharray="3 2"/>
+
+              <line x1="130" y1="82" x2="238" y2="82" stroke="#9c5f34" stroke-width="1.2"/>
+              <circle cx="130" cy="82" r="2.2" fill="#9c5f34"/>
+              <text x="244" y="85" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600" fill="#7d4822">BROKEN HANDOFF</text>
+
+              <!-- Row 2: Systems 04, 05, 06 -->
+              <rect x="20" y="112" width="54" height="32" fill="#e6dfd3" stroke="#16130e" stroke-width="1.3"/>
+              <text x="26" y="126" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#16130e">SYS 04</text>
+              <text x="26" y="137" font-family="Newsreader, serif" font-size="8.5" fill="#595044">3PL</text>
+              <line x1="74" y1="128" x2="88" y2="128" stroke="#16130e" stroke-width="1.3"/>
+
+              <rect x="88" y="112" width="54" height="32" fill="#e6dfd3" stroke="#16130e" stroke-width="1.3"/>
+              <text x="94" y="126" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#16130e">SYS 05</text>
+              <text x="94" y="137" font-family="Newsreader, serif" font-size="8.5" fill="#595044">Carrier</text>
+              <line x1="142" y1="128" x2="156" y2="128" stroke="#16130e" stroke-width="1.3"/>
+
+              <rect x="156" y="112" width="54" height="32" fill="#e6dfd3" stroke="#16130e" stroke-width="1.3"/>
+              <text x="162" y="126" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#16130e">SYS 06</text>
+              <text x="162" y="137" font-family="Newsreader, serif" font-size="8.5" fill="#595044">Support</text>
+
+              <!-- Stamp badge -->
+              <rect x="20" y="156" width="328" height="34" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
+              <text x="30" y="170" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">STRUCTURAL GAP</text>
+              <text x="30" y="183" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600" fill="#16130e">6 GREEN DASHBOARDS · 0 INCIDENT OWNER ON SEAM</text>
+            </svg>
+            <div class="specimen-tray" style="min-height: 280px;">
+              <div class="specimen-tray-header">
+                <span>INCIDENT SPECIMENS</span>
+                <span class="drag-hint">DRAG TO ARRANGE ⤢</span>
+              </div>
+              <div class="specimen-card specimen-trace" data-base-transform="rotate(-1.5deg)" style="top: 22px; left: 16px; width: 240px; transform: rotate(-1.5deg); z-index: 2; border-left: 3px solid var(--accent);">
+                <div class="card-tag">SIX-SYSTEM SEAM TRACE</div>
+                <div class="card-title" style="font-size: 12.5px;">Pixel Order #94821</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; line-height: 1.45; color: var(--text); margin: 6px 0;">
+                  <div>[STORE] Paid &amp; captured &rarr; OMS</div>
+                  <div>[OMS] Routed to 3PL warehouse</div>
+                  <div><span style="color: var(--accent); font-weight: 600;">[3PL]</span> &ldquo;Awaiting carrier scan&rdquo; (6d)</div>
+                  <div><span style="color: var(--accent); font-weight: 600;">[CARRIER]</span> No pre-advice received</div>
+                </div>
+                <div class="card-body" style="font-size: 10.5px; color: var(--muted); font-style: italic;">Status green locally; order stuck in gap.</div>
+              </div>
+
+              <div class="specimen-card specimen-hats" data-base-transform="rotate(2deg)" style="top: 125px; right: 16px; width: 230px; transform: rotate(2deg); z-index: 3; background: #23221e; color: #ede6dc; border-color: #4a453e;">
+                <div class="card-tag" style="background: #34322c; color: #e8a87c; border-color: #5c554b;">STRUCTURAL GAP DIAGNOSIS</div>
+                <div class="card-title" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #fdfaf6;">Cross-Silo Matrix</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; line-height: 1.45; color: #c8c0b4; margin: 6px 0;">
+                  <div>Support view: Tracking pending</div>
+                  <div>Warehouse view: Picked &amp; staged</div>
+                  <div>Carrier SLA: Never received parcel</div>
+                  <div style="color: #e8a87c; margin-top: 2px;">Zero owner across handoff seam.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="iv-metrics-plate">
+            <div>
+              <div class="plate-caption">
+                <span>ESCALATION ARCHITECTURE</span>
+                <span>HIERARCHICAL TICKET BOUNCE VS. FUNCTIONAL PULL</span>
+              </div>
+              <div class="eval-bars" role="img" aria-label="Comparison between hierarchical ticket escalation across six separate systems and a functional incident-commander pull model across the broken handoff seam">
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>Hierarchical support escalation (6 silos)</span>
+                    <span class="sample">Context lost per hop</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill muted-bar" style="width: 35%;">Each system checks its own state &amp; closes ticket</div>
+                  </div>
+                </div>
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>Functional pull &amp; seam ownership</span>
+                    <span class="sample">Architecture brief + role hats</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill ink-bar" style="width: 100%;">Maps intended vs actual state across all 6 systems</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="iv-drift-note">
+              <p>Pixel order stuck across six systems; living brief, role hats, structural gap. Maps actual vs intended flow across checkout, payment, order management, warehouse, carrier, and support when no single team owns the handoff seam.</p>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           SECTION: NUMBER-FIDELITY
+           ================================================================= -->
+      <section class="item" id="number-fidelity">
+        <div class="meta">
+          <span class="code">SPEECH</span>
+          <span class="roman">2026</span>
+          <div class="gauge built"></div>
+          <span>EVAL</span>
+        </div>
+        <h2 class="item-title"><a href="./proofs/number-fidelity/" class="title-link">Right meaning, wrong number <span class="ext-arrow">↗</span></a></h2>
+        <p class="teaser">In a voice confirm, the only words that matter are the numbers. No audio is recorded and no model has been scored yet.</p>
+
+        <div class="iv-workbench">
+          <div class="iv-tote-plate">
+            <div class="plate-caption">
+              <span>FIG 5.1 · HINDI-ENGLISH NUMBER TRAP SET</span>
+              <span>50 ITEMS · 5 FAILURE CATEGORIES</span>
+            </div>
+            <svg viewBox="0 0 360 210" role="img" aria-label="Technical diagram of the 50-item Hindi-English spoken number test set showing five trap categories (homophones, near-identical tens, fractions, code-switching, check digits) and a circled number failure on the waveform">
+              <title>Right meaning, wrong number: 50-item Hindi-English number fidelity evaluation design</title>
+              <!-- Waveform strip at top with circled number error -->
+              <rect x="24" y="14" width="180" height="36" fill="#fbf9f5" stroke="#16130e" stroke-width="1.3"/>
+              <path d="M 32 32 L 42 24 L 48 40 L 56 28 L 66 32 L 88 32 L 96 18 L 104 46 L 112 20 L 120 32 L 154 32 L 164 26 L 172 38 L 182 32" fill="none" stroke="#2f4758" stroke-width="1.3"/>
+              <ellipse cx="104" cy="32" rx="18" ry="15" fill="none" stroke="#9c5f34" stroke-width="1.5" stroke-dasharray="3 2"/>
+              <line x1="208" y1="32" x2="242" y2="32" stroke="#9c5f34" stroke-width="1.2"/>
+              <circle cx="208" cy="32" r="2.2" fill="#9c5f34"/>
+              <text x="248" y="35" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600" fill="#7d4822">SAATH(60)≠SAAT(7)</text>
+
+              <!-- 5 Category Bars (10 items each = 50 items) -->
+              <rect x="24" y="58" width="180" height="18" fill="#e6dfd3" stroke="#16130e" stroke-width="1.2"/>
+              <text x="32" y="70" font-family="JetBrains Mono, monospace" font-size="8" fill="#16130e">CAT A (1-10) · Homophones (saath/do)</text>
+
+              <rect x="24" y="80" width="180" height="18" fill="#ece6da" stroke="#16130e" stroke-width="1.2"/>
+              <text x="32" y="92" font-family="JetBrains Mono, monospace" font-size="8" fill="#16130e">CAT B (11-20) · 19/29/49/79 &amp; 15/50</text>
+
+              <rect x="24" y="102" width="180" height="18" fill="#e6dfd3" stroke="#16130e" stroke-width="1.2"/>
+              <text x="32" y="114" font-family="JetBrains Mono, monospace" font-size="8" fill="#16130e">CAT C (21-30) · Fractions (paune teen)</text>
+
+              <rect x="24" y="124" width="180" height="18" fill="#ece6da" stroke="#16130e" stroke-width="1.2"/>
+              <text x="32" y="136" font-family="JetBrains Mono, monospace" font-size="8" fill="#16130e">CAT D (31-40) · Mid-number switch</text>
+
+              <rect x="24" y="146" width="180" height="18" fill="#d8cfc0" stroke="#16130e" stroke-width="1.2"/>
+              <text x="32" y="158" font-family="JetBrains Mono, monospace" font-size="8" fill="#16130e">CAT E (41-50) · Check digits &amp; nahi</text>
+
+              <!-- Stamp badge -->
+              <rect x="218" y="126" width="130" height="38" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
+              <text x="226" y="141" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">TEST SET + PROTOCOL</text>
+              <text x="226" y="156" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">N = 50 SCRIPTS</text>
+            </svg>
+          </div>
+
+          <div class="iv-metrics-plate">
+            <div>
+              <div class="plate-caption">
+                <span>METRIC DESIGN: WER VS. NUMBER FIDELITY</span>
+                <span>EVAL DESIGN ONLY (0 AUDIO RECORDED YET)</span>
+              </div>
+              <div class="eval-bars" role="img" aria-label="Comparison between standard Word Error Rate where 95% word accuracy still fails if the quantity is wrong versus Number Fidelity Error which scores exact numeric fields out of 50 scripts">
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>Standard Word Error Rate (DER / WER)</span>
+                    <span class="sample">Blurs number errors</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill muted-bar" style="width: 95%;">95% words right → still a mispick if 1 digit flips</div>
+                  </div>
+                </div>
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>Number Fidelity Error (NFE · 50 items)</span>
+                    <span class="sample">Failures out of n</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill accent-bar" style="width: 100%;">Exact field match after Hindi-English normalisation</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="iv-drift-note">
+              <p>Speech models are scored on word error rate. In a voice confirm, the only words that matter are the numbers. A 50-item Hindi-English test set and scoring protocol for spoken quantities, fractions, self-corrections ("nahi"), and check digits under warehouse noise. No audio is recorded and no model has been scored yet.</p>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           8. TWO DEPOSIT SCHEMES, ONE ISLAND (Full Workbench Section)
+           ================================================================= -->
+
+      <!-- =================================================================
+           SECTION: TWO-SCHEMES-ONE-ISLAND
+           ================================================================= -->
+      <section class="item" id="two-schemes-one-island">
+        <div class="meta">
+          <span class="code">DEPOSIT</span>
+          <span class="roman">2026</span>
+          <div class="gauge built"></div>
+          <span>BRIEF</span>
+        </div>
+        <h2 class="item-title"><a href="./proofs/two-schemes-one-island/" class="title-link">Two deposit schemes, one island <span class="ext-arrow">↗</span></a></h2>
+        <p class="teaser">From 1 October 2027, Northern Ireland packs carry their own deposit too. The risk changes from "deposit vs none" to "the wrong deposit".</p>
+
+        <div class="iv-workbench">
+          <div class="iv-tote-plate">
+            <div class="plate-caption">
+              <span>FIG 6.1 · ALL-ISLAND DRINKS DISTRIBUTION</span>
+              <span>ROI RE-TURN VS. UK-NI (1 OCT 2027)</span>
+            </div>
+            <svg viewBox="0 0 360 210" role="img" aria-label="Technical diagram showing one shared island distribution warehouse splitting pallets between Republic of Ireland Re-turn deposit packs and Northern Ireland UK deposit scheme packs from 1 October 2027">
+              <title>Two deposit schemes, one island: ROI Re-turn and UK-NI Deposit Return Scheme (1 Oct 2027)</title>
+              <!-- Shared All-Island Warehouse Node -->
+              <rect x="24" y="16" width="180" height="32" fill="#e6dfd3" stroke="#16130e" stroke-width="1.3"/>
+              <text x="34" y="30" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#16130e">ALL-ISLAND BEVERAGE FLOOR</text>
+              <text x="34" y="42" font-family="Newsreader, serif" font-size="9.5" fill="#595044">Same liquid · same bay · two jurisdictions</text>
+
+              <!-- Fork -->
+              <line x1="72" y1="48" x2="72" y2="74" stroke="#2f4758" stroke-width="1.4"/>
+              <line x1="156" y1="48" x2="156" y2="74" stroke="#9c5f34" stroke-width="1.4"/>
+
+              <!-- Left Branch: ROI Re-turn -->
+              <rect x="24" y="74" width="90" height="58" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.4"/>
+              <text x="32" y="90" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#2f4758">ROI · RE-TURN</text>
+              <text x="32" y="104" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#16130e">Live since 2024</text>
+              <text x="32" y="118" font-family="Newsreader, serif" font-size="9" fill="#595044">EUR deposit mark</text>
+
+              <!-- Right Branch: NI / UK DRS -->
+              <rect x="120" y="74" width="90" height="58" fill="#fbf9f5" stroke="#9c5f34" stroke-width="1.5"/>
+              <text x="128" y="90" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#7d4822">NI · UK SCHEME</text>
+              <text x="128" y="104" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#16130e">Starts 1 Oct 2027</text>
+              <text x="128" y="118" font-family="Newsreader, serif" font-size="9" fill="#595044">GBP deposit mark</text>
+
+              <!-- Callout to Seam -->
+              <line x1="214" y1="103" x2="242" y2="103" stroke="#9c5f34" stroke-width="1.2"/>
+              <circle cx="214" cy="103" r="2.2" fill="#9c5f34"/>
+              <text x="248" y="106" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600" fill="#7d4822">2 ACTIVE SCHEMES</text>
+
+              <!-- Bottom Risk Box -->
+              <rect x="24" y="148" width="186" height="38" fill="#d8cfc0" stroke="#16130e" stroke-width="1.3"/>
+              <text x="32" y="163" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#16130e">CROSS-BORDER PICK RISK</text>
+              <text x="32" y="177" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">Wrong deposit barcode on pallet</text>
+
+              <!-- Stamp badge -->
+              <rect x="218" y="148" width="130" height="38" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
+              <text x="226" y="163" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">CUTOVER DATE</text>
+              <text x="226" y="178" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">1 OCTOBER 2027</text>
+            </svg>
+          </div>
+
+          <div class="iv-metrics-plate">
+            <div>
+              <div class="plate-caption">
+                <span>OPERATIONAL FAILURE MODE SHIFT</span>
+                <span>BEFORE VS. AFTER 1 OCT 2027</span>
+              </div>
+              <div class="eval-bars" role="img" aria-label="Shift in operational risk from Deposit versus No Deposit today to Wrong Deposit when Northern Ireland launches its deposit scheme on 1 October 2027">
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>2024 to Sep 2027 (ROI live, NI exempt)</span>
+                    <span class="sample">Binary check</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill muted-bar" style="width: 52%;">Risk: "Deposit vs. None"</div>
+                  </div>
+                </div>
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>From 1 October 2027 (Both schemes live)</span>
+                    <span class="sample">Two deposit SKUs</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill accent-bar" style="width: 100%;">Risk: "The Wrong Deposit" across one island border</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="iv-drift-note">
+              <p>From 1 October 2027, Northern Ireland packs carry their own deposit too. For all-island drinks distribution, the warehouse risk changes from "deposit vs none" to picking or shipping "the wrong deposit" across a land border.</p>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           9. FLOOR FLOW TO EWM GAP PACK (Full Workbench Section)
+           ================================================================= -->
+
+      <!-- =================================================================
+           SECTION: EWM-GAP-PACK
+           ================================================================= -->
+      <section class="item" id="ewm-gap-pack">
+        <div class="meta">
+          <span class="code">EWM</span>
+          <span class="roman">2026</span>
+          <div class="gauge built"></div>
+          <span>TEMPLATE</span>
+        </div>
+        <h2 class="item-title"><a href="./proofs/ewm-gap-pack/" class="title-link">Floor flow to EWM gap pack <span class="ext-arrow">↗</span></a></h2>
+        <p class="teaser">When a warehouse moves from SAP WM to EWM, its data migrates but its handheld scanner logic does not. A real pack uses observed flows.</p>
+
+        <div class="iv-workbench">
+          <div class="iv-tote-plate">
+            <div class="plate-caption">
+              <span>FIG 7.1 · SAP WM → EWM SCANNER FIT-GAP</span>
+              <span>DATA MIGRATES ≠ RF LOGIC MIGRATES</span>
+            </div>
+            <svg viewBox="0 0 360 210" role="img" aria-label="Technical diagram comparing SAP WM table migration with the unspoken handheld RF scanner exception steps that break in SAP EWM unless mapped from observed floor flows">
+              <title>Floor flow to EWM gap pack: mapping observed picker scanner flows before Workshop 1</title>
+              <!-- Top: Master Data Migration (Clean) -->
+              <rect x="24" y="16" width="180" height="32" fill="#e6dfd3" stroke="#2f4758" stroke-width="1.3"/>
+              <text x="34" y="30" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#2f4758">MASTER DATA (WM → EWM)</text>
+              <text x="34" y="42" font-family="Newsreader, serif" font-size="9.5" fill="#595044">Bins, materials, stock tables migrate</text>
+              <line x1="208" y1="32" x2="242" y2="32" stroke="#2f4758" stroke-width="1.2"/>
+              <circle cx="208" cy="32" r="2.2" fill="#2f4758"/>
+              <text x="248" y="35" font-family="JetBrains Mono, monospace" font-size="9" fill="#2f4758">TABLES MOVE</text>
+
+              <!-- Middle: Handheld Scanner Flow with Gap -->
+              <rect x="24" y="62" width="180" height="68" fill="#fbf9f5" stroke="#16130e" stroke-width="1.4"/>
+              <text x="34" y="78" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#16130e">HANDHELD RF SCANNER FLOW</text>
+              <rect x="34" y="86" width="44" height="20" fill="#ece6da" stroke="#16130e" stroke-width="1"/>
+              <text x="41" y="99" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#16130e">SCAN</text>
+              <line x1="78" y1="96" x2="90" y2="96" stroke="#16130e" stroke-width="1.2"/>
+              <!-- Highlighted Missing Step -->
+              <rect x="90" y="84" width="54" height="24" fill="#fbf9f5" stroke="#9c5f34" stroke-width="1.5" stroke-dasharray="3 2"/>
+              <text x="96" y="99" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#7d4822">GAP: EXCP</text>
+              <line x1="144" y1="96" x2="154" y2="96" stroke="#16130e" stroke-width="1.2"/>
+              <rect x="154" y="86" width="40" height="20" fill="#ece6da" stroke="#16130e" stroke-width="1"/>
+              <text x="161" y="99" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#16130e">DROP</text>
+              <text x="34" y="122" font-family="Newsreader, serif" font-style="italic" font-size="9" fill="#595044">Short-pick / split-HU / bay override</text>
+
+              <line x1="208" y1="96" x2="242" y2="96" stroke="#9c5f34" stroke-width="1.2"/>
+              <circle cx="208" cy="96" r="2.2" fill="#9c5f34"/>
+              <text x="248" y="99" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600" fill="#7d4822">RF LOGIC BREAKS</text>
+
+              <!-- Bottom: Gap Pack Output -->
+              <rect x="24" y="144" width="180" height="40" fill="#d8cfc0" stroke="#16130e" stroke-width="1.3"/>
+              <text x="34" y="160" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#16130e">PRE-WORKSHOP GAP PACK</text>
+              <text x="34" y="174" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">Observed aisle habits → EWM fit-gap</text>
+
+              <!-- Stamp badge -->
+              <rect x="218" y="144" width="130" height="40" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
+              <text x="226" y="159" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">TEMPLATE STATUS</text>
+              <text x="226" y="174" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600" fill="#16130e">NEEDS 5 REAL FLOWS</text>
+            </svg>
+          </div>
+
+          <div class="iv-metrics-plate">
+            <div>
+              <div class="plate-caption">
+                <span>MIGRATION DISCOVERY METHOD</span>
+                <span>CONFERENCE ROOM VS. AISLE OBSERVATION</span>
+              </div>
+              <div class="eval-bars" role="img" aria-label="Comparison between conference-room EWM workshops that miss unspoken floor workarounds and an observed floor-flow gap pack prepared before Workshop 1">
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>Standard SOP workshop discovery</span>
+                    <span class="sample">Misses floor workarounds</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill muted-bar" style="width: 40%;">Data migrates; scanner exceptions surface late</div>
+                  </div>
+                </div>
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>Observed floor-flow gap pack</span>
+                    <span class="sample">Before Workshop 1</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill accent-bar" style="width: 100%;">Maps real picker steps &amp; exceptions into EWM fit-gap</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="iv-drift-note">
+              <p>When a warehouse moves from SAP WM to EWM, its data migrates but its handheld scanner logic does not. A template for turning observed picker flows into a SAP EWM fit-gap list before the first workshop. Needs five real flows before it counts as site proof.</p>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           10. THE GHOST SHELF (Full Workbench Section)
+           ================================================================= -->
+
+      <!-- =================================================================
+           SECTION: GHOST-SHELF
+           ================================================================= -->
+      <section class="item" id="ghost-shelf">
+        <div class="meta">
+          <span class="code">SHELF</span>
+          <span class="roman">2026</span>
+          <div class="gauge built"></div>
+          <span>CONCEPT</span>
+        </div>
+        <h2 class="item-title"><a href="./proofs/ghost-shelf/" class="title-link">The ghost shelf <span class="ext-arrow">↗</span></a></h2>
+        <p class="teaser">Shoppers click an ad, land on "out of stock", and leave annoyed. The idea: an ad that tells you the truth before you tap.</p>
+
+        <div class="iv-workbench">
+          <div class="iv-tote-plate">
+            <div class="plate-caption">
+              <span>FIG 8.1 · 24-48H AD FEED SYNC LAG</span>
+              <span>SOLD OUT AT 11:04 · OFF AIR AT 11:04</span>
+            </div>
+            <svg viewBox="0 0 360 210" role="img" aria-label="Technical diagram showing a retail shelf selling out at 11:04 while the daily shopping ad feed keeps buying clicks on a ghost slot for 24 to 48 hours">
+              <title>The ghost shelf: closing the 24 to 48 hour gap between store sell-out and shopping ad feeds</title>
+              <!-- Physical Shelf Row (Sold out at 11:04) -->
+              <rect x="24" y="16" width="180" height="48" fill="#fbf9f5" stroke="#16130e" stroke-width="1.3"/>
+              <line x1="30" y1="54" x2="198" y2="54" stroke="#16130e" stroke-width="2"/>
+              <rect x="36" y="26" width="32" height="28" fill="#e6dfd3" stroke="#2f4758" stroke-width="1.1"/>
+              <!-- Center Empty Ghost Slot -->
+              <rect x="82" y="22" width="64" height="32" fill="none" stroke="#9c5f34" stroke-width="1.5" stroke-dasharray="3 2"/>
+              <text x="92" y="41" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#7d4822">0 STOCK</text>
+              <rect x="160" y="26" width="32" height="28" fill="#e6dfd3" stroke="#2f4758" stroke-width="1.1"/>
+              <line x1="208" y1="40" x2="242" y2="40" stroke="#9c5f34" stroke-width="1.2"/>
+              <circle cx="208" cy="40" r="2.2" fill="#9c5f34"/>
+              <text x="248" y="43" font-family="JetBrains Mono, monospace" font-size="9" font-weight="500" fill="#7d4822">11:04 · SOLD OUT</text>
+
+              <!-- Lag Arrow -->
+              <line x1="114" y1="64" x2="114" y2="86" stroke="#9c5f34" stroke-width="1.4" stroke-dasharray="3 2"/>
+              <text x="122" y="79" font-family="JetBrains Mono, monospace" font-size="8" fill="#7d4822">24-48h feed lag</text>
+
+              <!-- Stale Shopping Ad Tile -->
+              <rect x="24" y="86" width="180" height="38" fill="#ece6da" stroke="#595044" stroke-width="1.2"/>
+              <text x="34" y="101" font-family="JetBrains Mono, monospace" font-size="8" fill="#595044">DAILY BATCH AD FEED (STALE)</text>
+              <text x="34" y="115" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">Still buying clicks on an empty slot</text>
+
+              <!-- Honest Ad Rule -->
+              <rect x="24" y="138" width="180" height="44" fill="#d8cfc0" stroke="#16130e" stroke-width="1.4"/>
+              <text x="34" y="154" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#16130e">HONEST AD CREATIVE</text>
+              <text x="34" y="169" font-family="Newsreader, serif" font-style="italic" font-size="9.5" fill="#16130e">“Sold out. Back Thursday.”</text>
+
+              <!-- Stamp badge -->
+              <rect x="218" y="138" width="130" height="44" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
+              <text x="226" y="153" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">VENDOR STUDY (N=500)</text>
+              <text x="226" y="169" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">97% PAID ON 0 STOCK</text>
+            </svg>
+          </div>
+
+          <div class="iv-metrics-plate">
+            <div>
+              <div class="plate-caption">
+                <span>RETAIL AD SPEND ON OUT-OF-STOCK SKUS</span>
+                <span>SAMPLE: 500 RETAILERS (VENDOR STUDY)</span>
+              </div>
+              <div class="eval-bars" role="img" aria-label="Bar chart showing 97% of 500 retailers in a ShoppingIQ study kept paying for clicks on unavailable products during the 24 to 48 hour feed lag">
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>Retailers paying for clicks on out-of-stock ads</span>
+                    <span class="sample">97% · 500 retailers (24-48h lag)</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill baseline" style="width: 97%;">97% kept paying for unavailable SKUs</div>
+                  </div>
+                </div>
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>Ghost Shelf campaign rule</span>
+                    <span class="sample">Off air or truth-first copy</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill accent-bar" style="width: 100%;">Gone at 11:04 → Off air or "Back Thursday" at 11:04</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="iv-drift-note">
+              <p>Shopping ads usually learn about stock from a feed that refreshes about once a day. Between a product selling out and the feed catching up, the ad keeps running. In that gap, money buys disappointment. (97% figure from a ShoppingIQ study of 500 retailers via Search Engine Land; vendor-sourced figure.)</p>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           11. CAREKIT (Full Workbench Section matching updated CareKit site)
+           ================================================================= -->
+
+      <!-- =================================================================
+           SECTION: CAREKIT
+           ================================================================= -->
+      <section class="item" id="carekit">
+        <div class="meta">
+          <span class="code">CARE</span>
+          <span class="roman">2026</span>
+          <div class="gauge public"></div>
+          <span>IN DESIGN</span>
+        </div>
+        <h2 class="item-title"><a href="https://care-diary-uk.vercel.app" target="_blank" rel="noopener" class="title-link">CareKit (working name) <span class="ext-arrow">↗</span></a></h2>
+        <p class="teaser">A care diary for families looking after an ageing parent in England and Wales. Log the help you give in seconds, and it becomes a dated written record in your own words.</p>
+
+        <div class="iv-workbench">
+          <div class="iv-tote-plate">
+            <div class="plate-caption">
+              <span>FIG 9.1 · STATIONER'S CARE LEDGER</span>
+              <span>QUICK HELP LOG → DATED WRITTEN RECORD</span>
+            </div>
+            <svg viewBox="0 0 360 210" role="img" aria-label="Technical specimen of the CareKit cloth-bound stationer's ledger showing forest-slate bookcloth spine, top carmine ribbon bookmark, double oxblood margin rule, and dated family care entries">
+              <title>CareKit stationer's ledger specimen: quick daily logs compounding into a dated written family record</title>
+              <!-- Cloth-bound ledger sheet -->
+              <rect x="24" y="14" width="184" height="172" fill="#faf6ee" stroke="#16130e" stroke-width="1.3"/>
+              <!-- Forest-slate bookcloth spine -->
+              <rect x="24" y="14" width="12" height="172" fill="#2b3830"/>
+              <!-- Carmine ribbon bookmark at top -->
+              <polygon points="50,14 60,14 60,32 55,27 50,32" fill="#7c2d23"/>
+              <!-- Double oxblood margin rail -->
+              <line x1="76" y1="14" x2="76" y2="186" stroke="#7c2d23" stroke-width="1.2"/>
+              <line x1="80" y1="14" x2="80" y2="186" stroke="#7c2d23" stroke-width="0.7"/>
+
+              <!-- Ruled entry rows -->
+              <line x1="36" y1="56" x2="208" y2="56" stroke="#e5dfd3" stroke-width="1"/>
+              <text x="42" y="49" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#7c2d23">14 OCT</text>
+              <text x="86" y="49" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">08:15 · Wash, dressing &amp; tablets</text>
+
+              <line x1="36" y1="92" x2="208" y2="92" stroke="#e5dfd3" stroke-width="1"/>
+              <text x="42" y="84" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#7c2d23">14 OCT</text>
+              <text x="86" y="84" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">22:40 · Night settling &amp; bathroom</text>
+
+              <line x1="36" y1="128" x2="208" y2="128" stroke="#e5dfd3" stroke-width="1"/>
+              <text x="42" y="120" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#7c2d23">15 OCT</text>
+              <text x="86" y="120" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">13:10 · Hot meal &amp; prompt to drink</text>
+
+              <!-- 7-day cadence strip at bottom of sheet -->
+              <text x="42" y="162" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#595044">CADENCE</text>
+              <rect x="86" y="153" width="12" height="12" fill="#2b3830"/>
+              <rect x="102" y="153" width="12" height="12" fill="#2b3830"/>
+              <rect x="118" y="153" width="12" height="12" fill="#7c2d23"/>
+              <rect x="134" y="153" width="12" height="12" fill="#2b3830"/>
+              <rect x="150" y="153" width="12" height="12" fill="#e5dfd3" stroke="#16130e" stroke-width="0.8"/>
+              <rect x="166" y="153" width="12" height="12" fill="#2b3830"/>
+              <rect x="182" y="153" width="12" height="12" fill="#2b3830"/>
+
+              <!-- Callout leaders -->
+              <line x1="212" y1="48" x2="242" y2="48" stroke="#9c5f34" stroke-width="1.2"/>
+              <circle cx="212" cy="48" r="2.2" fill="#9c5f34"/>
+              <text x="248" y="51" font-family="JetBrains Mono, monospace" font-size="9" font-weight="500" fill="#7d4822">10S DAILY ENTRY</text>
+
+              <line x1="212" y1="118" x2="242" y2="118" stroke="#9c5f34" stroke-width="1.2"/>
+              <circle cx="212" cy="118" r="2.2" fill="#9c5f34"/>
+              <text x="248" y="121" font-family="JetBrains Mono, monospace" font-size="9" fill="#7d4822">DATED LEDGER LINE</text>
+
+              <!-- Stamp badge -->
+              <rect x="218" y="146" width="130" height="40" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
+              <text x="226" y="161" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">ENGLAND &amp; WALES</text>
+              <text x="226" y="176" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">IN YOUR OWN WORDS</text>
+            </svg>
+          </div>
+
+          <div class="iv-metrics-plate">
+            <div>
+              <div class="plate-caption">
+                <span>RECORDKEEPING WORKFLOW</span>
+                <span>FROM UNLOGGED HELP TO DATED RECORD</span>
+              </div>
+              <div class="eval-bars" role="img" aria-label="Comparison between reconstructing months of family care from memory and logging daily help in seconds into a dated written record">
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>Reconstructing care months later from memory</span>
+                    <span class="sample">Routine help forgotten</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill muted-bar" style="width: 32%;">Gaps on bad days &amp; night waking</div>
+                  </div>
+                </div>
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>Quick daily care log (CareKit)</span>
+                    <span class="sample">Logged in seconds</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill accent-bar" style="width: 100%;">Dated written record in the family's own words</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="iv-drift-note">
+              <p>A care diary for families looking after an ageing parent in England and Wales. Log the help you give in seconds, and it becomes a dated written record in your own words.</p>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           12. HEARD (Full Workbench Section matching updated Heard v2 site)
+           ================================================================= -->
+
+      <!-- =================================================================
+           SECTION: HEARD
+           ================================================================= -->
+      <section class="item" id="heard">
+        <div class="meta">
+          <span class="code">HEALTH</span>
+          <span class="roman">2026</span>
+          <div class="gauge public"></div>
+          <span>IN DESIGN</span>
+        </div>
+        <h2 class="item-title"><a href="https://heard-ten-puce.vercel.app" target="_blank" rel="noopener" class="title-link">Heard <span class="ext-arrow">↗</span></a></h2>
+        <p class="teaser">A diary for endometriosis and pelvic pain that turns 10-second daily logs into a plain summary to take to a GP appointment.</p>
+
+        <div class="iv-workbench">
+          <div class="iv-tote-plate">
+            <div class="plate-caption">
+              <span>FIG 10.1 · HOLDING THE ROOM · GP SUMMARY</span>
+              <span>10S PAIN LOG → CONSULTATION BRIEF</span>
+            </div>
+            <svg viewBox="0 0 360 210" role="img" aria-label="Technical specimen of Heard showing the deep mineral-petrol acoustic stage with concentric copper-rose vocal aperture arcs and the graduated 1-to-10 daily pain-scale tick row">
+              <title>Heard specimen: 10-second daily pelvic pain log projecting into a plain GP appointment summary</title>
+              <!-- Deep mineral-petrol stage ("Holding the Room") -->
+              <rect x="24" y="14" width="184" height="114" fill="#111E25" stroke="#16130e" stroke-width="1.3"/>
+              <!-- Concentric copper-rose vocal aperture arcs -->
+              <circle cx="52" cy="56" r="4" fill="#E29578"/>
+              <path d="M 64 42 A 18 18 0 0 1 64 70" fill="none" stroke="#E29578" stroke-width="1.6"/>
+              <path d="M 76 34 A 28 28 0 0 1 76 78" fill="none" stroke="#F2F4F5" stroke-width="1.3"/>
+              <path d="M 88 26 A 38 38 0 0 1 88 86" fill="none" stroke="#B4C3C9" stroke-width="1" stroke-dasharray="3 2"/>
+              <text x="108" y="48" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#F2F4F5">VOICE MADE VISIBLE</text>
+              <text x="108" y="62" font-family="Newsreader, serif" font-style="italic" font-size="9.5" fill="#B4C3C9">90-day pattern sheet</text>
+
+              <!-- Graduated 1-10 pain-scale tick row at bottom of dark chamber -->
+              <line x1="38" y1="106" x2="194" y2="106" stroke="#B4C3C9" stroke-width="1"/>
+              <line x1="42" y1="101" x2="42" y2="111" stroke="#B4C3C9" stroke-width="1"/>
+              <line x1="58" y1="103" x2="58" y2="109" stroke="#B4C3C9" stroke-width="1"/>
+              <line x1="74" y1="103" x2="74" y2="109" stroke="#B4C3C9" stroke-width="1"/>
+              <line x1="90" y1="103" x2="90" y2="109" stroke="#B4C3C9" stroke-width="1"/>
+              <line x1="106" y1="100" x2="106" y2="112" stroke="#F2F4F5" stroke-width="1.2"/>
+              <line x1="122" y1="103" x2="122" y2="109" stroke="#B4C3C9" stroke-width="1"/>
+              <line x1="138" y1="96" x2="138" y2="112" stroke="#E29578" stroke-width="2"/>
+              <circle cx="138" cy="93" r="3" fill="#E29578"/>
+              <text x="131" y="86" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#E29578">7/10</text>
+              <line x1="154" y1="103" x2="154" y2="109" stroke="#B4C3C9" stroke-width="1"/>
+              <line x1="170" y1="103" x2="170" y2="109" stroke="#B4C3C9" stroke-width="1"/>
+              <line x1="186" y1="101" x2="186" y2="111" stroke="#F2F4F5" stroke-width="1.2"/>
+
+              <!-- GP Summary Sheet Below -->
+              <rect x="24" y="138" width="184" height="48" fill="#fbf9f5" stroke="#16130e" stroke-width="1.3"/>
+              <text x="34" y="154" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#16130e">GP APPOINTMENT BRIEF (1 PAGE)</text>
+              <text x="34" y="168" font-family="Newsreader, serif" font-size="9.5" fill="#595044">Flare frequency · cycle link · work missed</text>
+
+              <!-- Callout leaders -->
+              <line x1="212" y1="96" x2="242" y2="96" stroke="#9c5f34" stroke-width="1.2"/>
+              <circle cx="212" cy="96" r="2.2" fill="#9c5f34"/>
+              <text x="248" y="99" font-family="JetBrains Mono, monospace" font-size="9" font-weight="500" fill="#7d4822">10S SEVERITY TICK</text>
+
+              <!-- Stamp badge -->
+              <rect x="218" y="138" width="130" height="48" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
+              <text x="226" y="155" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">10-MIN GP SLOT</text>
+              <text x="226" y="171" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">PLAIN EVIDENCE</text>
+            </svg>
+          </div>
+
+          <div class="iv-metrics-plate">
+            <div>
+              <div class="plate-caption">
+                <span>CONSULTATION PREPARATION</span>
+                <span>VERBAL RECALL VS. STRUCTURED GP SUMMARY</span>
+              </div>
+              <div class="eval-bars" role="img" aria-label="Comparison between summarizing months of pelvic pain from memory in a 10-minute GP slot versus handing over a plain 1-page summary built from 10-second daily logs">
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>Recalling months of flares verbally in 10 minutes</span>
+                    <span class="sample">Pattern gets lost</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill muted-bar" style="width: 30%;">Hard to compress under time pressure</div>
+                  </div>
+                </div>
+                <div class="eval-row">
+                  <div class="eval-row-label">
+                    <span>10-second daily log → GP appointment brief</span>
+                    <span class="sample">Heard summary sheet</span>
+                  </div>
+                  <div class="eval-track">
+                    <div class="eval-fill accent-bar" style="width: 100%;">Plain written summary of severity, timing &amp; impact</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="iv-drift-note">
+              <p>A diary for endometriosis and pelvic pain that turns 10-second daily logs into a plain summary to take to a GP appointment.</p>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           13. SYSTEMS BRIEF (Full Workbench Section: Six Systems, Broken Link)
+           ================================================================= -->
+
+      <!-- =================================================================
+           SECTION: AUTOPILOT
+           ================================================================= -->
       <section class="item" id="autopilot">
         <div class="meta">
           <span class="code">AUTOPILOT</span>
@@ -1006,13 +2017,13 @@
           <div class="gauge mind"></div>
           <span>LIFE OS</span>
         </div>
-        <h2 class="item-title">Autopilot</h2>
+        <h2 class="item-title"><a href="#autopilot-panel" class="title-link">Autopilot</a></h2>
         <p class="teaser">Execution layer I designed: Board, cascade, /log; sessions inherit truth.</p>
 
         <div class="iv-workbench">
           <div class="iv-tote-plate">
             <div class="plate-caption">
-              <span>FIG 4.1 · EXECUTION CONTROL PLANE</span>
+              <span>FIG 11.1 · EXECUTION CONTROL PLANE</span>
               <span>SWEEP → RECONCILE → BOARD → /LOG</span>
             </div>
             <svg viewBox="0 0 360 220" role="img" aria-label="Technical diagram of Autopilot showing four vertical execution layers: Sweep Fronts, Reconcile Drift, Board Stall Gate, and Cascade plus /log return loop">
@@ -1061,6 +2072,33 @@
               <text x="224" y="167" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">PERSISTENT MEMORY</text>
               <text x="224" y="182" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">ZERO BLIND WAKES</text>
             </svg>
+            <div class="specimen-tray" style="min-height: 280px;">
+              <div class="specimen-tray-header">
+                <span>AUTOPILOT SNAPSHOTS</span>
+                <span class="drag-hint">DRAG TO ARRANGE ⤢</span>
+              </div>
+              <div class="specimen-card specimen-board" data-base-transform="rotate(-1.5deg)" style="top: 22px; left: 16px; width: 240px; transform: rotate(-1.5deg); z-index: 2; border-left: 3px solid var(--accent);">
+                <div class="card-tag">BOARD.MD · SINGLE FACE</div>
+                <div class="card-title" style="font-size: 12.5px;">Needs You Queue</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; line-height: 1.5; color: var(--text); margin: 6px 0;">
+                  <div><span style="color: var(--accent); font-weight: 600;">[ ]</span> 14:00 Louise mail send (stalled)</div>
+                  <div><span style="color: #2f7a4d; font-weight: 600;">[x]</span> 10:30 Reconcile tracker mtime</div>
+                  <div><span style="color: #2f7a4d; font-weight: 600;">[x]</span> 09:15 Window &amp; Priorities sweep</div>
+                </div>
+                <div class="card-body" style="font-size: 10.5px; font-style: italic; color: var(--muted);">context: &ldquo;Louise Demo Stock thread ready in drafts&rdquo;</div>
+              </div>
+
+              <div class="specimen-card specimen-cascade" data-base-transform="rotate(2deg)" style="top: 125px; right: 16px; width: 230px; transform: rotate(2deg); z-index: 3; background: #23221e; color: #ede6dc; border-color: #4a453e;">
+                <div class="card-tag" style="background: #34322c; color: #79d2a6; border-color: #5c554b;">SESSION MEMORY CASCADE</div>
+                <div class="card-title" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #fdfaf6;">$ /autopilot sweep</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; line-height: 1.45; color: #c8c0b4; margin: 6px 0;">
+                  <div>[OK] Priorities.md fresh (0 drift)</div>
+                  <div>[OK] Window.md (18h available)</div>
+                  <div><span style="color: #e8a87c;">[STALL]</span> Spend &amp; sends &rarr; Board.md</div>
+                  <div style="color: #79d2a6;">[LOG] Compounding across sessions</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="iv-metrics-plate">
@@ -1438,6 +2476,10 @@ Tell the user: the log was updated (or created), the file path, and one sentence
       <!-- =================================================================
            5. CLOSING THE LOOP (Workbench: Selective Expression Plate + Xenrich)
            ================================================================= -->
+
+      <!-- =================================================================
+           SECTION: CLOSING-THE-LOOP
+           ================================================================= -->
       <section class="item" id="closing-the-loop">
         <div class="meta">
           <span class="code">LOOP</span>
@@ -1445,13 +2487,13 @@ Tell the user: the log was updated (or created), the file path, and one sentence
           <div class="gauge mind"></div>
           <span>ATTENTION</span>
         </div>
-        <h2 class="item-title">Closing the loop</h2>
+        <h2 class="item-title"><a href="#loop-panel" class="title-link">Closing the loop</a></h2>
         <p class="teaser">Cell, express, clear. Xenrich as the receipt on bookmarks and the feed.</p>
 
         <div class="iv-workbench">
           <div class="iv-tote-plate">
             <div class="plate-caption">
-              <span>FIG 5.1 · SELECTIVE EXPRESSION PIPELINE</span>
+              <span>FIG 12.1 · SELECTIVE EXPRESSION PIPELINE</span>
               <span>STAGE → WHY → FILE → DELETE</span>
             </div>
             <svg viewBox="0 0 360 220" role="img" aria-label="Technical diagram of the Xenrich bookmark enrichment loop showing Stage by Folder world, Human Why enrichment, Filing into active thread plus append-only ledger receipt, and Bookmark deletion">
@@ -1496,6 +2538,33 @@ Tell the user: the log was updated (or created), the file path, and one sentence
               <text x="224" y="167" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">TRAIL = LEDGER.MD</text>
               <text x="224" y="182" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">SAVED QUEUE = 0</text>
             </svg>
+            <div class="specimen-tray" style="min-height: 280px;">
+              <div class="specimen-tray-header">
+                <span>WORKFLOW SNAPSHOTS</span>
+                <span class="drag-hint">DRAG TO ARRANGE ⤢</span>
+              </div>
+              <div class="specimen-card specimen-audit" data-base-transform="rotate(-1.5deg)" style="top: 22px; left: 16px; width: 240px; transform: rotate(-1.5deg); z-index: 2; background: #23221e; color: #ede6dc; border-color: #4a453e;">
+                <div class="card-tag" style="background: #34322c; color: #e8a87c; border-color: #5c554b;">TRANSCRIPT AUDIT RUN</div>
+                <div class="card-title" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #fdfaf6;">$ /loop audit --session</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; line-height: 1.45; color: #c8c0b4; margin: 6px 0;">
+                  <div>[SCAN] 14 claims across 37 turns</div>
+                  <div><span style="color: #e8a87c;">[FLAG]</span> Turn 18: unverified precond</div>
+                  <div><span style="color: #79d2a6;">[EXTRACT]</span> Rule filed to Intake.md</div>
+                  <div style="color: #9c9488;">[STATUS] Closed before session ends</div>
+                </div>
+              </div>
+
+              <div class="specimen-card specimen-manifest" data-base-transform="rotate(2deg)" style="top: 125px; right: 16px; width: 230px; transform: rotate(2deg); z-index: 3; border-left: 3px solid var(--ink);">
+                <div class="card-tag">SKILL SCHEMA MANIFEST</div>
+                <div class="card-title" style="font-family: 'JetBrains Mono', monospace; font-size: 11px;">closing-the-loop.yaml</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; line-height: 1.45; color: var(--text); margin: 6px 0; background: var(--bg); padding: 6px; border: 1px solid var(--rule-strong);">
+                  <div>name: closing-the-loop</div>
+                  <div>type: reflective-audit</div>
+                  <div>portable: true</div>
+                  <div>gates: [verify, intake]</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="iv-metrics-plate">
@@ -1665,6 +2734,190 @@ If a folder is empty, say so plainly and move on.
       <div id="stupid-ideas">
 
         <!-- 6.1 Shankha Alarm -->
+
+      <!-- =================================================================
+           PLAYFUL / LAB SECTIONS (Playful prototypes placed at the end)
+           ================================================================= -->
+      <div id="stupid-ideas">
+
+        <!-- Lab piece: dictation-exhaust -->
+        <section class="item" id="dictation-exhaust">
+          <div class="meta">
+            <span class="code">LAB · CORPUS</span>
+            <span class="roman">2026</span>
+            <div class="gauge public"></div>
+            <span>SQLITE</span>
+          </div>
+          <h2 class="item-title"><a href="#dictation-exhaust" class="title-link">Dictation exhaust</a></h2>
+          <p class="teaser">Years of MacWhisper push-to-talk SQLite logs turned into computer-use episodes and a private command lexicon.</p>
+
+          <div class="iv-workbench">
+            <div class="iv-tote-plate">
+              <div class="plate-caption">
+                <span>FIG 13.1 · SPEECH-TO-TOOL EXHAUST PIPELINE</span>
+                <span>LOCAL SQLITE → EPISODES &amp; LEXICON</span>
+              </div>
+              <svg viewBox="0 0 360 210" role="img" aria-label="Technical diagram showing MacWhisper push-to-talk SQLite rows grouped into computer-use episodes, re-prompt friction scores, and a private command lexicon">
+                <title>Dictation exhaust pipeline: MacWhisper SQLite table to computer-use episodes, friction scores, and command lexicon</title>
+                <!-- Row 1: SQLite Table Schema -->
+                <rect x="24" y="18" width="180" height="44" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.3"/>
+                <rect x="24" y="18" width="180" height="15" fill="#e6dfd3" stroke="#2f4758" stroke-width="1.1"/>
+                <text x="32" y="29" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#2f4758">MACWHISPER.SQLITE</text>
+                <text x="32" y="45" font-family="JetBrains Mono, monospace" font-size="8" fill="#16130e">ts | transcript | target_app</text>
+                <text x="32" y="56" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#595044">years of push-to-talk rows</text>
+                <line x1="208" y1="40" x2="242" y2="40" stroke="#9c5f34" stroke-width="1.2"/>
+                <circle cx="208" cy="40" r="2.2" fill="#9c5f34"/>
+                <text x="248" y="43" font-family="JetBrains Mono, monospace" font-size="9" fill="#7d4822">RAW EXHAUST</text>
+
+                <line x1="114" y1="62" x2="114" y2="78" stroke="#16130e" stroke-width="1.3"/>
+
+                <!-- Row 2: Episode Windowing & Friction Score -->
+                <rect x="24" y="78" width="180" height="36" fill="#ece6da" stroke="#16130e" stroke-width="1.3"/>
+                <text x="32" y="92" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#16130e">RE-PROMPT FRICTION SCORE</text>
+                <text x="32" y="105" font-family="Newsreader, serif" font-size="9.5" fill="#595044">Adjacent retries inside same app window</text>
+                <line x1="208" y1="96" x2="242" y2="96" stroke="#9c5f34" stroke-width="1.2"/>
+                <circle cx="208" cy="96" r="2.2" fill="#9c5f34"/>
+                <text x="248" y="99" font-family="JetBrains Mono, monospace" font-size="9" fill="#7d4822">FRICTION METRIC</text>
+
+                <line x1="114" y1="114" x2="114" y2="130" stroke="#16130e" stroke-width="1.3"/>
+
+                <!-- Row 3: Derived Outputs -->
+                <rect x="24" y="130" width="180" height="38" fill="#d8cfc0" stroke="#9c5f34" stroke-width="1.4"/>
+                <text x="32" y="145" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#7d4822">EPISODES + COMMAND LEXICON</text>
+                <text x="32" y="158" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">Intentional speech-to-tool corpus</text>
+
+                <!-- Stamp badge -->
+                <rect x="218" y="130" width="130" height="38" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
+                <text x="226" y="145" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">LOCAL SQLITE TRAIL</text>
+                <text x="226" y="160" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">3 DERIVED ASSETS</text>
+              </svg>
+            </div>
+
+            <div class="iv-metrics-plate">
+              <div>
+                <div class="plate-caption">
+                  <span>CORPUS EXTRACTION</span>
+                  <span>BYPRODUCT → STRUCTURED DATASET</span>
+                </div>
+                <div class="eval-bars" role="img" aria-label="Transformation of local MacWhisper SQLite logs into computer-use demo episodes, re-prompt friction scores, and a private command lexicon">
+                  <div class="eval-row">
+                    <div class="eval-row-label">
+                      <span>Raw push-to-talk history (timestamp, text, app)</span>
+                      <span class="sample">Local SQLite</span>
+                    </div>
+                    <div class="eval-track">
+                      <div class="eval-fill muted-bar" style="width: 45%;">Unmined local log</div>
+                    </div>
+                  </div>
+                  <div class="eval-row">
+                    <div class="eval-row-label">
+                      <span>Mined speech-to-tool corpus</span>
+                      <span class="sample">Episodes · Friction · Lexicon</span>
+                    </div>
+                    <div class="eval-track">
+                      <div class="eval-fill ink-bar" style="width: 100%;">Computer-use episodes + re-prompt scores + lexicon</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="iv-drift-note">
+                <p>Years of MacWhisper push-to-talk left a local SQLite trail; timestamp, text, target app. That history became a personal corpus: intentional speech-to-tool exhaust. From it: computer-use demo episodes, re-prompt friction scores, and a private command lexicon.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6.4 Clean and Seal -->
+
+        <!-- Lab piece: clean-and-seal -->
+        <section class="item" id="clean-and-seal">
+          <div class="meta">
+            <span class="code">LAB · PACKAGING</span>
+            <span class="roman">2026</span>
+            <div class="gauge public"></div>
+            <span>SEQUENCE</span>
+          </div>
+          <h2 class="item-title"><a href="#clean-and-seal" class="title-link">Clean and Seal</a></h2>
+          <p class="teaser">Pocket dual stick putting tear-wipe and a liquid-plaster dose in one forced clean-then-seal pass.</p>
+
+          <div class="iv-workbench">
+            <div class="iv-tote-plate">
+              <div class="plate-caption">
+                <span>FIG 14.1 · DUAL-ENDED SINGLE-USE STICK</span>
+                <span>FORCED 1 → 2 POCKET SEQUENCE</span>
+              </div>
+              <svg viewBox="0 0 360 210" role="img" aria-label="Technical sectioned drawing of a single-use pocket dual stick with End 01 tear-wipe swab and End 02 liquid-plaster seal separated by a center barrier">
+                <title>Clean and Seal pocket dual stick: End 01 Tear-Wipe and End 02 Liquid-Plaster Dose in one pass</title>
+                <!-- Step 1 Chamber: Tear-Wipe -->
+                <rect x="24" y="42" width="180" height="36" rx="4" fill="#e6dfd3" stroke="#2f4758" stroke-width="1.4"/>
+                <text x="34" y="58" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#2f4758">END 01 · TEAR-WIPE SWAB</text>
+                <text x="34" y="70" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">Antiseptic prep pad (first pass)</text>
+                <line x1="208" y1="60" x2="242" y2="60" stroke="#9c5f34" stroke-width="1.2"/>
+                <circle cx="208" cy="60" r="2.2" fill="#9c5f34"/>
+                <text x="248" y="63" font-family="JetBrains Mono, monospace" font-size="9" font-weight="500" fill="#7d4822">STEP 01 · CLEAN</text>
+
+                <!-- Center Snap / Barrier Collar -->
+                <rect x="64" y="78" width="100" height="16" fill="#16130e"/>
+                <text x="76" y="89" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#f7f4ee">SEQUENCE COLLAR</text>
+
+                <!-- Step 2 Chamber: Liquid Plaster -->
+                <rect x="24" y="94" width="180" height="36" rx="4" fill="#fbf9f5" stroke="#9c5f34" stroke-width="1.5"/>
+                <text x="34" y="110" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#7d4822">END 02 · LIQUID-PLASTER DOSE</text>
+                <text x="34" y="122" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">Film-forming seal (second pass)</text>
+                <line x1="208" y1="112" x2="242" y2="112" stroke="#9c5f34" stroke-width="1.2"/>
+                <circle cx="208" cy="112" r="2.2" fill="#9c5f34"/>
+                <text x="248" y="115" font-family="JetBrains Mono, monospace" font-size="9" font-weight="500" fill="#7d4822">STEP 02 · SEAL</text>
+
+                <!-- Stamp badge -->
+                <rect x="24" y="148" width="324" height="36" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
+                <text x="34" y="163" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">CARRY-FIRST SINGLE-USE MULTIPACK</text>
+                <text x="34" y="177" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">EXISTING CHEMISTRY · FORCED 1-PASS HABIT</text>
+              </svg>
+            </div>
+
+            <div class="iv-metrics-plate">
+              <div>
+                <div class="plate-caption">
+                  <span>FRICTION REMOVAL</span>
+                  <span>TWO FIDDLES VS. ONE FORCED PASS</span>
+                </div>
+                <div class="eval-bars" role="img" aria-label="Comparison showing loose wipe plus separate plaster gets skipped for small scratches whereas a carry-first dual stick forces clean-then-seal in one pass">
+                  <div class="eval-row">
+                    <div class="eval-row-label">
+                      <span>Loose wipe + separate plaster</span>
+                      <span class="sample">Two separate fiddles</span>
+                    </div>
+                    <div class="eval-track">
+                      <div class="eval-fill muted-bar" style="width: 28%;">Small scratches ignored</div>
+                    </div>
+                  </div>
+                  <div class="eval-row">
+                    <div class="eval-row-label">
+                      <span>Carry-first pocket dual stick</span>
+                      <span class="sample">1 pass: wipe → liquid seal</span>
+                    </div>
+                    <div class="eval-track">
+                      <div class="eval-fill accent-bar" style="width: 100%;">Forced clean-then-seal sequence carried in pocket</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="iv-drift-note">
+                <p>Small scratches get ignored because clean and cover are two separate fiddles. A pocket dual stick puts tear-wipe and a liquid-plaster dose in one pass, as a carry-first single-use multipack. The bet is readiness and a forced clean-then-seal sequence; chemistry that already works, carried so it gets used.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- =================================================================
+           7. RIGHT MEANING, WRONG NUMBER (Full Workbench Section)
+           ================================================================= -->
+
+        <!-- Lab piece: shankha-alarm -->
         <section class="item" id="shankha-alarm">
           <div class="meta">
             <span class="code">LAB · ACOUSTICS</span>
@@ -1672,13 +2925,13 @@ If a folder is empty, say so plainly and move on.
             <div class="gauge public"></div>
             <span>SIMULATION</span>
           </div>
-          <h2 class="item-title">Shankha Alarm</h2>
+          <h2 class="item-title"><a href="#shankha-alarm" class="title-link">Shankha Alarm</a></h2>
           <p class="teaser">Some ideas start as a sensation or a narrow fear and refuse to leave. These are the ones chased far enough to leave a trail.</p>
 
           <div class="iv-workbench">
             <div class="iv-tote-plate">
               <div class="plate-caption">
-                <span>FIG 6.1 · PNEUMATIC CONCH RESONATOR</span>
+                <span>FIG 15.1 · PNEUMATIC CONCH RESONATOR</span>
                 <span>BEM ACOUSTICS · OPEN ON PEETA</span>
               </div>
               <svg viewBox="0 0 360 210" role="img" aria-label="Technical cross-section of a real conch shell on a stepped peeta stand coupled to a quiet air pump and accumulator">
@@ -1761,6 +3014,8 @@ If a folder is empty, say so plainly and move on.
         </section>
 
         <!-- 6.2 Net Saver / EntangleSafe -->
+
+        <!-- Lab piece: net-saver -->
         <section class="item" id="net-saver">
           <div class="meta">
             <span class="code">LAB · BUOYANCY</span>
@@ -1768,13 +3023,13 @@ If a folder is empty, say so plainly and move on.
             <div class="gauge public"></div>
             <span>PROTOTYPE</span>
           </div>
-          <h2 class="item-title">Net Saver / EntangleSafe</h2>
+          <h2 class="item-title"><a href="#net-saver" class="title-link">Net Saver / EntangleSafe</a></h2>
           <p class="teaser">Collar-level hydrostatic buoyancy prototype against quiet inland fishing-net drowning.</p>
 
           <div class="iv-workbench">
             <div class="iv-tote-plate">
               <div class="plate-caption">
-                <span>FIG 6.2 · HYDROSTATIC LIFT VS. NET TENSION</span>
+                <span>FIG 16.1 · HYDROSTATIC LIFT VS. NET TENSION</span>
                 <span>COLLAR-LEVEL FORCE BALANCE</span>
               </div>
               <svg viewBox="0 0 360 210" role="img" aria-label="Technical force diagram showing a collar-level hydrostatic buoyancy ring generating upward lift against downward inland fishing-net tension">
@@ -1845,867 +3100,16 @@ If a folder is empty, say so plainly and move on.
         </section>
 
         <!-- 6.3 Dictation exhaust -->
-        <section class="item" id="dictation-exhaust">
-          <div class="meta">
-            <span class="code">LAB · CORPUS</span>
-            <span class="roman">2026</span>
-            <div class="gauge public"></div>
-            <span>SQLITE</span>
-          </div>
-          <h2 class="item-title">Dictation exhaust</h2>
-          <p class="teaser">Years of MacWhisper push-to-talk SQLite logs turned into computer-use episodes and a private command lexicon.</p>
-
-          <div class="iv-workbench">
-            <div class="iv-tote-plate">
-              <div class="plate-caption">
-                <span>FIG 6.3 · SPEECH-TO-TOOL EXHAUST PIPELINE</span>
-                <span>LOCAL SQLITE → EPISODES &amp; LEXICON</span>
-              </div>
-              <svg viewBox="0 0 360 210" role="img" aria-label="Technical diagram showing MacWhisper push-to-talk SQLite rows grouped into computer-use episodes, re-prompt friction scores, and a private command lexicon">
-                <title>Dictation exhaust pipeline: MacWhisper SQLite table to computer-use episodes, friction scores, and command lexicon</title>
-                <!-- Row 1: SQLite Table Schema -->
-                <rect x="24" y="18" width="180" height="44" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.3"/>
-                <rect x="24" y="18" width="180" height="15" fill="#e6dfd3" stroke="#2f4758" stroke-width="1.1"/>
-                <text x="32" y="29" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#2f4758">MACWHISPER.SQLITE</text>
-                <text x="32" y="45" font-family="JetBrains Mono, monospace" font-size="8" fill="#16130e">ts | transcript | target_app</text>
-                <text x="32" y="56" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#595044">years of push-to-talk rows</text>
-                <line x1="208" y1="40" x2="242" y2="40" stroke="#9c5f34" stroke-width="1.2"/>
-                <circle cx="208" cy="40" r="2.2" fill="#9c5f34"/>
-                <text x="248" y="43" font-family="JetBrains Mono, monospace" font-size="9" fill="#7d4822">RAW EXHAUST</text>
-
-                <line x1="114" y1="62" x2="114" y2="78" stroke="#16130e" stroke-width="1.3"/>
-
-                <!-- Row 2: Episode Windowing & Friction Score -->
-                <rect x="24" y="78" width="180" height="36" fill="#ece6da" stroke="#16130e" stroke-width="1.3"/>
-                <text x="32" y="92" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#16130e">RE-PROMPT FRICTION SCORE</text>
-                <text x="32" y="105" font-family="Newsreader, serif" font-size="9.5" fill="#595044">Adjacent retries inside same app window</text>
-                <line x1="208" y1="96" x2="242" y2="96" stroke="#9c5f34" stroke-width="1.2"/>
-                <circle cx="208" cy="96" r="2.2" fill="#9c5f34"/>
-                <text x="248" y="99" font-family="JetBrains Mono, monospace" font-size="9" fill="#7d4822">FRICTION METRIC</text>
-
-                <line x1="114" y1="114" x2="114" y2="130" stroke="#16130e" stroke-width="1.3"/>
-
-                <!-- Row 3: Derived Outputs -->
-                <rect x="24" y="130" width="180" height="38" fill="#d8cfc0" stroke="#9c5f34" stroke-width="1.4"/>
-                <text x="32" y="145" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#7d4822">EPISODES + COMMAND LEXICON</text>
-                <text x="32" y="158" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">Intentional speech-to-tool corpus</text>
-
-                <!-- Stamp badge -->
-                <rect x="218" y="130" width="130" height="38" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
-                <text x="226" y="145" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">LOCAL SQLITE TRAIL</text>
-                <text x="226" y="160" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">3 DERIVED ASSETS</text>
-              </svg>
-            </div>
-
-            <div class="iv-metrics-plate">
-              <div>
-                <div class="plate-caption">
-                  <span>CORPUS EXTRACTION</span>
-                  <span>BYPRODUCT → STRUCTURED DATASET</span>
-                </div>
-                <div class="eval-bars" role="img" aria-label="Transformation of local MacWhisper SQLite logs into computer-use demo episodes, re-prompt friction scores, and a private command lexicon">
-                  <div class="eval-row">
-                    <div class="eval-row-label">
-                      <span>Raw push-to-talk history (timestamp, text, app)</span>
-                      <span class="sample">Local SQLite</span>
-                    </div>
-                    <div class="eval-track">
-                      <div class="eval-fill muted-bar" style="width: 45%;">Unmined local log</div>
-                    </div>
-                  </div>
-                  <div class="eval-row">
-                    <div class="eval-row-label">
-                      <span>Mined speech-to-tool corpus</span>
-                      <span class="sample">Episodes · Friction · Lexicon</span>
-                    </div>
-                    <div class="eval-track">
-                      <div class="eval-fill ink-bar" style="width: 100%;">Computer-use episodes + re-prompt scores + lexicon</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="iv-drift-note">
-                <p>Years of MacWhisper push-to-talk left a local SQLite trail; timestamp, text, target app. That history became a personal corpus: intentional speech-to-tool exhaust. From it: computer-use demo episodes, re-prompt friction scores, and a private command lexicon.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- 6.4 Clean and Seal -->
-        <section class="item" id="clean-and-seal">
-          <div class="meta">
-            <span class="code">LAB · PACKAGING</span>
-            <span class="roman">2026</span>
-            <div class="gauge public"></div>
-            <span>SEQUENCE</span>
-          </div>
-          <h2 class="item-title">Clean and Seal</h2>
-          <p class="teaser">Pocket dual stick putting tear-wipe and a liquid-plaster dose in one forced clean-then-seal pass.</p>
-
-          <div class="iv-workbench">
-            <div class="iv-tote-plate">
-              <div class="plate-caption">
-                <span>FIG 6.4 · DUAL-ENDED SINGLE-USE STICK</span>
-                <span>FORCED 1 → 2 POCKET SEQUENCE</span>
-              </div>
-              <svg viewBox="0 0 360 210" role="img" aria-label="Technical sectioned drawing of a single-use pocket dual stick with End 01 tear-wipe swab and End 02 liquid-plaster seal separated by a center barrier">
-                <title>Clean and Seal pocket dual stick: End 01 Tear-Wipe and End 02 Liquid-Plaster Dose in one pass</title>
-                <!-- Step 1 Chamber: Tear-Wipe -->
-                <rect x="24" y="42" width="180" height="36" rx="4" fill="#e6dfd3" stroke="#2f4758" stroke-width="1.4"/>
-                <text x="34" y="58" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#2f4758">END 01 · TEAR-WIPE SWAB</text>
-                <text x="34" y="70" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">Antiseptic prep pad (first pass)</text>
-                <line x1="208" y1="60" x2="242" y2="60" stroke="#9c5f34" stroke-width="1.2"/>
-                <circle cx="208" cy="60" r="2.2" fill="#9c5f34"/>
-                <text x="248" y="63" font-family="JetBrains Mono, monospace" font-size="9" font-weight="500" fill="#7d4822">STEP 01 · CLEAN</text>
-
-                <!-- Center Snap / Barrier Collar -->
-                <rect x="64" y="78" width="100" height="16" fill="#16130e"/>
-                <text x="76" y="89" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#f7f4ee">SEQUENCE COLLAR</text>
-
-                <!-- Step 2 Chamber: Liquid Plaster -->
-                <rect x="24" y="94" width="180" height="36" rx="4" fill="#fbf9f5" stroke="#9c5f34" stroke-width="1.5"/>
-                <text x="34" y="110" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#7d4822">END 02 · LIQUID-PLASTER DOSE</text>
-                <text x="34" y="122" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">Film-forming seal (second pass)</text>
-                <line x1="208" y1="112" x2="242" y2="112" stroke="#9c5f34" stroke-width="1.2"/>
-                <circle cx="208" cy="112" r="2.2" fill="#9c5f34"/>
-                <text x="248" y="115" font-family="JetBrains Mono, monospace" font-size="9" font-weight="500" fill="#7d4822">STEP 02 · SEAL</text>
-
-                <!-- Stamp badge -->
-                <rect x="24" y="148" width="324" height="36" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
-                <text x="34" y="163" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">CARRY-FIRST SINGLE-USE MULTIPACK</text>
-                <text x="34" y="177" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">EXISTING CHEMISTRY · FORCED 1-PASS HABIT</text>
-              </svg>
-            </div>
-
-            <div class="iv-metrics-plate">
-              <div>
-                <div class="plate-caption">
-                  <span>FRICTION REMOVAL</span>
-                  <span>TWO FIDDLES VS. ONE FORCED PASS</span>
-                </div>
-                <div class="eval-bars" role="img" aria-label="Comparison showing loose wipe plus separate plaster gets skipped for small scratches whereas a carry-first dual stick forces clean-then-seal in one pass">
-                  <div class="eval-row">
-                    <div class="eval-row-label">
-                      <span>Loose wipe + separate plaster</span>
-                      <span class="sample">Two separate fiddles</span>
-                    </div>
-                    <div class="eval-track">
-                      <div class="eval-fill muted-bar" style="width: 28%;">Small scratches ignored</div>
-                    </div>
-                  </div>
-                  <div class="eval-row">
-                    <div class="eval-row-label">
-                      <span>Carry-first pocket dual stick</span>
-                      <span class="sample">1 pass: wipe → liquid seal</span>
-                    </div>
-                    <div class="eval-track">
-                      <div class="eval-fill accent-bar" style="width: 100%;">Forced clean-then-seal sequence carried in pocket</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="iv-drift-note">
-                <p>Small scratches get ignored because clean and cover are two separate fiddles. A pocket dual stick puts tear-wipe and a liquid-plaster dose in one pass, as a carry-first single-use multipack. The bet is readiness and a forced clean-then-seal sequence; chemistry that already works, carried so it gets used.</p>
-              </div>
-            </div>
-          </div>
-        </section>
 
       </div>
 
-      <!-- =================================================================
-           7. RIGHT MEANING, WRONG NUMBER (Full Workbench Section)
-           ================================================================= -->
-      <section class="item" id="number-fidelity">
-        <div class="meta">
-          <span class="code">SPEECH</span>
-          <span class="roman">2026</span>
-          <div class="gauge built"></div>
-          <span>EVAL</span>
-        </div>
-        <h2 class="item-title">Right meaning, wrong number</h2>
-        <p class="teaser">In a voice confirm, the only words that matter are the numbers. No audio is recorded and no model has been scored yet.</p>
-
-        <div class="iv-workbench">
-          <div class="iv-tote-plate">
-            <div class="plate-caption">
-              <span>FIG 7.1 · HINDI-ENGLISH NUMBER TRAP SET</span>
-              <span>50 ITEMS · 5 FAILURE CATEGORIES</span>
-            </div>
-            <svg viewBox="0 0 360 210" role="img" aria-label="Technical diagram of the 50-item Hindi-English spoken number test set showing five trap categories (homophones, near-identical tens, fractions, code-switching, check digits) and a circled number failure on the waveform">
-              <title>Right meaning, wrong number: 50-item Hindi-English number fidelity evaluation design</title>
-              <!-- Waveform strip at top with circled number error -->
-              <rect x="24" y="14" width="180" height="36" fill="#fbf9f5" stroke="#16130e" stroke-width="1.3"/>
-              <path d="M 32 32 L 42 24 L 48 40 L 56 28 L 66 32 L 88 32 L 96 18 L 104 46 L 112 20 L 120 32 L 154 32 L 164 26 L 172 38 L 182 32" fill="none" stroke="#2f4758" stroke-width="1.3"/>
-              <ellipse cx="104" cy="32" rx="18" ry="15" fill="none" stroke="#9c5f34" stroke-width="1.5" stroke-dasharray="3 2"/>
-              <line x1="208" y1="32" x2="242" y2="32" stroke="#9c5f34" stroke-width="1.2"/>
-              <circle cx="208" cy="32" r="2.2" fill="#9c5f34"/>
-              <text x="248" y="35" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600" fill="#7d4822">SAATH(60)≠SAAT(7)</text>
-
-              <!-- 5 Category Bars (10 items each = 50 items) -->
-              <rect x="24" y="58" width="180" height="18" fill="#e6dfd3" stroke="#16130e" stroke-width="1.2"/>
-              <text x="32" y="70" font-family="JetBrains Mono, monospace" font-size="8" fill="#16130e">CAT A (1-10) · Homophones (saath/do)</text>
-
-              <rect x="24" y="80" width="180" height="18" fill="#ece6da" stroke="#16130e" stroke-width="1.2"/>
-              <text x="32" y="92" font-family="JetBrains Mono, monospace" font-size="8" fill="#16130e">CAT B (11-20) · 19/29/49/79 &amp; 15/50</text>
-
-              <rect x="24" y="102" width="180" height="18" fill="#e6dfd3" stroke="#16130e" stroke-width="1.2"/>
-              <text x="32" y="114" font-family="JetBrains Mono, monospace" font-size="8" fill="#16130e">CAT C (21-30) · Fractions (paune teen)</text>
-
-              <rect x="24" y="124" width="180" height="18" fill="#ece6da" stroke="#16130e" stroke-width="1.2"/>
-              <text x="32" y="136" font-family="JetBrains Mono, monospace" font-size="8" fill="#16130e">CAT D (31-40) · Mid-number switch</text>
-
-              <rect x="24" y="146" width="180" height="18" fill="#d8cfc0" stroke="#16130e" stroke-width="1.2"/>
-              <text x="32" y="158" font-family="JetBrains Mono, monospace" font-size="8" fill="#16130e">CAT E (41-50) · Check digits &amp; nahi</text>
-
-              <!-- Stamp badge -->
-              <rect x="218" y="126" width="130" height="38" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
-              <text x="226" y="141" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">TEST SET + PROTOCOL</text>
-              <text x="226" y="156" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">N = 50 SCRIPTS</text>
-            </svg>
-          </div>
-
-          <div class="iv-metrics-plate">
-            <div>
-              <div class="plate-caption">
-                <span>METRIC DESIGN: WER VS. NUMBER FIDELITY</span>
-                <span>EVAL DESIGN ONLY (0 AUDIO RECORDED YET)</span>
-              </div>
-              <div class="eval-bars" role="img" aria-label="Comparison between standard Word Error Rate where 95% word accuracy still fails if the quantity is wrong versus Number Fidelity Error which scores exact numeric fields out of 50 scripts">
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>Standard Word Error Rate (DER / WER)</span>
-                    <span class="sample">Blurs number errors</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill muted-bar" style="width: 95%;">95% words right → still a mispick if 1 digit flips</div>
-                  </div>
-                </div>
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>Number Fidelity Error (NFE · 50 items)</span>
-                    <span class="sample">Failures out of n</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill accent-bar" style="width: 100%;">Exact field match after Hindi-English normalisation</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="iv-drift-note">
-              <p>Speech models are scored on word error rate. In a voice confirm, the only words that matter are the numbers. A 50-item Hindi-English test set and scoring protocol for spoken quantities, fractions, self-corrections ("nahi"), and check digits under warehouse noise. No audio is recorded and no model has been scored yet.</p>
-              <div class="surface-links">
-                <a href="./proofs/number-fidelity/">Open artifact →</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- =================================================================
-           8. TWO DEPOSIT SCHEMES, ONE ISLAND (Full Workbench Section)
-           ================================================================= -->
-      <section class="item" id="two-schemes-one-island">
-        <div class="meta">
-          <span class="code">DEPOSIT</span>
-          <span class="roman">2026</span>
-          <div class="gauge built"></div>
-          <span>BRIEF</span>
-        </div>
-        <h2 class="item-title">Two deposit schemes, one island</h2>
-        <p class="teaser">From 1 October 2027, Northern Ireland packs carry their own deposit too. The risk changes from "deposit vs none" to "the wrong deposit".</p>
-
-        <div class="iv-workbench">
-          <div class="iv-tote-plate">
-            <div class="plate-caption">
-              <span>FIG 8.1 · ALL-ISLAND DRINKS DISTRIBUTION</span>
-              <span>ROI RE-TURN VS. UK-NI (1 OCT 2027)</span>
-            </div>
-            <svg viewBox="0 0 360 210" role="img" aria-label="Technical diagram showing one shared island distribution warehouse splitting pallets between Republic of Ireland Re-turn deposit packs and Northern Ireland UK deposit scheme packs from 1 October 2027">
-              <title>Two deposit schemes, one island: ROI Re-turn and UK-NI Deposit Return Scheme (1 Oct 2027)</title>
-              <!-- Shared All-Island Warehouse Node -->
-              <rect x="24" y="16" width="180" height="32" fill="#e6dfd3" stroke="#16130e" stroke-width="1.3"/>
-              <text x="34" y="30" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#16130e">ALL-ISLAND BEVERAGE FLOOR</text>
-              <text x="34" y="42" font-family="Newsreader, serif" font-size="9.5" fill="#595044">Same liquid · same bay · two jurisdictions</text>
-
-              <!-- Fork -->
-              <line x1="72" y1="48" x2="72" y2="74" stroke="#2f4758" stroke-width="1.4"/>
-              <line x1="156" y1="48" x2="156" y2="74" stroke="#9c5f34" stroke-width="1.4"/>
-
-              <!-- Left Branch: ROI Re-turn -->
-              <rect x="24" y="74" width="90" height="58" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.4"/>
-              <text x="32" y="90" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#2f4758">ROI · RE-TURN</text>
-              <text x="32" y="104" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#16130e">Live since 2024</text>
-              <text x="32" y="118" font-family="Newsreader, serif" font-size="9" fill="#595044">EUR deposit mark</text>
-
-              <!-- Right Branch: NI / UK DRS -->
-              <rect x="120" y="74" width="90" height="58" fill="#fbf9f5" stroke="#9c5f34" stroke-width="1.5"/>
-              <text x="128" y="90" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#7d4822">NI · UK SCHEME</text>
-              <text x="128" y="104" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#16130e">Starts 1 Oct 2027</text>
-              <text x="128" y="118" font-family="Newsreader, serif" font-size="9" fill="#595044">GBP deposit mark</text>
-
-              <!-- Callout to Seam -->
-              <line x1="214" y1="103" x2="242" y2="103" stroke="#9c5f34" stroke-width="1.2"/>
-              <circle cx="214" cy="103" r="2.2" fill="#9c5f34"/>
-              <text x="248" y="106" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600" fill="#7d4822">2 ACTIVE SCHEMES</text>
-
-              <!-- Bottom Risk Box -->
-              <rect x="24" y="148" width="186" height="38" fill="#d8cfc0" stroke="#16130e" stroke-width="1.3"/>
-              <text x="32" y="163" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#16130e">CROSS-BORDER PICK RISK</text>
-              <text x="32" y="177" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">Wrong deposit barcode on pallet</text>
-
-              <!-- Stamp badge -->
-              <rect x="218" y="148" width="130" height="38" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
-              <text x="226" y="163" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">CUTOVER DATE</text>
-              <text x="226" y="178" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">1 OCTOBER 2027</text>
-            </svg>
-          </div>
-
-          <div class="iv-metrics-plate">
-            <div>
-              <div class="plate-caption">
-                <span>OPERATIONAL FAILURE MODE SHIFT</span>
-                <span>BEFORE VS. AFTER 1 OCT 2027</span>
-              </div>
-              <div class="eval-bars" role="img" aria-label="Shift in operational risk from Deposit versus No Deposit today to Wrong Deposit when Northern Ireland launches its deposit scheme on 1 October 2027">
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>2024 to Sep 2027 (ROI live, NI exempt)</span>
-                    <span class="sample">Binary check</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill muted-bar" style="width: 52%;">Risk: "Deposit vs. None"</div>
-                  </div>
-                </div>
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>From 1 October 2027 (Both schemes live)</span>
-                    <span class="sample">Two deposit SKUs</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill accent-bar" style="width: 100%;">Risk: "The Wrong Deposit" across one island border</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="iv-drift-note">
-              <p>From 1 October 2027, Northern Ireland packs carry their own deposit too. For all-island drinks distribution, the warehouse risk changes from "deposit vs none" to picking or shipping "the wrong deposit" across a land border.</p>
-              <div class="surface-links">
-                <a href="./proofs/two-schemes-one-island/">Open artifact →</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- =================================================================
-           9. FLOOR FLOW TO EWM GAP PACK (Full Workbench Section)
-           ================================================================= -->
-      <section class="item" id="ewm-gap-pack">
-        <div class="meta">
-          <span class="code">EWM</span>
-          <span class="roman">2026</span>
-          <div class="gauge built"></div>
-          <span>TEMPLATE</span>
-        </div>
-        <h2 class="item-title">Floor flow to EWM gap pack</h2>
-        <p class="teaser">When a warehouse moves from SAP WM to EWM, its data migrates but its handheld scanner logic does not. A real pack uses observed flows.</p>
-
-        <div class="iv-workbench">
-          <div class="iv-tote-plate">
-            <div class="plate-caption">
-              <span>FIG 9.1 · SAP WM → EWM SCANNER FIT-GAP</span>
-              <span>DATA MIGRATES ≠ RF LOGIC MIGRATES</span>
-            </div>
-            <svg viewBox="0 0 360 210" role="img" aria-label="Technical diagram comparing SAP WM table migration with the unspoken handheld RF scanner exception steps that break in SAP EWM unless mapped from observed floor flows">
-              <title>Floor flow to EWM gap pack: mapping observed picker scanner flows before Workshop 1</title>
-              <!-- Top: Master Data Migration (Clean) -->
-              <rect x="24" y="16" width="180" height="32" fill="#e6dfd3" stroke="#2f4758" stroke-width="1.3"/>
-              <text x="34" y="30" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#2f4758">MASTER DATA (WM → EWM)</text>
-              <text x="34" y="42" font-family="Newsreader, serif" font-size="9.5" fill="#595044">Bins, materials, stock tables migrate</text>
-              <line x1="208" y1="32" x2="242" y2="32" stroke="#2f4758" stroke-width="1.2"/>
-              <circle cx="208" cy="32" r="2.2" fill="#2f4758"/>
-              <text x="248" y="35" font-family="JetBrains Mono, monospace" font-size="9" fill="#2f4758">TABLES MOVE</text>
-
-              <!-- Middle: Handheld Scanner Flow with Gap -->
-              <rect x="24" y="62" width="180" height="68" fill="#fbf9f5" stroke="#16130e" stroke-width="1.4"/>
-              <text x="34" y="78" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#16130e">HANDHELD RF SCANNER FLOW</text>
-              <rect x="34" y="86" width="44" height="20" fill="#ece6da" stroke="#16130e" stroke-width="1"/>
-              <text x="41" y="99" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#16130e">SCAN</text>
-              <line x1="78" y1="96" x2="90" y2="96" stroke="#16130e" stroke-width="1.2"/>
-              <!-- Highlighted Missing Step -->
-              <rect x="90" y="84" width="54" height="24" fill="#fbf9f5" stroke="#9c5f34" stroke-width="1.5" stroke-dasharray="3 2"/>
-              <text x="96" y="99" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#7d4822">GAP: EXCP</text>
-              <line x1="144" y1="96" x2="154" y2="96" stroke="#16130e" stroke-width="1.2"/>
-              <rect x="154" y="86" width="40" height="20" fill="#ece6da" stroke="#16130e" stroke-width="1"/>
-              <text x="161" y="99" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#16130e">DROP</text>
-              <text x="34" y="122" font-family="Newsreader, serif" font-style="italic" font-size="9" fill="#595044">Short-pick / split-HU / bay override</text>
-
-              <line x1="208" y1="96" x2="242" y2="96" stroke="#9c5f34" stroke-width="1.2"/>
-              <circle cx="208" cy="96" r="2.2" fill="#9c5f34"/>
-              <text x="248" y="99" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600" fill="#7d4822">RF LOGIC BREAKS</text>
-
-              <!-- Bottom: Gap Pack Output -->
-              <rect x="24" y="144" width="180" height="40" fill="#d8cfc0" stroke="#16130e" stroke-width="1.3"/>
-              <text x="34" y="160" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#16130e">PRE-WORKSHOP GAP PACK</text>
-              <text x="34" y="174" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">Observed aisle habits → EWM fit-gap</text>
-
-              <!-- Stamp badge -->
-              <rect x="218" y="144" width="130" height="40" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
-              <text x="226" y="159" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">TEMPLATE STATUS</text>
-              <text x="226" y="174" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600" fill="#16130e">NEEDS 5 REAL FLOWS</text>
-            </svg>
-          </div>
-
-          <div class="iv-metrics-plate">
-            <div>
-              <div class="plate-caption">
-                <span>MIGRATION DISCOVERY METHOD</span>
-                <span>CONFERENCE ROOM VS. AISLE OBSERVATION</span>
-              </div>
-              <div class="eval-bars" role="img" aria-label="Comparison between conference-room EWM workshops that miss unspoken floor workarounds and an observed floor-flow gap pack prepared before Workshop 1">
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>Standard SOP workshop discovery</span>
-                    <span class="sample">Misses floor workarounds</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill muted-bar" style="width: 40%;">Data migrates; scanner exceptions surface late</div>
-                  </div>
-                </div>
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>Observed floor-flow gap pack</span>
-                    <span class="sample">Before Workshop 1</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill accent-bar" style="width: 100%;">Maps real picker steps &amp; exceptions into EWM fit-gap</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="iv-drift-note">
-              <p>When a warehouse moves from SAP WM to EWM, its data migrates but its handheld scanner logic does not. A template for turning observed picker flows into a SAP EWM fit-gap list before the first workshop. Needs five real flows before it counts as site proof.</p>
-              <div class="surface-links">
-                <a href="./proofs/ewm-gap-pack/">Open artifact →</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- =================================================================
-           10. THE GHOST SHELF (Full Workbench Section)
-           ================================================================= -->
-      <section class="item" id="ghost-shelf">
-        <div class="meta">
-          <span class="code">SHELF</span>
-          <span class="roman">2026</span>
-          <div class="gauge built"></div>
-          <span>CONCEPT</span>
-        </div>
-        <h2 class="item-title">The ghost shelf</h2>
-        <p class="teaser">Shoppers click an ad, land on "out of stock", and leave annoyed. The idea: an ad that tells you the truth before you tap.</p>
-
-        <div class="iv-workbench">
-          <div class="iv-tote-plate">
-            <div class="plate-caption">
-              <span>FIG 10.1 · 24-48H AD FEED SYNC LAG</span>
-              <span>SOLD OUT AT 11:04 · OFF AIR AT 11:04</span>
-            </div>
-            <svg viewBox="0 0 360 210" role="img" aria-label="Technical diagram showing a retail shelf selling out at 11:04 while the daily shopping ad feed keeps buying clicks on a ghost slot for 24 to 48 hours">
-              <title>The ghost shelf: closing the 24 to 48 hour gap between store sell-out and shopping ad feeds</title>
-              <!-- Physical Shelf Row (Sold out at 11:04) -->
-              <rect x="24" y="16" width="180" height="48" fill="#fbf9f5" stroke="#16130e" stroke-width="1.3"/>
-              <line x1="30" y1="54" x2="198" y2="54" stroke="#16130e" stroke-width="2"/>
-              <rect x="36" y="26" width="32" height="28" fill="#e6dfd3" stroke="#2f4758" stroke-width="1.1"/>
-              <!-- Center Empty Ghost Slot -->
-              <rect x="82" y="22" width="64" height="32" fill="none" stroke="#9c5f34" stroke-width="1.5" stroke-dasharray="3 2"/>
-              <text x="92" y="41" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#7d4822">0 STOCK</text>
-              <rect x="160" y="26" width="32" height="28" fill="#e6dfd3" stroke="#2f4758" stroke-width="1.1"/>
-              <line x1="208" y1="40" x2="242" y2="40" stroke="#9c5f34" stroke-width="1.2"/>
-              <circle cx="208" cy="40" r="2.2" fill="#9c5f34"/>
-              <text x="248" y="43" font-family="JetBrains Mono, monospace" font-size="9" font-weight="500" fill="#7d4822">11:04 · SOLD OUT</text>
-
-              <!-- Lag Arrow -->
-              <line x1="114" y1="64" x2="114" y2="86" stroke="#9c5f34" stroke-width="1.4" stroke-dasharray="3 2"/>
-              <text x="122" y="79" font-family="JetBrains Mono, monospace" font-size="8" fill="#7d4822">24-48h feed lag</text>
-
-              <!-- Stale Shopping Ad Tile -->
-              <rect x="24" y="86" width="180" height="38" fill="#ece6da" stroke="#595044" stroke-width="1.2"/>
-              <text x="34" y="101" font-family="JetBrains Mono, monospace" font-size="8" fill="#595044">DAILY BATCH AD FEED (STALE)</text>
-              <text x="34" y="115" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">Still buying clicks on an empty slot</text>
-
-              <!-- Honest Ad Rule -->
-              <rect x="24" y="138" width="180" height="44" fill="#d8cfc0" stroke="#16130e" stroke-width="1.4"/>
-              <text x="34" y="154" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="600" fill="#16130e">HONEST AD CREATIVE</text>
-              <text x="34" y="169" font-family="Newsreader, serif" font-style="italic" font-size="9.5" fill="#16130e">“Sold out. Back Thursday.”</text>
-
-              <!-- Stamp badge -->
-              <rect x="218" y="138" width="130" height="44" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
-              <text x="226" y="153" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">VENDOR STUDY (N=500)</text>
-              <text x="226" y="169" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">97% PAID ON 0 STOCK</text>
-            </svg>
-          </div>
-
-          <div class="iv-metrics-plate">
-            <div>
-              <div class="plate-caption">
-                <span>RETAIL AD SPEND ON OUT-OF-STOCK SKUS</span>
-                <span>SAMPLE: 500 RETAILERS (VENDOR STUDY)</span>
-              </div>
-              <div class="eval-bars" role="img" aria-label="Bar chart showing 97% of 500 retailers in a ShoppingIQ study kept paying for clicks on unavailable products during the 24 to 48 hour feed lag">
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>Retailers paying for clicks on out-of-stock ads</span>
-                    <span class="sample">97% · 500 retailers (24-48h lag)</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill baseline" style="width: 97%;">97% kept paying for unavailable SKUs</div>
-                  </div>
-                </div>
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>Ghost Shelf campaign rule</span>
-                    <span class="sample">Off air or truth-first copy</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill accent-bar" style="width: 100%;">Gone at 11:04 → Off air or "Back Thursday" at 11:04</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="iv-drift-note">
-              <p>Shopping ads usually learn about stock from a feed that refreshes about once a day. Between a product selling out and the feed catching up, the ad keeps running. In that gap, money buys disappointment. (97% figure from a ShoppingIQ study of 500 retailers via Search Engine Land; vendor-sourced figure.)</p>
-              <div class="surface-links">
-                <a href="./proofs/ghost-shelf/">Open artifact →</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- =================================================================
-           11. CAREKIT (Full Workbench Section matching updated CareKit site)
-           ================================================================= -->
-      <section class="item" id="carekit">
-        <div class="meta">
-          <span class="code">CARE</span>
-          <span class="roman">2026</span>
-          <div class="gauge public"></div>
-          <span>IN DESIGN</span>
-        </div>
-        <h2 class="item-title">CareKit (working name)</h2>
-        <p class="teaser">A care diary for families looking after an ageing parent in England and Wales. Log the help you give in seconds, and it becomes a dated written record in your own words.</p>
-
-        <div class="iv-workbench">
-          <div class="iv-tote-plate">
-            <div class="plate-caption">
-              <span>FIG 11.1 · STATIONER'S CARE LEDGER</span>
-              <span>QUICK HELP LOG → DATED WRITTEN RECORD</span>
-            </div>
-            <svg viewBox="0 0 360 210" role="img" aria-label="Technical specimen of the CareKit cloth-bound stationer's ledger showing forest-slate bookcloth spine, top carmine ribbon bookmark, double oxblood margin rule, and dated family care entries">
-              <title>CareKit stationer's ledger specimen: quick daily logs compounding into a dated written family record</title>
-              <!-- Cloth-bound ledger sheet -->
-              <rect x="24" y="14" width="184" height="172" fill="#faf6ee" stroke="#16130e" stroke-width="1.3"/>
-              <!-- Forest-slate bookcloth spine -->
-              <rect x="24" y="14" width="12" height="172" fill="#2b3830"/>
-              <!-- Carmine ribbon bookmark at top -->
-              <polygon points="50,14 60,14 60,32 55,27 50,32" fill="#7c2d23"/>
-              <!-- Double oxblood margin rail -->
-              <line x1="76" y1="14" x2="76" y2="186" stroke="#7c2d23" stroke-width="1.2"/>
-              <line x1="80" y1="14" x2="80" y2="186" stroke="#7c2d23" stroke-width="0.7"/>
-
-              <!-- Ruled entry rows -->
-              <line x1="36" y1="56" x2="208" y2="56" stroke="#e5dfd3" stroke-width="1"/>
-              <text x="42" y="49" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#7c2d23">14 OCT</text>
-              <text x="86" y="49" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">08:15 · Wash, dressing &amp; tablets</text>
-
-              <line x1="36" y1="92" x2="208" y2="92" stroke="#e5dfd3" stroke-width="1"/>
-              <text x="42" y="84" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#7c2d23">14 OCT</text>
-              <text x="86" y="84" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">22:40 · Night settling &amp; bathroom</text>
-
-              <line x1="36" y1="128" x2="208" y2="128" stroke="#e5dfd3" stroke-width="1"/>
-              <text x="42" y="120" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#7c2d23">15 OCT</text>
-              <text x="86" y="120" font-family="Newsreader, serif" font-size="9.5" fill="#16130e">13:10 · Hot meal &amp; prompt to drink</text>
-
-              <!-- 7-day cadence strip at bottom of sheet -->
-              <text x="42" y="162" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#595044">CADENCE</text>
-              <rect x="86" y="153" width="12" height="12" fill="#2b3830"/>
-              <rect x="102" y="153" width="12" height="12" fill="#2b3830"/>
-              <rect x="118" y="153" width="12" height="12" fill="#7c2d23"/>
-              <rect x="134" y="153" width="12" height="12" fill="#2b3830"/>
-              <rect x="150" y="153" width="12" height="12" fill="#e5dfd3" stroke="#16130e" stroke-width="0.8"/>
-              <rect x="166" y="153" width="12" height="12" fill="#2b3830"/>
-              <rect x="182" y="153" width="12" height="12" fill="#2b3830"/>
-
-              <!-- Callout leaders -->
-              <line x1="212" y1="48" x2="242" y2="48" stroke="#9c5f34" stroke-width="1.2"/>
-              <circle cx="212" cy="48" r="2.2" fill="#9c5f34"/>
-              <text x="248" y="51" font-family="JetBrains Mono, monospace" font-size="9" font-weight="500" fill="#7d4822">10S DAILY ENTRY</text>
-
-              <line x1="212" y1="118" x2="242" y2="118" stroke="#9c5f34" stroke-width="1.2"/>
-              <circle cx="212" cy="118" r="2.2" fill="#9c5f34"/>
-              <text x="248" y="121" font-family="JetBrains Mono, monospace" font-size="9" fill="#7d4822">DATED LEDGER LINE</text>
-
-              <!-- Stamp badge -->
-              <rect x="218" y="146" width="130" height="40" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
-              <text x="226" y="161" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">ENGLAND &amp; WALES</text>
-              <text x="226" y="176" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">IN YOUR OWN WORDS</text>
-            </svg>
-          </div>
-
-          <div class="iv-metrics-plate">
-            <div>
-              <div class="plate-caption">
-                <span>RECORDKEEPING WORKFLOW</span>
-                <span>FROM UNLOGGED HELP TO DATED RECORD</span>
-              </div>
-              <div class="eval-bars" role="img" aria-label="Comparison between reconstructing months of family care from memory and logging daily help in seconds into a dated written record">
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>Reconstructing care months later from memory</span>
-                    <span class="sample">Routine help forgotten</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill muted-bar" style="width: 32%;">Gaps on bad days &amp; night waking</div>
-                  </div>
-                </div>
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>Quick daily care log (CareKit)</span>
-                    <span class="sample">Logged in seconds</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill accent-bar" style="width: 100%;">Dated written record in the family's own words</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="iv-drift-note">
-              <p>A care diary for families looking after an ageing parent in England and Wales. Log the help you give in seconds, and it becomes a dated written record in your own words.</p>
-              <div class="surface-links">
-                <a href="https://care-diary-uk.vercel.app" target="_blank" rel="noopener">Open page →</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- =================================================================
-           12. HEARD (Full Workbench Section matching updated Heard v2 site)
-           ================================================================= -->
-      <section class="item" id="heard">
-        <div class="meta">
-          <span class="code">HEALTH</span>
-          <span class="roman">2026</span>
-          <div class="gauge public"></div>
-          <span>IN DESIGN</span>
-        </div>
-        <h2 class="item-title">Heard</h2>
-        <p class="teaser">A diary for endometriosis and pelvic pain that turns 10-second daily logs into a plain summary to take to a GP appointment.</p>
-
-        <div class="iv-workbench">
-          <div class="iv-tote-plate">
-            <div class="plate-caption">
-              <span>FIG 12.1 · HOLDING THE ROOM · GP SUMMARY</span>
-              <span>10S PAIN LOG → CONSULTATION BRIEF</span>
-            </div>
-            <svg viewBox="0 0 360 210" role="img" aria-label="Technical specimen of Heard showing the deep mineral-petrol acoustic stage with concentric copper-rose vocal aperture arcs and the graduated 1-to-10 daily pain-scale tick row">
-              <title>Heard specimen: 10-second daily pelvic pain log projecting into a plain GP appointment summary</title>
-              <!-- Deep mineral-petrol stage ("Holding the Room") -->
-              <rect x="24" y="14" width="184" height="114" fill="#111E25" stroke="#16130e" stroke-width="1.3"/>
-              <!-- Concentric copper-rose vocal aperture arcs -->
-              <circle cx="52" cy="56" r="4" fill="#E29578"/>
-              <path d="M 64 42 A 18 18 0 0 1 64 70" fill="none" stroke="#E29578" stroke-width="1.6"/>
-              <path d="M 76 34 A 28 28 0 0 1 76 78" fill="none" stroke="#F2F4F5" stroke-width="1.3"/>
-              <path d="M 88 26 A 38 38 0 0 1 88 86" fill="none" stroke="#B4C3C9" stroke-width="1" stroke-dasharray="3 2"/>
-              <text x="108" y="48" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#F2F4F5">VOICE MADE VISIBLE</text>
-              <text x="108" y="62" font-family="Newsreader, serif" font-style="italic" font-size="9.5" fill="#B4C3C9">90-day pattern sheet</text>
-
-              <!-- Graduated 1-10 pain-scale tick row at bottom of dark chamber -->
-              <line x1="38" y1="106" x2="194" y2="106" stroke="#B4C3C9" stroke-width="1"/>
-              <line x1="42" y1="101" x2="42" y2="111" stroke="#B4C3C9" stroke-width="1"/>
-              <line x1="58" y1="103" x2="58" y2="109" stroke="#B4C3C9" stroke-width="1"/>
-              <line x1="74" y1="103" x2="74" y2="109" stroke="#B4C3C9" stroke-width="1"/>
-              <line x1="90" y1="103" x2="90" y2="109" stroke="#B4C3C9" stroke-width="1"/>
-              <line x1="106" y1="100" x2="106" y2="112" stroke="#F2F4F5" stroke-width="1.2"/>
-              <line x1="122" y1="103" x2="122" y2="109" stroke="#B4C3C9" stroke-width="1"/>
-              <line x1="138" y1="96" x2="138" y2="112" stroke="#E29578" stroke-width="2"/>
-              <circle cx="138" cy="93" r="3" fill="#E29578"/>
-              <text x="131" y="86" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#E29578">7/10</text>
-              <line x1="154" y1="103" x2="154" y2="109" stroke="#B4C3C9" stroke-width="1"/>
-              <line x1="170" y1="103" x2="170" y2="109" stroke="#B4C3C9" stroke-width="1"/>
-              <line x1="186" y1="101" x2="186" y2="111" stroke="#F2F4F5" stroke-width="1.2"/>
-
-              <!-- GP Summary Sheet Below -->
-              <rect x="24" y="138" width="184" height="48" fill="#fbf9f5" stroke="#16130e" stroke-width="1.3"/>
-              <text x="34" y="154" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#16130e">GP APPOINTMENT BRIEF (1 PAGE)</text>
-              <text x="34" y="168" font-family="Newsreader, serif" font-size="9.5" fill="#595044">Flare frequency · cycle link · work missed</text>
-
-              <!-- Callout leaders -->
-              <line x1="212" y1="96" x2="242" y2="96" stroke="#9c5f34" stroke-width="1.2"/>
-              <circle cx="212" cy="96" r="2.2" fill="#9c5f34"/>
-              <text x="248" y="99" font-family="JetBrains Mono, monospace" font-size="9" font-weight="500" fill="#7d4822">10S SEVERITY TICK</text>
-
-              <!-- Stamp badge -->
-              <rect x="218" y="138" width="130" height="48" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
-              <text x="226" y="155" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">10-MIN GP SLOT</text>
-              <text x="226" y="171" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600" fill="#16130e">PLAIN EVIDENCE</text>
-            </svg>
-          </div>
-
-          <div class="iv-metrics-plate">
-            <div>
-              <div class="plate-caption">
-                <span>CONSULTATION PREPARATION</span>
-                <span>VERBAL RECALL VS. STRUCTURED GP SUMMARY</span>
-              </div>
-              <div class="eval-bars" role="img" aria-label="Comparison between summarizing months of pelvic pain from memory in a 10-minute GP slot versus handing over a plain 1-page summary built from 10-second daily logs">
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>Recalling months of flares verbally in 10 minutes</span>
-                    <span class="sample">Pattern gets lost</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill muted-bar" style="width: 30%;">Hard to compress under time pressure</div>
-                  </div>
-                </div>
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>10-second daily log → GP appointment brief</span>
-                    <span class="sample">Heard summary sheet</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill accent-bar" style="width: 100%;">Plain written summary of severity, timing &amp; impact</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="iv-drift-note">
-              <p>A diary for endometriosis and pelvic pain that turns 10-second daily logs into a plain summary to take to a GP appointment.</p>
-              <div class="surface-links">
-                <a href="https://heard-ten-puce.vercel.app" target="_blank" rel="noopener">Open page →</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- =================================================================
-           13. SYSTEMS BRIEF (Full Workbench Section: Six Systems, Broken Link)
-           ================================================================= -->
-      <section class="item" id="systems-brief">
-        <div class="meta">
-          <span class="code">GOOGLE</span>
-          <span class="roman">2026</span>
-          <div class="gauge public"></div>
-          <span>BRIEF</span>
-        </div>
-        <h2 class="item-title">Systems brief</h2>
-        <p class="teaser">Pixel order stuck across six systems; living brief, role hats, structural gap.</p>
-
-        <div class="iv-workbench">
-          <div class="iv-tote-plate">
-            <div class="plate-caption">
-              <span>FIG 13.1 · SIX-SYSTEM ORDER HANDOFF CHAIN</span>
-              <span>LOCAL GREEN ≠ END-TO-END FLOW</span>
-            </div>
-            <svg viewBox="0 0 360 210" role="img" aria-label="Technical diagram of six operational systems in a chain with a broken handoff seam between System 03 OMS and System 04 3PL Warehouse">
-              <title>Systems brief: Pixel order stuck across six systems with broken handoff between OMS and 3PL</title>
-              <!-- Row 1: Systems 01, 02, 03 -->
-              <rect x="20" y="20" width="54" height="32" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.3"/>
-              <text x="26" y="34" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#2f4758">SYS 01</text>
-              <text x="26" y="45" font-family="Newsreader, serif" font-size="8.5" fill="#595044">Store</text>
-              <line x1="74" y1="36" x2="88" y2="36" stroke="#2f4758" stroke-width="1.3"/>
-
-              <rect x="88" y="20" width="54" height="32" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.3"/>
-              <text x="94" y="34" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#2f4758">SYS 02</text>
-              <text x="94" y="45" font-family="Newsreader, serif" font-size="8.5" fill="#595044">Auth</text>
-              <line x1="142" y1="36" x2="156" y2="36" stroke="#2f4758" stroke-width="1.3"/>
-
-              <rect x="156" y="20" width="54" height="32" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.3"/>
-              <text x="162" y="34" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#2f4758">SYS 03</text>
-              <text x="162" y="45" font-family="Newsreader, serif" font-size="8.5" fill="#595044">OMS</text>
-
-              <!-- Broken Link Seam between SYS 03 and SYS 04 -->
-              <line x1="183" y1="52" x2="128" y2="76" stroke="#9c5f34" stroke-width="1.6" stroke-dasharray="3 2"/>
-              <circle cx="115" cy="82" r="10" fill="#fbf9f5" stroke="#9c5f34" stroke-width="1.5"/>
-              <text x="110.5" y="85.5" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#7d4822">✕</text>
-              <line x1="102" y1="88" x2="47" y2="112" stroke="#9c5f34" stroke-width="1.6" stroke-dasharray="3 2"/>
-
-              <line x1="130" y1="82" x2="238" y2="82" stroke="#9c5f34" stroke-width="1.2"/>
-              <circle cx="130" cy="82" r="2.2" fill="#9c5f34"/>
-              <text x="244" y="85" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600" fill="#7d4822">BROKEN HANDOFF</text>
-
-              <!-- Row 2: Systems 04, 05, 06 -->
-              <rect x="20" y="112" width="54" height="32" fill="#e6dfd3" stroke="#16130e" stroke-width="1.3"/>
-              <text x="26" y="126" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#16130e">SYS 04</text>
-              <text x="26" y="137" font-family="Newsreader, serif" font-size="8.5" fill="#595044">3PL</text>
-              <line x1="74" y1="128" x2="88" y2="128" stroke="#16130e" stroke-width="1.3"/>
-
-              <rect x="88" y="112" width="54" height="32" fill="#e6dfd3" stroke="#16130e" stroke-width="1.3"/>
-              <text x="94" y="126" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#16130e">SYS 05</text>
-              <text x="94" y="137" font-family="Newsreader, serif" font-size="8.5" fill="#595044">Carrier</text>
-              <line x1="142" y1="128" x2="156" y2="128" stroke="#16130e" stroke-width="1.3"/>
-
-              <rect x="156" y="112" width="54" height="32" fill="#e6dfd3" stroke="#16130e" stroke-width="1.3"/>
-              <text x="162" y="126" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="600" fill="#16130e">SYS 06</text>
-              <text x="162" y="137" font-family="Newsreader, serif" font-size="8.5" fill="#595044">Support</text>
-
-              <!-- Stamp badge -->
-              <rect x="20" y="156" width="328" height="34" fill="#fbf9f5" stroke="#2f4758" stroke-width="1.2"/>
-              <text x="30" y="170" font-family="JetBrains Mono, monospace" font-size="7.8" fill="#595044">STRUCTURAL GAP</text>
-              <text x="30" y="183" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600" fill="#16130e">6 GREEN DASHBOARDS · 0 INCIDENT OWNER ON SEAM</text>
-            </svg>
-          </div>
-
-          <div class="iv-metrics-plate">
-            <div>
-              <div class="plate-caption">
-                <span>ESCALATION ARCHITECTURE</span>
-                <span>HIERARCHICAL TICKET BOUNCE VS. FUNCTIONAL PULL</span>
-              </div>
-              <div class="eval-bars" role="img" aria-label="Comparison between hierarchical ticket escalation across six separate systems and a functional incident-commander pull model across the broken handoff seam">
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>Hierarchical support escalation (6 silos)</span>
-                    <span class="sample">Context lost per hop</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill muted-bar" style="width: 35%;">Each system checks its own state &amp; closes ticket</div>
-                  </div>
-                </div>
-                <div class="eval-row">
-                  <div class="eval-row-label">
-                    <span>Functional pull &amp; seam ownership</span>
-                    <span class="sample">Architecture brief + role hats</span>
-                  </div>
-                  <div class="eval-track">
-                    <div class="eval-fill ink-bar" style="width: 100%;">Maps intended vs actual state across all 6 systems</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="iv-drift-note">
-              <p>Pixel order stuck across six systems; living brief, role hats, structural gap. Maps actual vs intended flow across checkout, payment, order management, warehouse, carrier, and support when no single team owns the handoff seam.</p>
-              <div class="surface-links">
-                <a href="https://k-saicharan.github.io/google-order-case-study" target="_blank" rel="noopener">Open case study →</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+    </div>
+
+        <div class="mind-thread">
+      <div class="thread-kicker">The common thread</div>
+      <blockquote class="thread-prose">
+        &ldquo;A portfolio built like an active mind does not stop at one domain. The thread running through this work is never what is being thought about, but how: meeting ground reality directly, isolating the unexamined friction, and building the working logic that closes the seam.&rdquo;
+      </blockquote>
     </div>
 
     <footer class="footer-note">
@@ -2837,6 +3241,54 @@ If a folder is empty, say so plainly and move on.
         }
       });
     });
+  
+    // Interactive Movable Specimen Cards
+    (function initMovableSpecimens() {
+      var topZ = 10;
+      var cards = document.querySelectorAll('.specimen-card');
+      if (window.innerWidth <= 900) return; // relative stacking on mobile
+
+      cards.forEach(function(card) {
+        var isDragging = false;
+        var startX, startY;
+        var initialX = 0, initialY = 0;
+        var currentX = 0, currentY = 0;
+        var baseTransform = card.getAttribute('data-base-transform') || '';
+
+        card.addEventListener('pointerdown', function(e) {
+          if (e.button !== 0) return; // left click only
+          isDragging = true;
+          card.classList.add('is-dragging');
+          topZ++;
+          card.style.zIndex = topZ;
+          startX = e.clientX;
+          startY = e.clientY;
+          initialX = currentX;
+          initialY = currentY;
+          try { card.setPointerCapture(e.pointerId); } catch(err) {}
+        });
+
+        card.addEventListener('pointermove', function(e) {
+          if (!isDragging) return;
+          var dx = e.clientX - startX;
+          var dy = e.clientY - startY;
+          currentX = initialX + dx;
+          currentY = initialY + dy;
+          card.style.transform = baseTransform + ' translate(' + currentX + 'px, ' + currentY + 'px)';
+        });
+
+        function stopDrag(e) {
+          if (!isDragging) return;
+          isDragging = false;
+          card.classList.remove('is-dragging');
+          try { card.releasePointerCapture(e.pointerId); } catch(err) {}
+        }
+
+        card.addEventListener('pointerup', stopDrag);
+        card.addEventListener('pointercancel', stopDrag);
+      });
+    })();
+
   </script>
 </body>
 </html>
