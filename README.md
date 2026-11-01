@@ -6,7 +6,7 @@ Canonical source: this directory. Do not start a new folder. Binding spec: vault
 
 | Page | URL |
 |---|---|
-| Jobs: How my mind works when left somewhere | https://portfolios-chi-one.vercel.app/ |
+| Jobs: Finding the edge. Building the logic. | https://portfolios-chi-one.vercel.app/ |
 | Same page on GitHub Pages (alias; `/ops/` too) | https://k-saicharan.github.io/portfolios/ |
 | Film: What the Image Does | https://k-saicharan.github.io/portfolios/film/ |
 
