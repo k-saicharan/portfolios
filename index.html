@@ -105,9 +105,9 @@
       letter-spacing: 2.2px;
     }
     .reading-no a {
-      color: var(--ink);
+      color: var(--accent-ink);
       text-decoration: underline;
-      text-decoration-color: var(--tick);
+      text-decoration-color: var(--accent);
       text-underline-offset: 3px;
       letter-spacing: 0.8px;
       text-transform: none;
@@ -589,7 +589,7 @@
     .footer-note a {
       color: var(--accent-ink);
       text-decoration: underline;
-      text-decoration-color: var(--tick);
+      text-decoration-color: var(--accent);
       text-underline-offset: 3px;
     }
     .footer-note a:hover {
@@ -618,36 +618,82 @@
       }
     }
   
-    /* Title links, Subheading links & Inline links */
-    .item-title a.title-link,
-    .item-title a {
-      color: inherit;
+            /* Title links, Subheading links, Inline chips & Badges */
+    .item-title a.title-link {
+      color: var(--text);
       text-decoration: none;
-      border-bottom: 1px dotted var(--tick);
-      transition: color 150ms ease, border-bottom-color 150ms ease;
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 10px;
+      transition: color 150ms ease;
     }
-    .item-title a.title-link:hover,
-    .item-title a:hover {
+    .item-title a.title-link .title-text {
+      text-decoration: underline;
+      text-decoration-color: var(--accent);
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 5px;
+      transition: color 150ms ease, text-decoration-color 150ms ease;
+    }
+    .item-title a.title-link:hover .title-text {
       color: var(--accent-ink);
-      border-bottom-color: var(--accent-ink);
+      text-decoration-color: var(--accent-ink);
     }
-    .ext-arrow {
-      display: inline-block;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72em;
-      margin-left: 5px;
-      color: var(--accent);
-      vertical-align: 0.12em;
-      transition: transform 150ms ease;
+    .link-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+      text-transform: none;
+      background: var(--paper-well);
+      color: var(--accent-ink);
+      border: 1px solid var(--rule-strong);
+      padding: 2px 7px;
+      border-radius: 2px;
+      vertical-align: 0.22em;
+      text-decoration: none !important;
+      transition: background 150ms ease, color 150ms ease, border-color 150ms ease, transform 150ms ease;
+      white-space: nowrap;
     }
-    .item-title a:hover .ext-arrow,
-    .sub-link-head a:hover .ext-arrow {
-      transform: translate(2px, -2px);
+    .title-link:hover .link-badge,
+    .sub-link-head a:hover .link-badge {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+      transform: translateY(-1px);
+    }
+    .iv-drift-note h3.sub-link-head {
+      margin-top: 22px;
+      margin-bottom: 8px;
+    }
+    .iv-drift-note h3.sub-link-head a.title-link,
+    .iv-drift-note h3.sub-link-head a {
+      color: var(--text);
+      text-decoration: none;
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px;
+      transition: color 150ms ease;
+    }
+    .iv-drift-note h3.sub-link-head a .title-text {
+      text-decoration: underline;
+      text-decoration-color: var(--accent);
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 4px;
+      transition: color 150ms ease, text-decoration-color 150ms ease;
+    }
+    .iv-drift-note h3.sub-link-head a:hover .title-text {
+      color: var(--accent-ink);
+      text-decoration-color: var(--accent-ink);
     }
     .iv-drift-note a {
       color: var(--accent-ink);
       text-decoration: underline;
-      text-decoration-color: var(--tick);
+      text-decoration-color: var(--accent);
       text-underline-offset: 3px;
       transition: color 150ms ease, text-decoration-color 150ms ease;
     }
@@ -655,22 +701,27 @@
       color: var(--text);
       text-decoration-color: var(--text);
     }
-    .iv-drift-note h3.sub-link-head {
-      margin-top: 18px;
+    .inline-chip {
+      display: inline-block;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 11px;
+      padding: 1px 6px;
+      text-transform: none;
+      background: var(--paper-well);
+      border: 1px solid var(--rule-strong);
+      border-radius: 2px;
+      color: var(--accent-ink) !important;
+      text-decoration: none !important;
+      vertical-align: 0.05em;
+      transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
     }
-    .iv-drift-note h3.sub-link-head a {
-      color: inherit;
-      text-decoration: none;
-      border-bottom: 1px dotted var(--tick);
-      transition: color 150ms ease, border-bottom-color 150ms ease;
-    }
-    .iv-drift-note h3.sub-link-head a:hover {
-      color: var(--accent-ink);
-      border-bottom-color: var(--accent-ink);
+    .inline-chip:hover {
+      background: var(--text);
+      color: var(--bg) !important;
+      border-color: var(--text);
     }
 
-    /* Workbench Specimen Tray & Movable Cards (filling left-hand empty space) */
-    .specimen-tray {
+  .specimen-tray {
       margin-top: 18px;
       position: relative;
       background: rgba(236, 230, 218, 0.45);
@@ -826,7 +877,7 @@
           <div class="gauge mind"></div>
           <span>HINGE</span>
         </div>
-        <h2 class="item-title"><a href="#missing-piece" class="title-link">The missing piece</a></h2>
+        <h2 class="item-title">The missing piece</h2>
         <p class="teaser">Where matter moves, AI capability is rarely the bottleneck. The scarce half is judgment, trigger, and what survives the floor.</p>
 
         <div class="iv-workbench">
@@ -945,7 +996,7 @@
           <div class="gauge built"></div>
           <span>LINEAGE</span>
         </div>
-        <h2 class="item-title"><a href="#on-the-floor" class="title-link">On the floor</a></h2>
+        <h2 class="item-title">On the floor</h2>
         <p class="teaser">Picker to field logs to Stacked on shift; Voice, Bay Door, where the work points next.</p>
 
         <div class="iv-workbench">
@@ -1094,9 +1145,10 @@
 
             <div class="iv-drift-note">
               <p>I started as a picker in a beverage 3PL warehouse. After shifts I logged what had surprised me or made me wonder why. Those notes became a system: field logs in, domain pages out. Later observations started landing on earlier ones. That compounding is how I learned the floor: picking, voice kit, waves, exceptions, how work actually moves.</p>
-              <p>From those logs came <strong><a href="https://github.com/k-saicharan/stacked-public" target="_blank" rel="noopener">Stacked</a></strong> (<a href="./stacked/index.html">about</a> · <a href="https://k-saicharan.github.io/stacked-public/show.html" target="_blank" rel="noopener">join pilot</a>): a phone app I use on shift to log pallets, watch items-per-hour live, and keep rotating schedules straight. Local-first. Optional anonymous sync.</p>
+              <h3 class="sub-link-head"><a href="https://github.com/k-saicharan/stacked-public" target="_blank" rel="noopener" class="title-link"><span class="title-text">Stacked</span> <span class="link-badge">github.com/k-saicharan/stacked-public ↗</span></a></h3>
+              <p>From those logs came Stacked (<a href="./stacked/index.html" class="inline-chip">about ↗</a> · <a href="https://k-saicharan.github.io/stacked-public/show.html" target="_blank" rel="noopener" class="inline-chip">join pilot ↗</a>): a phone app I use on shift to log pallets, watch items-per-hour live, and keep rotating schedules straight. Local-first. Optional anonymous sync.</p>
               <p>Upstream is a clean personal record of what the shift produced while I was still in it. Downstream, if usage grows, those logs become material for harder picking questions: sequences that serve aggregate throughput, with the worker as an input rather than the whole target. That thread stays open until the data is real.</p>
-              <h3 class="sub-link-head"><a href="https://github.com/k-saicharan/sap-voice-middleware" target="_blank" rel="noopener">Voice <span class="ext-arrow">↗</span></a></h3>
+              <h3 class="sub-link-head"><a href="https://github.com/k-saicharan/sap-voice-middleware" target="_blank" rel="noopener" class="title-link"><span class="title-text">Voice</span> <span class="link-badge">github.com/k-saicharan/sap-voice-middleware ↗</span></a></h3>
               <p>Spoken quantity confirms are the brittle step under warehouse noise. I traced the failure to the speech layer sitting on the warehouse system, then built a thin middleware demo that corrects before the core stack sees the utterance; core left untouched. Later a language-pack path opened. Proposed and researched. Stacked is what I run; this path is direction until a site moment installs something.</p>
               <h3>Bay Door</h3>
               <p>Bay Door started as a “this should be simpler” instinct on the floor, then became a correction arc: the process looked clean on paper until attention rewrote what the aisle actually cost. It went into a management conversation as research. Same pattern as the rest of the floor work; deciding fact and decision place out of line.</p>
@@ -1122,7 +1174,7 @@
           <div class="gauge built"></div>
           <span>VISION</span>
         </div>
-        <h2 class="item-title"><a href="https://inventoryvisionhub.co.uk" target="_blank" rel="noopener" class="title-link">InventoryVision <span class="ext-arrow">↗</span></a></h2>
+        <h2 class="item-title"><a href="https://inventoryvisionhub.co.uk" target="_blank" rel="noopener" class="title-link"><span class="title-text">InventoryVision</span> <span class="link-badge">inventoryvisionhub.co.uk ↗</span></a></h2>
         <p class="teaser">Tote-counter proof; physical vs record drift; site-shaped customisation.</p>
 
         <div class="iv-workbench">
@@ -1288,7 +1340,7 @@
           <div class="gauge public"></div>
           <span>BRIEF</span>
         </div>
-        <h2 class="item-title"><a href="https://k-saicharan.github.io/google-order-case-study" target="_blank" rel="noopener" class="title-link">Systems brief: Pixel order stuck <span class="ext-arrow">↗</span></a></h2>
+        <h2 class="item-title"><a href="https://k-saicharan.github.io/google-order-case-study" target="_blank" rel="noopener" class="title-link"><span class="title-text">Systems brief: Pixel order stuck</span> <span class="link-badge">Case study ↗</span></a></h2>
         <p class="teaser">Pixel order stuck across six systems; living brief, role hats, structural gap.</p>
 
         <div class="iv-workbench">
@@ -1420,7 +1472,7 @@
           <div class="gauge built"></div>
           <span>EVAL</span>
         </div>
-        <h2 class="item-title"><a href="./proofs/number-fidelity/" class="title-link">Right meaning, wrong number <span class="ext-arrow">↗</span></a></h2>
+        <h2 class="item-title"><a href="./proofs/number-fidelity/" class="title-link"><span class="title-text">Right meaning, wrong number</span> <span class="link-badge">Open eval ↗</span></a></h2>
         <p class="teaser">In a voice confirm, the only words that matter are the numbers. No audio is recorded and no model has been scored yet.</p>
 
         <div class="iv-workbench">
@@ -1512,7 +1564,7 @@
           <div class="gauge built"></div>
           <span>BRIEF</span>
         </div>
-        <h2 class="item-title"><a href="./proofs/two-schemes-one-island/" class="title-link">Two deposit schemes, one island <span class="ext-arrow">↗</span></a></h2>
+        <h2 class="item-title"><a href="./proofs/two-schemes-one-island/" class="title-link"><span class="title-text">Two deposit schemes, one island</span> <span class="link-badge">Open memo ↗</span></a></h2>
         <p class="teaser">From 1 October 2027, Northern Ireland packs carry their own deposit too. The risk changes from "deposit vs none" to "the wrong deposit".</p>
 
         <div class="iv-workbench">
@@ -1611,7 +1663,7 @@
           <div class="gauge built"></div>
           <span>TEMPLATE</span>
         </div>
-        <h2 class="item-title"><a href="./proofs/ewm-gap-pack/" class="title-link">Floor flow to EWM gap pack <span class="ext-arrow">↗</span></a></h2>
+        <h2 class="item-title"><a href="./proofs/ewm-gap-pack/" class="title-link"><span class="title-text">Floor flow to EWM gap pack</span> <span class="link-badge">Open template ↗</span></a></h2>
         <p class="teaser">When a warehouse moves from SAP WM to EWM, its data migrates but its handheld scanner logic does not. A real pack uses observed flows.</p>
 
         <div class="iv-workbench">
@@ -1710,7 +1762,7 @@
           <div class="gauge built"></div>
           <span>CONCEPT</span>
         </div>
-        <h2 class="item-title"><a href="./proofs/ghost-shelf/" class="title-link">The ghost shelf <span class="ext-arrow">↗</span></a></h2>
+        <h2 class="item-title"><a href="./proofs/ghost-shelf/" class="title-link"><span class="title-text">The ghost shelf</span> <span class="link-badge">Open artifact ↗</span></a></h2>
         <p class="teaser">Shoppers click an ad, land on "out of stock", and leave annoyed. The idea: an ad that tells you the truth before you tap.</p>
 
         <div class="iv-workbench">
@@ -1804,7 +1856,7 @@
           <div class="gauge public"></div>
           <span>IN DESIGN</span>
         </div>
-        <h2 class="item-title"><a href="https://care-diary-uk.vercel.app" target="_blank" rel="noopener" class="title-link">CareKit (working name) <span class="ext-arrow">↗</span></a></h2>
+        <h2 class="item-title"><a href="https://care-diary-uk.vercel.app" target="_blank" rel="noopener" class="title-link"><span class="title-text">CareKit (working name)</span> <span class="link-badge">care-diary-uk.vercel.app ↗</span></a></h2>
         <p class="teaser">A care diary for families looking after an ageing parent in England and Wales. Log the help you give in seconds, and it becomes a dated written record in your own words.</p>
 
         <div class="iv-workbench">
@@ -1914,7 +1966,7 @@
           <div class="gauge public"></div>
           <span>IN DESIGN</span>
         </div>
-        <h2 class="item-title"><a href="https://heard-ten-puce.vercel.app" target="_blank" rel="noopener" class="title-link">Heard <span class="ext-arrow">↗</span></a></h2>
+        <h2 class="item-title"><a href="https://heard-ten-puce.vercel.app" target="_blank" rel="noopener" class="title-link"><span class="title-text">Heard</span> <span class="link-badge">heard-ten-puce.vercel.app ↗</span></a></h2>
         <p class="teaser">A diary for endometriosis and pelvic pain that turns 10-second daily logs into a plain summary to take to a GP appointment.</p>
 
         <div class="iv-workbench">
@@ -2017,7 +2069,7 @@
           <div class="gauge mind"></div>
           <span>LIFE OS</span>
         </div>
-        <h2 class="item-title"><a href="#autopilot-panel" class="title-link">Autopilot</a></h2>
+        <h2 class="item-title">Autopilot</h2>
         <p class="teaser">Execution layer I designed: Board, cascade, /log; sessions inherit truth.</p>
 
         <div class="iv-workbench">
@@ -2487,7 +2539,7 @@ Tell the user: the log was updated (or created), the file path, and one sentence
           <div class="gauge mind"></div>
           <span>ATTENTION</span>
         </div>
-        <h2 class="item-title"><a href="#loop-panel" class="title-link">Closing the loop</a></h2>
+        <h2 class="item-title">Closing the loop</h2>
         <p class="teaser">Cell, express, clear. Xenrich as the receipt on bookmarks and the feed.</p>
 
         <div class="iv-workbench">
@@ -2748,7 +2800,7 @@ If a folder is empty, say so plainly and move on.
             <div class="gauge public"></div>
             <span>SQLITE</span>
           </div>
-          <h2 class="item-title"><a href="#dictation-exhaust" class="title-link">Dictation exhaust</a></h2>
+          <h2 class="item-title">Dictation exhaust</h2>
           <p class="teaser">Years of MacWhisper push-to-talk SQLite logs turned into computer-use episodes and a private command lexicon.</p>
 
           <div class="iv-workbench">
@@ -2838,7 +2890,7 @@ If a folder is empty, say so plainly and move on.
             <div class="gauge public"></div>
             <span>SEQUENCE</span>
           </div>
-          <h2 class="item-title"><a href="#clean-and-seal" class="title-link">Clean and Seal</a></h2>
+          <h2 class="item-title">Clean and Seal</h2>
           <p class="teaser">Pocket dual stick putting tear-wipe and a liquid-plaster dose in one forced clean-then-seal pass.</p>
 
           <div class="iv-workbench">
@@ -2925,7 +2977,7 @@ If a folder is empty, say so plainly and move on.
             <div class="gauge public"></div>
             <span>SIMULATION</span>
           </div>
-          <h2 class="item-title"><a href="#shankha-alarm" class="title-link">Shankha Alarm</a></h2>
+          <h2 class="item-title">Shankha Alarm</h2>
           <p class="teaser">Some ideas start as a sensation or a narrow fear and refuse to leave. These are the ones chased far enough to leave a trail.</p>
 
           <div class="iv-workbench">
@@ -3023,7 +3075,7 @@ If a folder is empty, say so plainly and move on.
             <div class="gauge public"></div>
             <span>PROTOTYPE</span>
           </div>
-          <h2 class="item-title"><a href="#net-saver" class="title-link">Net Saver / EntangleSafe</a></h2>
+          <h2 class="item-title">Net Saver / EntangleSafe</h2>
           <p class="teaser">Collar-level hydrostatic buoyancy prototype against quiet inland fishing-net drowning.</p>
 
           <div class="iv-workbench">
