@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Work the System Can't See</title>
+  <meta name="description" content="A field thesis on where operations loses time it never measures, and what AI can honestly do about it. Written from inside a live warehouse operation.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,380;1,9..144,380&family=Newsreader:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --bg: #f7f4ee;
+      --text: #16130e;
+      --muted: #6f6659;
+      --rule: #e5dfd3;
+      --accent: #9c5f34;
+      --ink: #2f4758;
+      --tick: #c9c0b2;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scrollbar-color: var(--accent) var(--rule); scrollbar-width: thin; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      line-height: 1.74;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 88px 40px 120px;
+    }
+
+    /* Masthead */
+    .masthead { margin-bottom: 64px; position: relative; }
+
+    .reading-no {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2.8px;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .calibration-strip {
+      height: 1px;
+      background: var(--rule);
+      margin: 14px 0 36px;
+      position: relative;
+    }
+    .calibration-strip::before {
+      content: '';
+      position: absolute;
+      top: -5px; left: 0; right: 0; height: 5px;
+      background-image: repeating-linear-gradient(to right, var(--tick) 0 1px, transparent 1px 11px);
+    }
+
+    .masthead h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.05rem, 5vw, 2.95rem);
+      font-weight: 380;
+      letter-spacing: -0.018em;
+      line-height: 1.02;
+      margin: 0 0 16px;
+    }
+
+    .masthead .lead {
+      font-size: 1.06rem;
+      color: var(--text);
+      max-width: 56ch;
+      margin: 0 0 12px;
+    }
+
+    .masthead .method {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 56ch;
+      margin: 0;
+      font-style: italic;
+    }
+
+    .section-label, .evidence-label {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2.1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 20px;
+    }
+
+    .section { margin-bottom: 72px; }
+
+    /* Thesis movements */
+    .thesis { padding-left: 42px; margin: 0; }
+    .thesis-item {
+      position: relative;
+      padding-bottom: 30px;
+    }
+    .thesis-item:last-child { padding-bottom: 0; }
+    .thesis-item::before {
+      content: attr(data-n);
+      position: absolute;
+      left: -42px;
+      top: -2px;
+      font-family: 'Fraunces', serif;
+      font-size: 1.35rem;
+      font-weight: 300;
+      color: var(--tick);
+      letter-spacing: -0.02em;
+    }
+    .thesis-item h3 {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text);
+      margin: 0 0 7px;
+    }
+    .thesis-item p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.99rem;
+      line-height: 1.7;
+      max-width: 56ch;
+    }
+    .thesis-item p:last-child { margin-bottom: 0; }
+    .thesis-item strong { color: var(--text); font-weight: 500; }
+
+    /* Vantage block */
+    .vantage {
+      border-left: 2px solid var(--tick);
+      padding: 4px 0 4px 20px;
+      margin: 0;
+    }
+    .vantage p {
+      margin: 0 0 14px;
+      font-size: 1rem;
+      max-width: 58ch;
+      color: var(--text);
+    }
+    .vantage p:last-child { margin-bottom: 0; }
+
+    .counts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      margin: 26px 0 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .count {
+      flex: 1 1 130px;
+      padding: 16px 18px 16px 0;
+    }
+    .count .n {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      font-weight: 380;
+      color: var(--ink);
+      display: block;
+      line-height: 1.1;
+    }
+    .count .l {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.6px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-top: 5px;
+      line-height: 1.5;
+    }
+
+    /* Evidence readings */
+    .reading {
+      padding: 32px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .reading:last-of-type { border-bottom: 1px solid var(--rule); }
+
+    .reading .meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 1.3px;
+      color: var(--muted);
+      margin-bottom: 13px;
+    }
+    .reading .code { color: var(--ink); font-weight: 500; }
+    .reading .roman { color: var(--accent); }
+
+    .gauge { flex: 1; max-width: 108px; height: 1px; background: var(--rule); position: relative; }
+    .gauge::after {
+      content: ''; position: absolute; left: 0; top: 0; height: 1px;
+      background: var(--accent); width: 100%;
+    }
+    .gauge.built::after { background: var(--ink); }
+    .gauge.proposed::after { width: 52%; background: var(--tick); }
+    .gauge.running::after { width: 100%; background: var(--ink); }
+
+    .reading h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.13rem;
+      font-weight: 420;
+      letter-spacing: -0.006em;
+      margin: 0 0 9px;
+      line-height: 1.26;
+    }
+    .reading p {
+      margin: 0 0 15px;
+      color: var(--text);
+      font-size: 15.4px;
+      line-height: 1.7;
+      max-width: 61ch;
+    }
+    .reading .tests {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.3px;
+      color: var(--muted);
+      margin: 0 0 14px;
+      max-width: 58ch;
+    }
+    .reading .tests b {
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      font-size: 9.5px;
+      margin-right: 7px;
+    }
+    .reading .pull {
+      font-style: italic;
+      color: var(--ink);
+      font-size: 15.8px;
+      padding-left: 15px;
+      border-left: 2px solid var(--tick);
+      max-width: 54ch;
+    }
+    .reading .link { display: flex; gap: 24px; flex-wrap: wrap; }
+    .reading .link a {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+      transition: background-size 380ms cubic-bezier(0.22,1,0.36,1);
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .reading .link a:hover { background-size: 100% 1px; color: var(--text); }
+
+    /* Limits */
+    .limits { margin: 0; }
+    .limit {
+      padding: 18px 0;
+      border-bottom: 1px dotted var(--rule);
+      max-width: 60ch;
+    }
+    .limit:last-child { border-bottom: none; }
+    .limit h4 {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin: 0 0 6px;
+    }
+    .limit p { margin: 0; font-size: 15px; color: var(--muted); line-height: 1.68; }
+
+    .footer-note {
+      margin-top: 82px;
+      padding-top: 26px;
+      border-top: 1px solid var(--rule);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.9px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 780px) {
+      .page { padding: 64px 24px 100px; max-width: 100%; }
+      .thesis { padding-left: 28px; }
+      .thesis-item::before { left: -28px; font-size: 1.1rem; }
+      .reading .meta { flex-wrap: wrap; gap: 8px 14px; }
+      .gauge { max-width: 82px; }
+      .count { flex: 1 1 100px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="masthead">
+      <div class="reading-no">Saicharan Kuna · Field Thesis · 2026</div>
+      <div class="calibration-strip" aria-hidden="true"></div>
+      <h1>The work the system can't see.</h1>
+      <p class="lead">Large operations report themselves as almost perfect while the people inside them absorb a constant load that no metric records. That gap is the largest unmeasured cost in the building. It has just become cheap to instrument, and almost everyone is about to point the instrument at the wrong thing.</p>
+      <p class="method">Written from inside a live operation, not from a consulting seat.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">The Argument</div>
+      <div class="thesis">
+
+        <div class="thesis-item" data-n="01">
+          <h3>Everything is green</h3>
+          <p>Pick accuracy on a well-run beverage contract runs at 99.99%. Service levels are met. Every KPI that exists is satisfied, and the reporting is not lying.</p>
+          <p>The metric records what eventually got confirmed. It says nothing about how long the confirmation took, how many attempts it needed, or what the person had to do to get there.</p>
+        </div>
+
+        <div class="thesis-item" data-n="02">
+          <h3>The gap gets closed by whoever is standing there</h3>
+          <p>A voice terminal mishears the same word forty times a shift because the speech model was trained on an accent that isn't yours. A login gets shared because the system was designed around a staffing model the site doesn't use. A damaged pallet stays unlogged because logging it means leaving the aisle and walking to a terminal.</p>
+          <p>None of these fail a metric. <strong>That is exactly why they survive.</strong> The divergence between the system's model of the work and the work itself does not resolve itself. It gets absorbed, quietly and unpaid, by the person nearest to it.</p>
+        </div>
+
+        <div class="thesis-item" data-n="03">
+          <h3>Instrumenting the gap used to be uneconomic</h3>
+          <p>Measuring dead time meant a consultant with a clipboard and a time-and-motion study, priced so that it only happened when something was already visibly broken. So the gap stayed unmeasured, and unmeasured cost is indistinguishable from no cost on a P&amp;L.</p>
+          <p>A vision model that counts a stack of totes now costs pennies per call. A correction layer between a voice headset and a warehouse system is a few hundred lines of code. The economics changed underneath the problem while the org charts stayed the same.</p>
+        </div>
+
+        <div class="thesis-item" data-n="04">
+          <h3>The instrument can be aimed two ways, and this decides everything</h3>
+          <p>Aimed at the gap, the same tooling produces the first honest picture of what an operation actually costs to run.</p>
+          <p>Aimed at the person, it produces surveillance. Surveillance produces resistance, resistance produces quiet non-compliance, and quiet non-compliance produces a rollback and a manager who now believes the technology doesn't work. <strong>The technical problem was solved a while ago. What is left is a design and trust question, and it is settled by who the instrument is pointed at.</strong></p>
+        </div>
+
+        <div class="thesis-item" data-n="05">
+          <h3>Which makes the scarce person a specific person</h3>
+          <p>Reading the gap requires having stood in it. Knowing which measurement will be tolerated requires having been the one measured. Neither of those is available from a slide deck, and neither is what the analytics layer automates.</p>
+          <p>The work I am interested in is the adoption half of this, the part that decides whether a working system is actually used by people who did not ask for it.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">The Vantage</div>
+      <div class="vantage">
+        <p>I am not advising on this from outside. I pick on a beverage contract at a UK third-party logistics site, and I have been writing down what I see since April 2026: domain notes tracing how the system is supposed to behave, shift logs recording how it actually behaved that day, and the difference between the two.</p>
+        <p>The notes were not started for a portfolio. They were started because I could not otherwise hold what I was seeing across shifts.</p>
+        <div class="counts">
+          <div class="count"><span class="n">26</span><span class="l">Domain notes<br>on how the stack works</span></div>
+          <div class="count"><span class="n">10</span><span class="l">Shift logs<br>from the floor</span></div>
+          <div class="count"><span class="n">14 wks</span><span class="l">Continuous<br>since Apr 2026</span></div>
+          <div class="count"><span class="n">0</span><span class="l">Lines of code<br>written by hand</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="evidence-label">Evidence</div>
+
+      <article class="reading">
+        <div class="meta">
+          <span class="code">STACKED · ANDROID</span>
+          <span class="roman">2026 · 08</span>
+          <div class="gauge built"></div>
+          <span>BUILT · PILOT PENDING</span>
+        </div>
+        <h3>A measurement tool designed so it cannot be turned on its user</h3>
+        <p>A one-handed shift logging app for warehouse pickers, built because paper shift logs lose the data that would show where a shift actually goes. The interesting decision is not a feature. When the app syncs a shift, it strips the wall-clock start and end timestamps out of the payload, keeping only the duration, specifically so that a manager cannot cross-match a worker's logged output against CCTV footage or badge-in records. Manager access is bounded to a summary view by design. Sync is explicit opt-in and the free-text notes never leave the phone.</p>
+        <p class="tests"><b>Tests</b> Movement 04. If the instrument has to be safe to be adopted, then the threat model is a product requirement, and the person who writes it should be someone who would be on the wrong end of getting it wrong.</p>
+        <p class="pull">Two output formulas, deliberately different denominators, and a rule that they may never be merged into one ambiguous number called speed.</p>
+      </article>
+
+      <article class="reading">
+        <div class="meta">
+          <span class="code">SAP EWM · VOICE MIDDLEWARE</span>
+          <span class="roman">2026 · 05</span>
+          <div class="gauge proposed"></div>
+          <span>PROTOTYPE · PROPOSED, NOT DEPLOYED</span>
+        </div>
+        <h3>A correction layer between a voice headset and a warehouse system</h3>
+        <p>Voice-directed picking fails on accented speech in a high-noise bay. Each misrecognition costs a few seconds, repeated across roughly 1,400 to 1,600 confirmations per worker per shift, and it never registers anywhere because the pick still completes. The prototype is a per-worker word-mapping service sitting between the headset middleware and SAP EWM, correcting known failures for that speaker rather than retraining a general model.</p>
+        <p>The architectural choice is the part I would defend. SAP is not touched, not migrated, and not replaced. The intelligence sits in a thin layer between the legacy system and the human, because the legacy system is load-bearing and the contract around it is load-bearing too. I chose that shape from the floor, before knowing it was the shape the industry was converging on. The 2024 to 2026 record is unkind to the alternative: the large rip-and-replace programmes in this sector have mostly been written off, reverted, or quietly abandoned.</p>
+        <p class="tests"><b>Tests</b> Movements 02 and 03. A cost that exists entirely inside the gap, and a fix priced low enough that it never needed a capital case.</p>
+        <p class="pull">The metric measures what gets confirmed. It says nothing about how long it took.</p>
+        <div class="link">
+          <a href="https://github.com/k-saicharan/sap-voice-middleware" target="_blank" rel="noopener">Repository →</a>
+        </div>
+      </article>
+
+      <article class="reading">
+        <div class="meta">
+          <span class="code">VLM · TOTE-COUNTER</span>
+          <span class="roman">2026 · 02</span>
+          <div class="gauge built"></div>
+          <span>BUILT · OPEN SOURCE</span>
+        </div>
+        <h3>Counting tote stacks with a vision model</h3>
+        <p>A recurring miscount, turned into a working tool. A vision-language model with a chain-of-thought prompt that forces it to count edges in sequence rather than guess at a whole frame. FastAPI backend, mobile-first so it runs from a phone in the aisle. Accurate to within one unit on the test set.</p>
+        <p class="tests"><b>Tests</b> Movement 03. The cheapest possible demonstration that a measurement which used to need a person now needs a phone.</p>
+        <div class="link">
+          <a href="https://github.com/k-saicharan/tote-counter" target="_blank" rel="noopener">Repository →</a>
+        </div>
+      </article>
+
+      <article class="reading">
+        <div class="meta">
+          <span class="code">ESCALATION · CASE STUDY</span>
+          <span class="roman">2026 · 05</span>
+          <div class="gauge built"></div>
+          <span>PUBLIC</span>
+        </div>
+        <h3>Escalation as architecture</h3>
+        <p>An unresolved consumer order that crossed six operational systems over 21 days. Each layer examined from the inside: what it could see, what it structurally could not, and where the handoffs dropped. Every individual system behaved correctly. The failure lived entirely in the gaps between them, which is the same shape as the warehouse argument in a different building.</p>
+        <p class="tests"><b>Tests</b> Movements 01 and 02, outside logistics. Locally green systems, aggregate failure, nobody's KPI breached.</p>
+        <div class="link">
+          <a href="https://k-saicharan.github.io/google-order-case-study" target="_blank" rel="noopener">Public case study →</a>
+        </div>
+      </article>
+
+      <article class="reading">
+        <div class="meta">
+          <span class="code">MULTI-AGENT · OPERATING SYSTEM</span>
+          <span class="roman">2026 · 08</span>
+          <div class="gauge running"></div>
+          <span>RUNNING · SINGLE USER</span>
+        </div>
+        <h3>Running the same play on my own work</h3>
+        <p>An orchestration layer that routes tasks across three AI models by task shape, holds persistent file-based memory so context is never re-explained, and runs a reconciliation sweep that checks every tracker's claims against live sources and surfaces only the decisions that genuinely need a person. The parts that matter are the constraints: a written boundary between what it may advance alone and what it must stop and ask, a narrow write allowlist against broad read access, no delete permission, and version-control snapshots bracketing every autonomous run.</p>
+        <p class="tests"><b>Tests</b> Movement 05. Adoption is the hard half even when the user and the builder are the same person, and the autonomy boundary is where it is won or lost.</p>
+        <p class="pull">128 memory files, 61 codified workflows, 934 notes under management. What I cannot give you is an hours-saved figure, and the reason is in the limits below.</p>
+      </article>
+
+    </div>
+
+    <div class="section">
+      <div class="evidence-label">What I Am Not Claiming</div>
+      <div class="limits">
+
+        <div class="limit">
+          <h4>The middleware was never deployed</h4>
+          <p>It is a working prototype. I took it to the continuous improvement manager who could actually deploy it. He engaged seriously with part of the proposal and passed on other parts, which is a normal and reasonable outcome. It has never run in production and nobody's dead time has been reduced by it. What it demonstrates is the reading of the operation that produced it, and my read of why the parts he passed on were the parts that would have needed the client to move too.</p>
+        </div>
+
+        <div class="limit">
+          <h4>There is no hours-saved number anywhere on this page</h4>
+          <p>I could estimate one. Estimating it and presenting it as measured is the single most common dishonesty in this genre, and once you have done it every other number you give is worth less. The counts on this page are things I can show you in a directory listing. When the pilot produces a real before-and-after, that number will appear here with its method attached.</p>
+        </div>
+
+        <div class="limit">
+          <h4>Stacked has one user</h4>
+          <p>Me. The pilot has not launched. The privacy architecture is a design position that has not yet survived contact with twenty-five other people who did not build it.</p>
+        </div>
+
+        <div class="limit">
+          <h4>I do not write the code</h4>
+          <p>Every system here was built with AI-assisted development tools. I direct, diagnose, and decide the architecture, and the model executes. I mention this because the alternative is letting someone assume otherwise and finding out in a technical interview, and because the interesting claim is not that I can type Python. It is that the gap between seeing a problem on a floor and having a working tool for it has collapsed to about a week, and I would rather argue about that than pretend to a skill I do not have.</p>
+        </div>
+
+        <div class="limit">
+          <h4>The client is anonymised on purpose</h4>
+          <p>An earlier version of this work named the site and the client publicly. The employer's HR team asked for it to come down under confidentiality policy, and that was a fair call which I should have anticipated. The operational reading survives anonymisation completely, so nothing here needs the name.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer-note">
+      The gap is the asset. Point the instrument at it.
+      <div style="text-transform:none;letter-spacing:0;font-family:'Newsreader',Georgia,serif;font-size:13.5px;color:var(--muted);margin-top:16px;line-height:1.6;">
+        Saicharan Kuna &nbsp;·&nbsp; <a href="../ops/" style="color:var(--accent);text-decoration:none;">systems thinking from the floor →</a> &nbsp;·&nbsp; <a href="mailto:saicharan9977@gmail.com" style="color:var(--accent);text-decoration:none;">saicharan9977@gmail.com</a> &nbsp;·&nbsp; <a href="https://github.com/k-saicharan" style="color:var(--accent);text-decoration:none;">github.com/k-saicharan</a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
