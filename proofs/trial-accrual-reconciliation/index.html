@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Two-System Clinical Trial Accrual Reconciliation</title><link rel="stylesheet" href="../style.css"></head><body><main>
+<p class="kicker"><a href="../../">← Finding the edge. Building the logic.</a> · Healthcare Informatics · Trial Accruals (EDGE to NIHR ODP)</p>
+<h1>Two-System Clinical Trial Accrual Reconciliation</h1>
+<p class="lede">When hospital clinical databases meet national research portfolios, participant counts diverge. A deterministic reconciliation model isolates orphan records, dedupes participant keys, and flags recruitment velocity bottlenecks before statutory returns.</p>
+
+<h2>The operational gap</h2>
+<ul>
+<li><b>Disparate research systems drift out of sync.</b> Hospital trusts manage local clinical trial enrollment in platforms such as EDGE and local Electronic Patient Records (EPR), while statutory reporting flows into central registries like the NIHR Open Data Platform.</li>
+<li><b>Silent data anomalies distort portfolio metrics.</b> Multi-arm trials create duplicate consent timestamps; study protocol amendments change recruitment targets mid-cycle; and manual participant ID entry leads to unmapped study codes.</li>
+<li><b>Cumulative totals mask failing trials.</b> Reporting total participants recruited to date hides whether recruitment velocity has flatlined in the final three months before trial close-out.</li>
+</ul>
+
+<h2>The reconciliation primitive</h2>
+<div class="card">
+<p><b>Two-List Anti-Join &amp; Duplicate Quarantine (FP-DATA-01)</b></p>
+<p>Before aggregating research accruals or publishing clinical trial scorecards, validate records through a four-stage deterministic gate:</p>
+<ol>
+<li><b>Deduplication:</b> Partition the local patient intake on pseudonymised patient key and study code, retaining strictly the earliest confirmed consent timestamp.</li>
+<li><b>Orphan Isolation:</b> Execute an anti-join against the national portfolio master registry to stage unmatched records into a quarantine exception table with specific error codes (e.g. <code>ERR_UNMAPPED_STUDY</code>, <code>ERR_INVALID_SITE</code>).</li>
+<li><b>Velocity Measurement (FP-BI-02):</b> Compute dynamic recruitment velocity: remaining target patients divided by active run-rate times months remaining. Ratios exceeding 1.25 immediately trigger operational intervention flags.</li>
+<li><b>Clean Model Output:</b> Pass strictly verified, reconciled accruals to the Power BI reporting data model.</li>
+</ol>
+</div>
+
+<h2>Worked reconciliation logic</h2>
+<table><thead><tr><th>Local Patient Key</th><th>Study Ref</th><th>Consent Date</th><th>National Registry Match</th><th>Pipeline Action</th><th>Resolution Note</th></tr></thead><tbody>
+<tr><td><code>NHS-UCLH-0841</code></td><td>STU-2024-09</td><td>2026-09-12</td><td>Matched (Active)</td><td>Clean Accrual</td><td>Standard pass to reporting model</td></tr>
+<tr><td><code>NHS-UCLH-0841</code></td><td>STU-2024-09</td><td>2026-09-14</td><td>Duplicate Entry</td><td>Quarantine (Earliest Wins)</td><td>Second consent dropped; audit logged</td></tr>
+<tr><td><code>NHS-UCLH-1022</code></td><td>STU-9999-XX</td><td>2026-10-01</td><td>Unmapped Study ID</td><td>Quarantine (Anti-Join)</td><td>Staged in exception queue for trial manager</td></tr>
+<tr><td><code>NHS-UCLH-1105</code></td><td>STU-2024-14</td><td>2026-10-18</td><td>Matched (Target Reached)</td><td>Velocity Alert</td><td>Study target met; recruitment capped</td></tr>
+<tr><td><code>NHS-UCLH-1140</code></td><td>STU-2024-22</td><td>2026-11-02</td><td>Matched (Lagging)</td><td>Velocity Alert (>1.4)</td><td>Under-recruiting; flags site coordinator review</td></tr>
+</tbody></table>
+
+<h2>The SQL translation</h2>
+<div class="card">
+<pre><code>-- 1. Deduplicate local accruals on unique participant + study key
+WITH deduped_accruals AS (
+  SELECT 
+    pseudo_id,
+    study_id,
+    site_code,
+    consent_date,
+    ROW_NUMBER() OVER (
+      PARTITION BY pseudo_id, study_id 
+      ORDER BY consent_date ASC
+    ) AS record_rank
+  FROM local_edge_accruals
+),
+
+-- 2. Anti-join against central trial registry to quarantine orphans
+orphaned_exceptions AS (
+  SELECT 
+    d.*,
+    'ERR_UNMAPPED_STUDY' AS exception_reason
+  FROM deduped_accruals d
+  LEFT JOIN nihr_portfolio_master p 
+    ON d.study_id = p.study_id
+  WHERE d.record_rank = 1 
+    AND p.study_id IS NULL
+)
+SELECT * FROM orphaned_exceptions;</code></pre>
+</div>
+
+<h2>What this changes for a research informatics team</h2>
+<ul>
+<li>Eliminates end-of-quarter manual data scrubbing across spreadsheets.</li>
+<li>Provides clinical research coordinators with a daily exception queue showing exactly which participant records need protocol mapping.</li>
+<li>Ensures portfolio dashboards present trustworthy, audit-ready numbers that protect NHS trust research infrastructure funding.</li>
+</ul>
+
+<footer>Model design by Saicharan Kuna, Nov 2026. Part of the reality systems portfolio at <a href="../../">portfolios-chi-one.vercel.app</a>.</footer>
+</main></body></html>
